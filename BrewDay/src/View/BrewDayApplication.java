@@ -21,6 +21,7 @@ public class BrewDayApplication {
 	         String sql = "CREATE TABLE IF NOT EXISTS ingrediente" + 
 	        		  "(id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL," +
 	        		  "nome VARCHAR(45) NOT NULL, " +
+	        		  "unitaMisura VARCHAR(45) NOT NULL, " +
 	        		  "disponibilita FLOAT NOT NULL)";
 	         stmt.executeUpdate(sql);
 	         stmt.close();

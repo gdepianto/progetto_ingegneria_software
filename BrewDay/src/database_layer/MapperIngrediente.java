@@ -37,24 +37,24 @@ public class MapperIngrediente {
 	   
 	}
 	
-	public ArrayList getIngredienti() {
+	public ArrayList<Ingrediente> getIngredienti() {
 		Connection c = null;
 		Statement stmt = null;
-		
+		ArrayList<Ingrediente> listaIngredienti = new ArrayList<Ingrediente>();
 		try {
 		      Class.forName("org.sqlite.JDBC");
-		      c = DriverManager.getConnection("jdbc:sqlite:test.db");
+		      c = DriverManager.getConnection("jdbc:sqlite:brewday.db");
 		      c.setAutoCommit(false);
 		      System.out.println("Opened database successfully");
 
 		      stmt = c.createStatement();
-		      ResultSet rs = stmt.executeQuery( "SELECT * FROM COMPANY;" );
+		      ResultSet rs = stmt.executeQuery( "SELECT * FROM ingrediente;" );
 		      
 		      while ( rs.next() ) {
 		         String nome = rs.getString("nome");
 		         String unitaMisura = rs.getString("unitaMisura");
 		         float quantita  = rs.getFloat("quantita");
-		         
+		         listaIngredienti.add(new Ingrediente(nome,quantita,unitaMisura));
 		         
 		      }
 		      rs.close();
@@ -65,7 +65,7 @@ public class MapperIngrediente {
 		      System.exit(0);
 		}
 		System.out.println("Operation done successfully");
-		return null;
+		return listaIngredienti;
 	}
 		
 	

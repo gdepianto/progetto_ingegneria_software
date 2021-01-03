@@ -1,5 +1,7 @@
 package controller;
 
+import java.util.ArrayList;
+
 import database_layer.MapperIngrediente;
 import model.Ingrediente;
 
@@ -15,6 +17,10 @@ public class ControllerIngredienti {
 		Ingrediente ing = new Ingrediente(nome, disponibilita, unitaMisura);
 		mapperIngrediente.insert(ing);
 		
+	}
+	
+	public ArrayList<Ingrediente> getIngredienti(){
+		return mapperIngrediente.getIngredienti();
 	}
 	
     public void rimuoviIngrediente (int id) {
