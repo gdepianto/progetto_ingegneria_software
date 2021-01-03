@@ -48,6 +48,13 @@ public class Ingrediente {
 	public void setUnitaMisura(String unitaMisura) {
 		this.unitaMisura = unitaMisura;
 	}
+
+	@Override
+	public String toString() {
+		return "Ingrediente [idIngrediente=" + idIngrediente + ", nome=" + nome + ", disponibilita=" + disponibilita
+				+ ", unitaMisura=" + unitaMisura + "]";
+	}
+
 	public ArrayList<Quantita> getRicette() {
 		return ricette;
 	}

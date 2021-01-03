@@ -53,7 +53,7 @@ public class MapperIngrediente {
 		      while ( rs.next() ) {
 		         String nome = rs.getString("nome");
 		         String unitaMisura = rs.getString("unitaMisura");
-		         float quantita  = rs.getFloat("quantita");
+		         float quantita  = rs.getFloat("disponibilita");
 		         listaIngredienti.add(new Ingrediente(nome,quantita,unitaMisura));
 		         
 		      }
