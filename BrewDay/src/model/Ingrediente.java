@@ -7,12 +7,14 @@ public class Ingrediente {
 	private String nome;
 	private float disponibilita;
 	private ArrayList<Quantita> ricette = null;
+	private String unitaMisura;
 	
 
-	public Ingrediente (String nome, float disponibilita) {
+	public Ingrediente (String nome, float disponibilita, String unitaMisura) {
 		this.idIngrediente = -1;
 		this.nome = nome;
 		this.disponibilita = disponibilita;
+		this.unitaMisura  = unitaMisura;
 	}
 	
 	public int getIdIngrediente() {	
@@ -39,6 +41,13 @@ public class Ingrediente {
 		this.disponibilita = disponibilita;
 	}
 	
+	public String getUnitaMisura() {
+		return unitaMisura;
+	}
+	
+	public void setUnitaMisura(String unitaMisura) {
+		this.unitaMisura = unitaMisura;
+	}
 	public ArrayList<Quantita> getRicette() {
 		return ricette;
 	}

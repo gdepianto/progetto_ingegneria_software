@@ -18,8 +18,8 @@ public class MapperIngrediente {
 	         System.out.println("Opened database successfully");
 
 	         stmt = c.createStatement();
-	         String sql = "INSERT INTO ingrediente (nome,disponibilita) " +
-	                        "VALUES ('"+ing.getNome()+"',"+ing.getDisponibilita()+");"; 
+	         String sql = "INSERT INTO ingrediente (nome,disponibilita, unitaMisura) " +
+	                        "VALUES ('"+ing.getNome()+"',"+ing.getDisponibilita()+",'"+ing.getUnitaMisura()+"');"; 
 	         stmt.executeUpdate(sql);
 
 	         
