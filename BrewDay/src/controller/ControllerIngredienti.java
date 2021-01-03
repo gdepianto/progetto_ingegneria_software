@@ -1,8 +1,19 @@
 package controller;
 
+import database_layer.MapperIngrediente;
+import model.Ingrediente;
+
 public class ControllerIngredienti {
+	private MapperIngrediente mapperIngrediente;
 	
-	public void aggiungiIngrediente (int id, String nome, float disponibilita) {
+	public ControllerIngredienti () {
+		this.mapperIngrediente = new MapperIngrediente();
+		
+	}
+	
+	public void aggiungiIngrediente (String nome, float disponibilita) {
+		Ingrediente ing = new Ingrediente(nome, disponibilita);
+		mapperIngrediente.insert(ing);
 		
 	}
 	

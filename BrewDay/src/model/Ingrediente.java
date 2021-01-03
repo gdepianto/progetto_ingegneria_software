@@ -9,8 +9,8 @@ public class Ingrediente {
 	private ArrayList<Quantita> ricette = null;
 	
 
-	public Ingrediente (int idIngrediente, String nome, float disponibilita) {
-		this.idIngrediente = idIngrediente;
+	public Ingrediente (String nome, float disponibilita) {
+		this.idIngrediente = -1;
 		this.nome = nome;
 		this.disponibilita = disponibilita;
 	}
