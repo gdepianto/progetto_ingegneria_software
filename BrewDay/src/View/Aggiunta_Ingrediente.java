@@ -5,29 +5,46 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Text;
+
+import controller.ControllerIngredienti;
+
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Spinner;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.events.MouseAdapter;
 import org.eclipse.swt.events.MouseEvent;
 
+import org.eclipse.jface.fieldassist.AutoCompleteField;
+import org.eclipse.jface.fieldassist.ComboContentAdapter;
+
 public class Aggiunta_Ingrediente {
 
 	protected Shell shell;
 	private Text text;
-
+	private ControllerIngredienti controller;
+	
+	public Aggiunta_Ingrediente(ControllerIngredienti c) {
+		controller = c;
+	}
+	
+	public Aggiunta_Ingrediente() {
+		controller = null;
+	}
 	/**
 	 * Launch the application.
 	 * @param args
 	 */
 	public static void main(String[] args) {
 		try {
+			
 			Aggiunta_Ingrediente window = new Aggiunta_Ingrediente();
 			window.open();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
+	
+	
 
 	/**
 	 * Open the window.
@@ -68,10 +85,17 @@ public class Aggiunta_Ingrediente {
 		lblInserireUnitDi.setText("Inserire unit\u00E0 di misura");
 		
 		
+		
+		
 		String [] items = {"litri", "grammi"};
 		Combo combo = new Combo(shell, SWT.NONE);
 		combo.setBounds(10, 127, 91, 23);
 		combo.setItems(items);
+		/*new AutoCompleteField(combo, new ComboContentAdapter(), new String[] {"litri", "grammi"});*/
+		
+		
+		
+		
 		
 		Label lblInserireQuantit = new Label(shell, SWT.NONE);
 		lblInserireQuantit.setBounds(10, 179, 130, 15);
@@ -85,6 +109,7 @@ public class Aggiunta_Ingrediente {
 		btnAggiungi.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseDoubleClick(MouseEvent e) {
+				controller.aggiungiIngrediente(text.getText(), Integer.parseInt(spinner.getText()));
 			}
 		});
 		btnAggiungi.setBounds(295, 198, 75, 25);
