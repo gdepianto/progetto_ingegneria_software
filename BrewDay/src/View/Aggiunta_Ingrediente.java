@@ -109,7 +109,7 @@ public class Aggiunta_Ingrediente {
 		btnAggiungi.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseDoubleClick(MouseEvent e) {
-				controller.aggiungiIngrediente(text.getText(), Integer.parseInt(spinner.getText()));
+				controller.aggiungiIngrediente(text.getText(), Integer.parseInt(spinner.getText()),combo.getText());
 			}
 		});
 		btnAggiungi.setBounds(295, 198, 75, 25);

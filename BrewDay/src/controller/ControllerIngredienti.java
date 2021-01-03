@@ -11,8 +11,8 @@ public class ControllerIngredienti {
 		
 	}
 	
-	public void aggiungiIngrediente (String nome, float disponibilita) {
-		Ingrediente ing = new Ingrediente(nome, disponibilita);
+	public void aggiungiIngrediente (String nome, float disponibilita, String unitaMisura) {
+		Ingrediente ing = new Ingrediente(nome, disponibilita, unitaMisura);
 		mapperIngrediente.insert(ing);
 		
 	}
