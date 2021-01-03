@@ -51,10 +51,13 @@ public class MapperIngrediente {
 		      ResultSet rs = stmt.executeQuery( "SELECT * FROM ingrediente;" );
 		      
 		      while ( rs.next() ) {
+		    	 int id = rs.getInt("id");
 		         String nome = rs.getString("nome");
 		         String unitaMisura = rs.getString("unitaMisura");
 		         float quantita  = rs.getFloat("disponibilita");
-		         listaIngredienti.add(new Ingrediente(nome,quantita,unitaMisura));
+		         Ingrediente ing = new Ingrediente(nome,quantita,unitaMisura);
+		         ing.setIdIngrediente(id);
+		         listaIngredienti.add(ing);
 		         
 		      }
 		      rs.close();
