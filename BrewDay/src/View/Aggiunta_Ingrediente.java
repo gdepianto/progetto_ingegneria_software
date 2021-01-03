@@ -13,7 +13,8 @@ import org.eclipse.swt.widgets.Spinner;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.events.MouseAdapter;
 import org.eclipse.swt.events.MouseEvent;
-
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.jface.fieldassist.AutoCompleteField;
 import org.eclipse.jface.fieldassist.ComboContentAdapter;
 
@@ -106,12 +107,19 @@ public class Aggiunta_Ingrediente {
 		spinner.setMaximum(1000000000);
 		
 		Button btnAggiungi = new Button(shell, SWT.NONE);
-		btnAggiungi.addMouseListener(new MouseAdapter() {
+		btnAggiungi.addSelectionListener(new SelectionAdapter() {
+		    @Override
+		    public void widgetSelected(SelectionEvent e) {
+		    	controller.aggiungiIngrediente(text.getText(), Integer.parseInt(spinner.getText()),combo.getText());
+				
+		    }
+		});
+		/*btnAggiungi.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseDoubleClick(MouseEvent e) {
 				controller.aggiungiIngrediente(text.getText(), Integer.parseInt(spinner.getText()),combo.getText());
 			}
-		});
+		});*/
 		btnAggiungi.setBounds(295, 198, 75, 25);
 		btnAggiungi.setText("Aggiungi");
 
