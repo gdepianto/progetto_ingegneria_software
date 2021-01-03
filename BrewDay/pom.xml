@@ -18,6 +18,11 @@
   </build>
   <dependencies>
   <dependency>
+	  <groupId>org.eclipse</groupId>
+	  <artifactId>jface</artifactId>
+	  <version>3.3.0-I20070606-0010</version>
+	</dependency>
+  <dependency>
 		    <groupId>org.xerial</groupId>
 		    <artifactId>sqlite-jdbc</artifactId>
 		    <version>3.34.0</version>
