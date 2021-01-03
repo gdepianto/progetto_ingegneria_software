@@ -11,7 +11,7 @@ public class BrewDayApplication {
 	      Statement stmt = null;
 	      
 	      try {
-	         Class.forName("org.xerial.sqlite.JDBC");
+	         Class.forName("org.sqlite.JDBC");
 	         c = DriverManager.getConnection("jdbc:sqlite:brewday.db");
 	         System.out.println("Opened database successfully");
 
