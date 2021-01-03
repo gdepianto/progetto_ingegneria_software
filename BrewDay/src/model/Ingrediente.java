@@ -6,9 +6,16 @@ public class Ingrediente {
 	private int idIngrediente;
 	private String nome;
 	private float disponibilita;
-	private ArrayList<Quantita> ricette;
+	private ArrayList<Quantita> ricette = null;
+	
 
-	public int getIdIngrediente() {
+	public Ingrediente (int idIngrediente, String nome, float disponibilita) {
+		this.idIngrediente = idIngrediente;
+		this.nome = nome;
+		this.disponibilita = disponibilita;
+	}
+	
+	public int getIdIngrediente() {	
 		return idIngrediente;
 	}
 	
