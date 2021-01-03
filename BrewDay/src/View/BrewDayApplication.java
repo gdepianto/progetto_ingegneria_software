@@ -12,11 +12,11 @@ public class BrewDayApplication {
 	      
 	      try {
 	         Class.forName("org.sqlite.JDBC");
-	         c = DriverManager.getConnection("jdbc:sqlite:brewday.db");
+	         c = DriverManager.getConnection("jdbc:sqlite:src/brewday.db");
 	         System.out.println("Opened database successfully");
 
 	         stmt = c.createStatement();
-	         String sql = "CREATE TABLE IF NOT EXISTS brewDay.ingrediente" + 
+	         String sql = "CREATE TABLE IF NOT EXISTS ingrediente" + 
 	        		  "(id INT NOT NULL," +
 	        		  "nome VARCHAR(45) NOT NULL, " +
 	        		  "disponibilita FLOAT NOT NULL," +
