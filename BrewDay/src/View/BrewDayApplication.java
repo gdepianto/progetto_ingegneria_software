@@ -3,8 +3,10 @@ package View;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.Statement;
+import java.util.ArrayList;
 
 import controller.ControllerIngredienti;
+import model.Ingrediente;
 
 public class BrewDayApplication {
 
@@ -36,6 +38,14 @@ public class BrewDayApplication {
 	      /*control1.aggiungiIngrediente("cotoletta", 25);*/
 	      Aggiunta_Ingrediente Finestra = new Aggiunta_Ingrediente(control1);
 	      Finestra.open();
+	      
+	      ArrayList<Ingrediente> listaIngredienti = control1.getIngredienti();
+	      
+	      for (Ingrediente i: listaIngredienti) {
+	    	  System.out.println(i);
+	      }
 	}
+	
+	
 
 }
