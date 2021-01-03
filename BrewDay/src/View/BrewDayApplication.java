@@ -32,7 +32,9 @@ public class BrewDayApplication {
 	      System.out.println("Table created successfully");
 	
 	      ControllerIngredienti control1 = new ControllerIngredienti();
-	      control1.aggiungiIngrediente("cotoletta", 25);
+	      /*control1.aggiungiIngrediente("cotoletta", 25);*/
+	      Aggiunta_Ingrediente Finestra = new Aggiunta_Ingrediente(control1);
+	      Finestra.open();
 	}
 
 }
