@@ -193,8 +193,15 @@ public class Visualizzazione_Ingrediente {
 	                }
 	                else
 	                {
-	                     button = new Button((Composite) cell.getViewerRow().getControl(),SWT.NONE);
-	                    button.setText("Modifica");
+	                    button = new Button((Composite) cell.getViewerRow().getControl(),SWT.NONE);
+	                    button.setText("Aggiorna");
+	                    button.addSelectionListener(new SelectionAdapter() {
+	            		    @Override
+	            		    public void widgetSelected(SelectionEvent e) {
+	            		    	Ingrediente p = (Ingrediente)cell.getElement();
+	            		    	controller.aggiornaIngrediente(p.getIdIngrediente(), p.getNome(), p.getDisponibilita(), p.getUnitaMisura());
+	            		    }
+	            		});
 	                    buttons.put(cell.getElement(), button);
 	                }
 	                TableEditor editor = new TableEditor(item.getParent());
