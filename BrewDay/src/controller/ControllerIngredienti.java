@@ -15,8 +15,7 @@ public class ControllerIngredienti {
 	
 	public void aggiungiIngrediente (String nome, float disponibilita, String unitaMisura) {
 		Ingrediente ing = new Ingrediente(nome, disponibilita, unitaMisura);
-		mapperIngrediente.insert(ing);
-		
+		mapperIngrediente.insert(ing);	
 	}
 	
 	public ArrayList<Ingrediente> getIngredienti(){
@@ -24,7 +23,7 @@ public class ControllerIngredienti {
 	}
 	
     public void rimuoviIngrediente (int id) {
-		
+		mapperIngrediente.delete(id);
 	}
     
     public void aggiornaIngrediente (int id, float quantita) {
