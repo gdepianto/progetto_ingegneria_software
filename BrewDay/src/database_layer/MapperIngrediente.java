@@ -70,6 +70,32 @@ public class MapperIngrediente {
 		System.out.println("Operation done successfully");
 		return listaIngredienti;
 	}
+	
+	
+	public void delete (int id) {
+		Connection c = null;
+	    Statement stmt = null;
+	    
+	    try {
+	       Class.forName("org.sqlite.JDBC");
+	       c = DriverManager.getConnection("jdbc:sqlite:brew.db");
+	       c.setAutoCommit(false);
+	       System.out.println("Opened database successfully");
+	
+	       stmt = c.createStatement();
+	       String sql = "DELETE from INGREDIENTE where ID="+id;
+	       stmt.executeUpdate(sql);
+	       c.commit();
+	
+	    stmt.close();
+	    c.close();
+	    } catch ( Exception e ) {
+	       System.err.println( e.getClass().getName() + ": " + e.getMessage() );
+	       System.exit(0);
+	    }
+	    System.out.println("Operation done successfully");
+	 }
+}
 		
 	
-}
+
