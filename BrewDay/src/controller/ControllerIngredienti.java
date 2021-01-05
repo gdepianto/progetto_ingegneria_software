@@ -24,6 +24,8 @@ public class ControllerIngredienti {
 	}
 	
     public void rimuoviIngrediente (int id) {
+    	
+    	
 		
 	}
     

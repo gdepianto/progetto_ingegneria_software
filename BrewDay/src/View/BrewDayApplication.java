@@ -35,17 +35,11 @@ public class BrewDayApplication {
 	      System.out.println("Table created successfully");
 	
 	      ControllerIngredienti control1 = new ControllerIngredienti();
-	      /*control1.aggiungiIngrediente("cotoletta", 25);*/
-	      Aggiunta_Ingrediente Finestra = new Aggiunta_Ingrediente(control1);
-	      Finestra.open();
-	      
-	      ArrayList<Ingrediente> listaIngredienti = control1.getIngredienti();
-	      
-	      for (Ingrediente i: listaIngredienti) {
-	    	  System.out.println(i);
+	      Visualizzazione_Ingrediente finestra = new Visualizzazione_Ingrediente(control1);
+	      finestra.open();
 	      }
 	}
 	
 	
 
-}
+
