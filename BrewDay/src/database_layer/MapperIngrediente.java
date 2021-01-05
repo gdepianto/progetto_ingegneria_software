@@ -95,7 +95,28 @@ public class MapperIngrediente {
 	    }
 	    System.out.println("Operation done successfully");
 	 }
-}
-		
-	
 
+	public void update (int id, String nome, float disponibilita, String unitaMisura) {
+	 Connection c = null;
+	   Statement stmt = null;
+	   
+	   try {
+	      Class.forName("org.sqlite.JDBC");
+	      c = DriverManager.getConnection("jdbc:sqlite:brewday.db");
+	      c.setAutoCommit(false);
+	      System.out.println("Opened database successfully");
+
+	      stmt = c.createStatement();
+	      String sql = "UPDATE INGREDIENTI set nome = "+nome+", disponibilita ="+disponibilita+
+	    		       "unitaMisura ="+ unitaMisura+" where ID ="+id;
+	      stmt.executeUpdate(sql);
+	      c.commit();
+	   
+	      stmt.close();
+	      c.close();
+   }  catch ( Exception e ) {
+	      System.err.println( e.getClass().getName() + ": " + e.getMessage() );
+	      System.exit(0);
+   }	
+  }
+}
