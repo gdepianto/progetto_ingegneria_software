@@ -26,7 +26,8 @@ public class ControllerIngredienti {
 		mapperIngrediente.delete(id);
 	}
     
-    public void aggiornaIngrediente (int id, float quantita) {
-		
+    public void aggiornaIngrediente (int id,String nome, float quantita,String unitaMisura) {
+		Ingrediente updatedIng = new Ingrediente(nome,quantita,unitaMisura);
+		updatedIng.setIdIngrediente(id);
 	}
 }
