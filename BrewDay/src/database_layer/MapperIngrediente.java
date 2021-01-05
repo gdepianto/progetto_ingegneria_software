@@ -73,7 +73,6 @@ public class MapperIngrediente {
 	
 	
 	public void delete (int id) {
-
 		Connection c = null;
 	    Statement stmt = null;
 	    
@@ -97,9 +96,6 @@ public class MapperIngrediente {
 	    System.out.println("Operation done successfully");
 	 }
 
-		
-
-	
 	public void update (int id, String nome, float disponibilita, String unitaMisura) {
 	 Connection c = null;
 	   Statement stmt = null;
