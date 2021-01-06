@@ -11,7 +11,7 @@ public class ControllerRicetta {
 	}
 	
 	public void aggiungiRicetta (int id, String nome, String descrizione, int tempoPreparazione) {
-		Ricetta ricetta = new Ricetta(id, nome, descrizione, tempoPreparazione);
+		Ricetta ricetta = new Ricetta(nome, descrizione, tempoPreparazione);
 		mapperRicetta.insert(ricetta);
 	}
 	
