@@ -32,7 +32,8 @@ public class Visualizzazione_Ingrediente {
 	protected Shell shell;
 	private Table table;
 	private ControllerIngredienti controller;
-		
+	private TableViewer viewer;
+	
 	public Visualizzazione_Ingrediente(ControllerIngredienti c) {
 		controller = c;
 	}
@@ -52,6 +53,14 @@ public class Visualizzazione_Ingrediente {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+	
+	
+	
+	public void updateTableViewer()
+	{
+	    if(viewer != null)
+	        viewer.refresh();
 	}
 
 	/**
@@ -80,7 +89,7 @@ public class Visualizzazione_Ingrediente {
 	    
 		shell.setLayout(null);
 
-	        TableViewer viewer = new TableViewer(shell);
+	        viewer = new TableViewer(shell);
 	        Table table_1 = viewer.getTable();
 	        table_1.setBounds(0, 0, 503, 261);
 	        viewer.getTable().setHeaderVisible(true);
@@ -168,15 +177,19 @@ public class Visualizzazione_Ingrediente {
 	            		    	System.out.println(""+button.toString());
 	            		    	controller.rimuoviIngrediente(p.getIdIngrediente() );
 	            		    	listaIngredienti.remove(p);
-	            		    	//viewer.setInput(listaIngredienti);
-	            		    	/*Display.getDefault().asyncExec(new Runnable() {
+	            		    	//buttons.remove(p);
+	            		    	viewer.setInput(listaIngredienti);
+	            		    	Display.getDefault().asyncExec(new Runnable() {
 	                                @Override
 	                                public void run() {
 	                                	for(Ingrediente i : listaIngredienti)
 	                                		System.out.println(i);
-	                                    viewer.refresh();
+	                                	
+	                                	
+	                                	updateTableViewer();
+	                                	
 	                                }
-	                            });*/
+	                            });
 	            		    }
 	            		});
 	                    buttons.put(cell.getElement(), button);
