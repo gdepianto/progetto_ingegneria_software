@@ -204,11 +204,13 @@ public class Visualizzazione_Ingrediente {
 	                {
 	                    button = new Button((Composite) cell.getViewerRow().getControl(),SWT.NONE);
 	                    button.setText("Aggiorna");
+	                    Ingrediente p = (Ingrediente)cell.getElement();
 	                    button.addSelectionListener(new SelectionAdapter() {
 	            		    @Override
 	            		    public void widgetSelected(SelectionEvent e) {
-	            		    	Ingrediente p = (Ingrediente)cell.getElement();
-	            		    	controller.aggiornaIngrediente(p.getIdIngrediente(), p.getNome(), p.getDisponibilita(), p.getUnitaMisura());
+	            		    	
+	            		    	Modifica_Ingrediente FinestraModifica = new Modifica_Ingrediente(controller, p);
+	            		    	FinestraModifica.open();
 	            		    }
 	            		});
 	                    buttons.put(cell.getElement(), button);
