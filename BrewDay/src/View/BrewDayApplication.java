@@ -17,9 +17,10 @@ public class BrewDayApplication {
 	  	      
 	      try {
 	         Class.forName("org.sqlite.JDBC");
-	         c = DriverManager.getConnection("jdbc:sqlite:brewday.db");
+	         c = DriverManager.getConnection("jdbc:sqlite:brewday.db","",
+	                 "apassword");
 	         System.out.println("Opened database successfully");
-
+	         
 	         stmt = c.createStatement();
 	         String sql = "CREATE TABLE IF NOT EXISTS ingrediente" + 
 	        		  "(id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL," +
@@ -37,7 +38,8 @@ public class BrewDayApplication {
 	      
 	      try {
 		        Class.forName("org.sqlite.JDBC");
-		        c = DriverManager.getConnection("jdbc:sqlite:brewday.db");
+		        c = DriverManager.getConnection("jdbc:sqlite:brewday.db","",
+		                 "apassword");
 		        System.out.println("Opened database successfully");
 		
 		        stmt = c.createStatement();

@@ -15,7 +15,8 @@ public class MapperIngrediente {
 	      
 	      try {
 	         Class.forName("org.sqlite.JDBC");
-	         c = DriverManager.getConnection("jdbc:sqlite:brewday.db");
+	         c = DriverManager.getConnection("jdbc:sqlite:brewday.db","",
+	                 "apassword");
 	         c.setAutoCommit(false);
 	         System.out.println("Opened database successfully");
 
@@ -43,7 +44,8 @@ public class MapperIngrediente {
 		ArrayList<Ingrediente> listaIngredienti = new ArrayList<Ingrediente>();
 		try {
 		      Class.forName("org.sqlite.JDBC");
-		      c = DriverManager.getConnection("jdbc:sqlite:brewday.db");
+		      c = DriverManager.getConnection("jdbc:sqlite:brewday.db","",
+		                 "apassword");
 		      c.setAutoCommit(false);
 		      System.out.println("Opened database successfully");
 
@@ -78,7 +80,8 @@ public class MapperIngrediente {
 	    
 	    try {
 	       Class.forName("org.sqlite.JDBC");
-	       c = DriverManager.getConnection("jdbc:sqlite:brewday.db");
+	       c = DriverManager.getConnection("jdbc:sqlite:brewday.db","",
+	                 "apassword");
 	       c.setAutoCommit(false);
 	       System.out.println("Opened database successfully");
 	
@@ -102,7 +105,8 @@ public class MapperIngrediente {
 	   
 	   try {
 	      Class.forName("org.sqlite.JDBC");
-	      c = DriverManager.getConnection("jdbc:sqlite:brewday.db");
+	      c = DriverManager.getConnection("jdbc:sqlite:brewday.db","",
+	                 "apassword");
 	      c.setAutoCommit(false);
 	      System.out.println("Opened database successfully");
 
