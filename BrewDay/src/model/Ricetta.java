@@ -9,6 +9,13 @@ public class Ricetta {
 	private int tempoPreparazione;
 	private ArrayList<Quantita> ingredienti;
 
+	public Ricetta(String nome, String descrizione, int tempoPreparazione) {
+		this.idRicetta = -1;
+		this.nome = nome;
+		this.descrizione = descrizione;
+		this.tempoPreparazione = tempoPreparazione;
+	}
+	
 	public int getIdRicetta() {
 		return idRicetta;
 	}
