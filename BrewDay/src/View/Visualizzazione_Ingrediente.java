@@ -168,6 +168,7 @@ public class Visualizzazione_Ingrediente {
 	            		    	System.out.println(""+button.toString());
 	            		    	controller.rimuoviIngrediente(p.getIdIngrediente() );
 	            		    	listaIngredienti.remove(p);
+	            		   
 	            		    	//viewer.setInput(listaIngredienti);
 	            		    	/*Display.getDefault().asyncExec(new Runnable() {
 	                                @Override
