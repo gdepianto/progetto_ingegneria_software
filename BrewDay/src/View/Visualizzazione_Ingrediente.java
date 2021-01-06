@@ -27,19 +27,22 @@ import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.viewers.TableViewerColumn;
 import org.eclipse.jface.viewers.ViewerCell;
 
-public class Visualizzazione_Ingrediente {
+public class Visualizzazione_Ingrediente implements GenericObserver {
 
 	protected Shell shell;
 	private Table table;
 	private ControllerIngredienti controller;
 	private TableViewer viewer;
+	private Visualizzazione_Ingrediente instance;
 	
 	public Visualizzazione_Ingrediente(ControllerIngredienti c) {
 		controller = c;
+		instance = this;
 	}
 	
 	public Visualizzazione_Ingrediente() {
 		controller = null;
+		instance = this;
 	}
 	
 	/**
@@ -234,6 +237,7 @@ public class Visualizzazione_Ingrediente {
 
 	            		    	
 	            		    	Modifica_Ingrediente FinestraModifica = new Modifica_Ingrediente(controller, p);
+	            		    	FinestraModifica.addObserver(instance);
 	            		    	FinestraModifica.open();
 
 	            		    }
@@ -258,5 +262,11 @@ public class Visualizzazione_Ingrediente {
 		
 		
 
+	}
+
+	@Override
+	public void update() {
+		// TODO Auto-generated method stub
+		
 	}
 }

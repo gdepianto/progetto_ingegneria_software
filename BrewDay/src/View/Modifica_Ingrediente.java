@@ -24,6 +24,7 @@ public class Modifica_Ingrediente {
 	private ControllerIngredienti controller;
 	private Text text;
 	private Ingrediente i;
+	private GenericObserver observer;
 	
 	public Modifica_Ingrediente(ControllerIngredienti c, Ingrediente ing) {
 		controller = c;
@@ -38,6 +39,11 @@ public class Modifica_Ingrediente {
 	 * Launch the application.
 	 * @param args
 	 */
+	
+	public void addObserver(GenericObserver obs) {
+		observer = obs;
+	}
+	
 	public static void main(String[] args) {
 		try {
 			Modifica_Ingrediente window = new Modifica_Ingrediente();
@@ -108,7 +114,7 @@ public class Modifica_Ingrediente {
 		    @Override
 		    public void widgetSelected(SelectionEvent e) {
 		    	controller.aggiornaIngrediente(i.getIdIngrediente(), text.getText(), Integer.parseInt(spinner.getText()),combo.getText());
-				
+				observer.update();
 		    }
 		});
 		
