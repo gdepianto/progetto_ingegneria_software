@@ -78,12 +78,12 @@ public class MapperIngrediente {
 	    
 	    try {
 	       Class.forName("org.sqlite.JDBC");
-	       c = DriverManager.getConnection("jdbc:sqlite:brew.db");
+	       c = DriverManager.getConnection("jdbc:sqlite:brewday.db");
 	       c.setAutoCommit(false);
 	       System.out.println("Opened database successfully");
 	
 	       stmt = c.createStatement();
-	       String sql = "DELETE from INGREDIENTE where ID="+id;
+	       String sql = "DELETE FROM ingrediente WHERE ID="+id;
 	       stmt.executeUpdate(sql);
 	       c.commit();
 	

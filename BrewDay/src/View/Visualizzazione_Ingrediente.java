@@ -77,7 +77,10 @@ public class Visualizzazione_Ingrediente {
 		shell.setSize(625, 293);
 		shell.setText("SWT Application");
 		ArrayList<Ingrediente> ListaIngredienti = controller.getIngredienti();
-	        shell.setLayout(null);
+	    for (Ingrediente i: ListaIngredienti ) {
+	    	System.out.println(i.toString());
+	    }
+		shell.setLayout(null);
 
 	        TableViewer viewer = new TableViewer(shell);
 	        Table table_1 = viewer.getTable();
@@ -154,11 +157,17 @@ public class Visualizzazione_Ingrediente {
 	                else
 	                {
 	                    button = new Button((Composite) cell.getViewerRow().getControl(),SWT.NONE);
-	                    button.setText("Remove");
+	                    button.setText("Remove"+((Ingrediente)cell.getElement()).getNome());
+	                    Ingrediente p = (Ingrediente)cell.getElement();
 	                    button.addSelectionListener(new SelectionAdapter() {
 	            		    @Override
 	            		    public void widgetSelected(SelectionEvent e) {
-	            		    	Ingrediente p = (Ingrediente)cell.getElement();
+	            		    	
+	            		    	
+	            		    	/**/
+	            		    	
+	            		    	
+	            		    	System.out.println(""+button.toString());
 	            		    	controller.rimuoviIngrediente(p.getIdIngrediente() );
 	            		    }
 	            		});
