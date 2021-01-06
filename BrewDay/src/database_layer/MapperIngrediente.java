@@ -107,8 +107,8 @@ public class MapperIngrediente {
 	      System.out.println("Opened database successfully");
 
 	      stmt = c.createStatement();
-	      String sql = "UPDATE INGREDIENTI set nome = "+nome+", disponibilita ="+disponibilita+
-	    		       "unitaMisura ="+ unitaMisura+" where ID ="+id;
+	      String sql = "UPDATE INGREDIENTE set nome = '"+nome+"', disponibilita ="+disponibilita+
+	    		       ", unitaMisura ='"+ unitaMisura+"' where ID ="+id;
 	      stmt.executeUpdate(sql);
 	      c.commit();
 	   
