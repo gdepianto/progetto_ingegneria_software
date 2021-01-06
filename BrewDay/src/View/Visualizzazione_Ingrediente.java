@@ -76,10 +76,8 @@ public class Visualizzazione_Ingrediente {
 		shell = new Shell();
 		shell.setSize(625, 293);
 		shell.setText("SWT Application");
-		ArrayList<Ingrediente> ListaIngredienti = controller.getIngredienti();
-	    for (Ingrediente i: ListaIngredienti ) {
-	    	System.out.println(i.toString());
-	    }
+		ArrayList<Ingrediente> listaIngredienti = controller.getIngredienti();
+	    
 		shell.setLayout(null);
 
 	        TableViewer viewer = new TableViewer(shell);
@@ -105,7 +103,7 @@ public class Visualizzazione_Ingrediente {
 	        });
 
 	        column = new TableColumn(viewer.getTable(), SWT.NONE);
-	        column.setText("Disponibilità");
+	        column.setText("Disponibilitï¿½");
 	        column.setWidth(100);
 	        TableViewerColumn lastNameCol = new TableViewerColumn(viewer, column);
 	        lastNameCol.setLabelProvider(new ColumnLabelProvider(){
@@ -120,7 +118,7 @@ public class Visualizzazione_Ingrediente {
 	        });
 
 	        column = new TableColumn(viewer.getTable(), SWT.NONE);
-	        column.setText("Unità Misura");
+	        column.setText("Unitï¿½ Misura");
 	        column.setWidth(100);
 	        TableViewerColumn unitNameCol = new TableViewerColumn(viewer, column);
 	        unitNameCol.setLabelProvider(new ColumnLabelProvider(){
@@ -157,7 +155,7 @@ public class Visualizzazione_Ingrediente {
 	                else
 	                {
 	                    button = new Button((Composite) cell.getViewerRow().getControl(),SWT.NONE);
-	                    button.setText("Remove"+((Ingrediente)cell.getElement()).getNome());
+	                    button.setText("Remove");
 	                    Ingrediente p = (Ingrediente)cell.getElement();
 	                    button.addSelectionListener(new SelectionAdapter() {
 	            		    @Override
@@ -169,6 +167,16 @@ public class Visualizzazione_Ingrediente {
 	            		    	
 	            		    	System.out.println(""+button.toString());
 	            		    	controller.rimuoviIngrediente(p.getIdIngrediente() );
+	            		    	listaIngredienti.remove(p);
+	            		    	//viewer.setInput(listaIngredienti);
+	            		    	/*Display.getDefault().asyncExec(new Runnable() {
+	                                @Override
+	                                public void run() {
+	                                	for(Ingrediente i : listaIngredienti)
+	                                		System.out.println(i);
+	                                    viewer.refresh();
+	                                }
+	                            });*/
 	            		    }
 	            		});
 	                    buttons.put(cell.getElement(), button);
@@ -208,7 +216,8 @@ public class Visualizzazione_Ingrediente {
 	            		    @Override
 	            		    public void widgetSelected(SelectionEvent e) {
 	            		    	Ingrediente p = (Ingrediente)cell.getElement();
-	            		    	controller.aggiornaIngrediente(p.getIdIngrediente(), p.getNome(), p.getDisponibilita(), p.getUnitaMisura());
+	            		    	//controller.aggiornaIngrediente(p.getIdIngrediente(), p.getNome(), p.getDisponibilita(), p.getUnitaMisura());
+	            		    	viewer.refresh();
 	            		    }
 	            		});
 	                    buttons.put(cell.getElement(), button);
@@ -224,7 +233,7 @@ public class Visualizzazione_Ingrediente {
 	        
 	        
 
-		viewer.setInput(ListaIngredienti);
+		viewer.setInput(listaIngredienti);
 		
 		
 		

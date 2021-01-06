@@ -37,6 +37,8 @@ public class BrewDayApplication {
 	      ControllerIngredienti control1 = new ControllerIngredienti();
 	      Visualizzazione_Ingrediente finestra = new Visualizzazione_Ingrediente(control1);
 	      finestra.open();
+	      Aggiunta_Ingrediente finestraAgg = new Aggiunta_Ingrediente(control1);
+	      finestraAgg.open();
 	      }
 	}
 	
