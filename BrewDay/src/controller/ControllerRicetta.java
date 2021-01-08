@@ -10,7 +10,7 @@ public class ControllerRicetta {
 		this.mapperRicetta = new MapperRicetta();
 	}
 	
-	public void aggiungiRicetta (int id, String nome, String descrizione, int tempoPreparazione) {
+	public void aggiungiRicetta (String nome, String descrizione, int tempoPreparazione) {
 		Ricetta ricetta = new Ricetta(nome, descrizione, tempoPreparazione);
 		mapperRicetta.insert(ricetta);
 	}
