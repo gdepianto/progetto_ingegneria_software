@@ -1,5 +1,6 @@
 package View;
 
+import java.io.File;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.Statement;
@@ -7,18 +8,37 @@ import java.util.ArrayList;
 
 import controller.ControllerIngredienti;
 import controller.ControllerRicetta;
+import controller.SecurityController;
 import model.Ingrediente;
 
 public class BrewDayApplication {
-
+	public static String password;
+	
+	
 	public static void main(String[] args) {
+		
+	      SecurityController securityController = new SecurityController();
+	      File f = new File("security.bd");
+	      if(!f.exists() && !f.isDirectory()) { 
+	          CreaPassword finestraCreaPassword = new CreaPassword(securityController);
+	          finestraCreaPassword.open();
+	      }
+	      else {
+	    	  Accedi finestraAccedi = new Accedi(securityController);
+	    	  finestraAccedi.open();
+	      }
+	  	      
+	     
+	  }	
+	
+	public static void setPassword(String pass) {
+		password = pass;
 		Connection c = null;
 	      Statement stmt = null;
-	  	      
-	      try {
+		 try {
 	         Class.forName("org.sqlite.JDBC");
 	         c = DriverManager.getConnection("jdbc:sqlite:brewday.db","",
-	                 "apassword");
+	                 BrewDayApplication.password);
 	         System.out.println("Opened database successfully");
 	         
 	         stmt = c.createStatement();
@@ -39,7 +59,7 @@ public class BrewDayApplication {
 	      try {
 		        Class.forName("org.sqlite.JDBC");
 		        c = DriverManager.getConnection("jdbc:sqlite:brewday.db","",
-		                 "apassword");
+		                 BrewDayApplication.password);
 		        System.out.println("Opened database successfully");
 		
 		        stmt = c.createStatement();
@@ -62,7 +82,7 @@ public class BrewDayApplication {
 		      finestra.open();
 		      Aggiunta_Ingrediente finestraAgg = new Aggiunta_Ingrediente(control1);
 		      finestraAgg.open();
-	  }	
+	}
 }
 		
 	

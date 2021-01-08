@@ -2,32 +2,39 @@ package database_layer;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
 
+import View.BrewDayApplication;
 import model.Ingrediente;
 
 public class MapperIngrediente {
 	public void insert(Ingrediente ing) {
 		  Connection c = null;
-	      Statement stmt = null;
 	      
 	      try {
 	         Class.forName("org.sqlite.JDBC");
 	         c = DriverManager.getConnection("jdbc:sqlite:brewday.db","",
-	                 "apassword");
+	                 BrewDayApplication.password);
 	         c.setAutoCommit(false);
 	         System.out.println("Opened database successfully");
-
-	         stmt = c.createStatement();
+	         
 	         String sql = "INSERT INTO ingrediente (nome,disponibilita, unitaMisura) " +
-	                        "VALUES ('"+ing.getNome()+"',"+ing.getDisponibilita()+",'"+ing.getUnitaMisura()+"');"; 
-	         stmt.executeUpdate(sql);
-
+                     "VALUES (?,?,?);"; 
+	         PreparedStatement pstmt = c.prepareStatement( sql );
+	         pstmt.setString(1, ing.getNome());
+	         pstmt.setFloat(2, ing.getDisponibilita());
+	         pstmt.setString(3,ing.getUnitaMisura());
+	         
+	         
+	    
+	         pstmt.executeUpdate();
 	         
 
-	         stmt.close();
+	     
+	         pstmt.close();
 	         c.commit();
 	         c.close();
 	      } catch ( Exception e ) {
@@ -45,7 +52,7 @@ public class MapperIngrediente {
 		try {
 		      Class.forName("org.sqlite.JDBC");
 		      c = DriverManager.getConnection("jdbc:sqlite:brewday.db","",
-		                 "apassword");
+		    		  BrewDayApplication.password);
 		      c.setAutoCommit(false);
 		      System.out.println("Opened database successfully");
 
@@ -76,22 +83,28 @@ public class MapperIngrediente {
 	
 	public void delete (int id) {
 		Connection c = null;
-	    Statement stmt = null;
 	    
 	    try {
 	       Class.forName("org.sqlite.JDBC");
 	       c = DriverManager.getConnection("jdbc:sqlite:brewday.db","",
-	                 "apassword");
+	    		   BrewDayApplication.password);
 	       c.setAutoCommit(false);
+	       String sql = "DELETE FROM ingrediente WHERE ID=?";
 	       System.out.println("Opened database successfully");
-	
-	       stmt = c.createStatement();
-	       String sql = "DELETE FROM ingrediente WHERE ID="+id;
-	       stmt.executeUpdate(sql);
+	       PreparedStatement pstmt = c.prepareStatement( sql );
+	       pstmt.setInt(1, id);
+	         
+	         
+	    
+	       pstmt.executeUpdate();
+	         
+
+	     
+	       pstmt.close();
 	       c.commit();
 	
-	    stmt.close();
-	    c.close();
+	       
+	       c.close();
 	    } catch ( Exception e ) {
 	       System.err.println( e.getClass().getName() + ": " + e.getMessage() );
 	       System.exit(0);
@@ -101,22 +114,31 @@ public class MapperIngrediente {
 
 	public void update (int id, String nome, float disponibilita, String unitaMisura) {
 	 Connection c = null;
-	   Statement stmt = null;
 	   
 	   try {
 	      Class.forName("org.sqlite.JDBC");
 	      c = DriverManager.getConnection("jdbc:sqlite:brewday.db","",
-	                 "apassword");
+	    		  BrewDayApplication.password);
 	      c.setAutoCommit(false);
 	      System.out.println("Opened database successfully");
+	      String sql = "UPDATE INGREDIENTE set nome = ?, disponibilita =?, unitaMisura=? where ID =?";
+	      PreparedStatement pstmt = c.prepareStatement( sql );
+	      pstmt.setString(1, nome);
+	      pstmt.setFloat(2,disponibilita);
+	      pstmt.setString(3, unitaMisura);
+	      pstmt.setInt(4, id);
+	         
+	         
+	    
+	      pstmt.executeUpdate();
+	         
 
-	      stmt = c.createStatement();
-	      String sql = "UPDATE INGREDIENTE set nome = '"+nome+"', disponibilita ="+disponibilita+
-	    		       ", unitaMisura ='"+ unitaMisura+"' where ID ="+id;
-	      stmt.executeUpdate(sql);
+	     
+	      pstmt.close();
+	      
+	      
 	      c.commit();
 	   
-	      stmt.close();
 	      c.close();
    }  catch ( Exception e ) {
 	      System.err.println( e.getClass().getName() + ": " + e.getMessage() );

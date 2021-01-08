@@ -2,30 +2,42 @@ package database_layer;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
 
+import View.BrewDayApplication;
 import model.Ricetta;
 
 public class MapperRicetta {
 	
 	public void insert(Ricetta ricetta) {
 		  Connection c = null;
-	      Statement stmt = null;
 	      
 	      try {
 	         Class.forName("org.sqlite.JDBC");
-	         c = DriverManager.getConnection("jdbc:sqlite:brewday.db");
+	         c = DriverManager.getConnection("jdbc:sqlite:brewday.db","",
+		    		  BrewDayApplication.password);
 	         c.setAutoCommit(false);
 	         System.out.println("Opened database successfully");
-
-	         stmt = c.createStatement();
 	         String sql = "INSERT INTO ricetta (nome, descrizione, tempo_preparazione) " +
-	                        "VALUES ('"+ricetta.getNome()+"','"+ricetta.getDescrizione()+"',"+ricetta.getTempoPreparazione()+");"; 
-	         stmt.executeUpdate(sql);
+                     "VALUES (?,?,?);"; 
+	         PreparedStatement pstmt = c.prepareStatement( sql );
+		     pstmt.setString(1, ricetta.getNome());
+		     pstmt.setString(2,ricetta.getDescrizione());
+		     pstmt.setInt(3, ricetta.getTempoPreparazione());
+		     
+		         
+		         
+		    
+		     pstmt.executeUpdate();
+		         
 
-	         stmt.close();
+		     
+		     pstmt.close();
+
+	         
 	         c.commit();
 	         c.close();
 	      } catch ( Exception e ) {
@@ -38,20 +50,31 @@ public class MapperRicetta {
 	
 	public void delete (int id) {
 		Connection c = null;
-	    Statement stmt = null;
 	    
 	    try {
 	       Class.forName("org.sqlite.JDBC");
-	       c = DriverManager.getConnection("jdbc:sqlite:brewday.db");
+	       c = DriverManager.getConnection("jdbc:sqlite:brewday.db","",
+		    		  BrewDayApplication.password);
 	       c.setAutoCommit(false);
+	       String sql = "DELETE FROM ricetta WHERE ID=?";
 	       System.out.println("Opened database successfully");
+	       PreparedStatement pstmt = c.prepareStatement( sql );
+		
+		   pstmt.setInt(1, id);
+		     
+		         
+		         
+		    
+		   pstmt.executeUpdate();
+		         
+
+		     
+		   pstmt.close();
 	
-	       stmt = c.createStatement();
-	       String sql = "DELETE FROM ricetta WHERE ID="+id;
-	       stmt.executeUpdate(sql);
+	      
 	       c.commit();
 	
-	    stmt.close();
+	
 	    c.close();
 	    } catch ( Exception e ) {
 	       System.err.println( e.getClass().getName() + ": " + e.getMessage() );
@@ -62,21 +85,34 @@ public class MapperRicetta {
 	
 	public void update (int id, String nome, String descrizione, int tempoPreparazione) {
 		 Connection c = null;
-		   Statement stmt = null;
 		   
 		   try {
 		      Class.forName("org.sqlite.JDBC");
-		      c = DriverManager.getConnection("jdbc:sqlite:brewday.db");
+		      c = DriverManager.getConnection("jdbc:sqlite:brewday.db","",
+		    		  BrewDayApplication.password);
 		      c.setAutoCommit(false);
 		      System.out.println("Opened database successfully");
+		      String sql = "UPDATE ricetta set nome = ?, descrizione = ?"+
+	    		       ", tempoPreparazione = ? where ID =?";
+		      PreparedStatement pstmt = c.prepareStatement( sql );
+			  pstmt.setString(1, nome);
+			  pstmt.setString(2,descrizione);
+			  pstmt.setInt(3, tempoPreparazione);
+			  pstmt.setInt(4, id);
+			     
+			         
+			         
+			    
+			  pstmt.executeUpdate();
+			         
 
-		      stmt = c.createStatement();
-		      String sql = "UPDATE ricetta set nome = '"+nome+"', descrizione = '"+descrizione+
-		    		       "', tempoPreparazione = "+tempoPreparazione+" where ID ="+id;
-		      stmt.executeUpdate(sql);
+			     
+			  pstmt.close();
+		      
+		      
+		     
 		      c.commit();
 		   
-		      stmt.close();
 		      c.close();
 	   }  catch ( Exception e ) {
 		      System.err.println( e.getClass().getName() + ": " + e.getMessage() );
@@ -90,7 +126,8 @@ public class MapperRicetta {
 		ArrayList<Ricetta> listaRicette = new ArrayList<Ricetta>();
 		try {
 		      Class.forName("org.sqlite.JDBC");
-		      c = DriverManager.getConnection("jdbc:sqlite:brewday.db");
+		      c = DriverManager.getConnection("jdbc:sqlite:brewday.db","",
+		    		  BrewDayApplication.password);
 		      c.setAutoCommit(false);
 		      System.out.println("Opened database successfully");
 
