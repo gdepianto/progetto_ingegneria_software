@@ -27,7 +27,7 @@ public class MapperIngrediente {
 	         ResultSet rs = checkStatement.executeQuery();
 	         rs.next();
 	         count = rs.getInt(1);
-	         
+	         checkStatement.close();
 	         if(count == 0) {
 		         String sql = "INSERT INTO ingrediente (nome,disponibilita, unitaMisura) " +
 	                     "VALUES (?,?,?);"; 
