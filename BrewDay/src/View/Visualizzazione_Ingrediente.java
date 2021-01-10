@@ -164,7 +164,7 @@ public class Visualizzazione_Ingrediente implements GenericObserver {
 
         column = new TableColumn(viewer.getTable(), SWT.NONE);
         column.setText("");
-        column.setWidth(100);
+        column.setWidth(150);
         TableViewerColumn actionsNameCol = new TableViewerColumn(viewer, column);
         
         actionsNameCol.setLabelProvider(new ColumnLabelProvider(){
