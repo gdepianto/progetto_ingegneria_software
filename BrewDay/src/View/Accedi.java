@@ -8,6 +8,7 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Text;
 
 import controller.SecurityController;
+import model.Ingrediente;
 
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -83,7 +84,19 @@ public class Accedi {
 				
 				if(controller.verifyPassword(text.getText())) {
 					MessageDialog.openWarning(Display.getDefault().getActiveShell(), "Password Corretta", "Verrà avviata l'applicazione");
-					BrewDayApplication.setPassword(text.getText());
+					
+					Display.getDefault().asyncExec(new Runnable() {
+				     	
+	                        @Override
+	                        public void run() {
+	                        	
+	                        	
+	                        	shell.close();
+	                        	
+	                        }
+	                    });
+					BrewDayApplication.startApplication(text.getText());
+					
 					
 				}
 				else {

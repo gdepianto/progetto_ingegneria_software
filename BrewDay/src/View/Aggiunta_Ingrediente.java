@@ -23,9 +23,19 @@ public class Aggiunta_Ingrediente {
 	protected Shell shell;
 	private Text text;
 	private ControllerIngredienti controller;
+	private Shell modalWindow;
+	public GenericObserver observer;
 	
-	public Aggiunta_Ingrediente(ControllerIngredienti c) {
+	public Aggiunta_Ingrediente(ControllerIngredienti c,GenericObserver observer) {
 		controller = c;
+		modalWindow = null;
+		this.observer = observer;
+	}
+	
+	public Aggiunta_Ingrediente(ControllerIngredienti c,GenericObserver observer,Shell modalWindow) {
+		controller = c;
+		this.modalWindow = modalWindow;
+		this.observer = observer;
 	}
 	
 	public Aggiunta_Ingrediente() {
@@ -66,7 +76,10 @@ public class Aggiunta_Ingrediente {
 	 * Create contents of the window.
 	 */
 	protected void createContents() {
-		shell = new Shell();
+		if(shell == null)
+			shell = new Shell();
+		else
+			shell = new Shell(modalWindow,SWT.PRIMARY_MODAL);
 		shell.setSize(450, 300);
 		shell.setText("SWT Application");
 		
@@ -111,7 +124,7 @@ public class Aggiunta_Ingrediente {
 		    @Override
 		    public void widgetSelected(SelectionEvent e) {
 		    	controller.aggiungiIngrediente(text.getText(), Integer.parseInt(spinner.getText()),combo.getText());
-				
+				observer.update();
 		    }
 		});
 		/*btnAggiungi.addMouseListener(new MouseAdapter() {

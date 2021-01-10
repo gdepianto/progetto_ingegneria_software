@@ -72,7 +72,7 @@ public class Visualizzazione_Ingrediente implements GenericObserver {
 	 */
 	public void open() {
 		Display display = Display.getDefault();
-		createContents();
+		createContents(new Shell());
 		shell.open();
 		shell.layout();
 		while (!shell.isDisposed()) {
@@ -85,9 +85,10 @@ public class Visualizzazione_Ingrediente implements GenericObserver {
 	/**
 	 * Create contents of the window.
 	 */
-	protected void createContents() {
-		shell = new Shell();
-		shell.setSize(625, 293);
+	protected void createContents(Shell s) {
+		shell = s;
+	
+		shell.setSize(721, 293);
 		shell.setText("SWT Application");
 		ArrayList<Ingrediente> listaIngredienti = controller.getIngredienti();
 		
@@ -225,11 +226,22 @@ public class Visualizzazione_Ingrediente implements GenericObserver {
             }
 
         });
+        
+        Button btnNewButton = new Button(shell, SWT.NONE);
+        btnNewButton.addSelectionListener(new SelectionAdapter() {
+        	@Override
+        	public void widgetSelected(SelectionEvent e) {
+        		Aggiunta_Ingrediente finestraAggiungiIngrediente = new Aggiunta_Ingrediente(controller,instance,shell);
+        		finestraAggiungiIngrediente.open();
+        	}
+        });
+        btnNewButton.setBounds(520, 34, 153, 28);
+        btnNewButton.setText("Aggiungi Ingrediente");
 
         
         
 
-	viewer.setInput(listaIngredienti);
+        viewer.setInput(listaIngredienti);
 	
 		
 		
@@ -237,12 +249,15 @@ public class Visualizzazione_Ingrediente implements GenericObserver {
 		
 
 	}
+	
+	
 
 	@Override
 	public void update() {
-		// TODO Auto-generated method stub
+		
+		createContents(shell);
+		//shell.open();
+		shell.layout();
 		
 	}
-
-	
 }

@@ -6,6 +6,8 @@ import java.sql.DriverManager;
 import java.sql.Statement;
 import java.util.ArrayList;
 
+import org.eclipse.swt.widgets.Shell;
+
 import controller.ControllerIngredienti;
 import controller.ControllerRicetta;
 import controller.SecurityController;
@@ -31,10 +33,10 @@ public class BrewDayApplication {
 	     
 	  }	
 	
-	public static void setPassword(String pass) {
-		password = pass;
-		Connection c = null;
-	      Statement stmt = null;
+	public static void initialize(String pass) {
+		 password = pass;
+		 Connection c = null;
+	     Statement stmt = null;
 		 try {
 	         Class.forName("org.sqlite.JDBC");
 	         c = DriverManager.getConnection("jdbc:sqlite:brewday.db","",
@@ -76,13 +78,20 @@ public class BrewDayApplication {
 		        System.exit(0);
 		     }
 		     System.out.println("Table created successfully");
-		     
-		      ControllerIngredienti control1 = new ControllerIngredienti();
-		      Visualizzazione_Ingrediente finestra = new Visualizzazione_Ingrediente(control1);
-		      finestra.open();
-		      Aggiunta_Ingrediente finestraAgg = new Aggiunta_Ingrediente(control1);
-		      finestraAgg.open();
+		     startApplication(pass);
 	}
+	
+	public static void startApplication(String pass) {
+		password = pass;
+		
+		     
+		ControllerIngredienti control1 = new ControllerIngredienti();
+		Visualizzazione_Ingrediente finestra = new Visualizzazione_Ingrediente(control1);
+		finestra.open();
+		
+	}
+	
+	
 }
 		
 	

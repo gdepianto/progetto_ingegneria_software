@@ -97,6 +97,8 @@ public class CreaPassword {
 					}
 					else {
 						controller.savePassword(text.getText());
+						BrewDayApplication.initialize(text.getText());
+						shell.close();
 					}
 				}
 					
