@@ -15,6 +15,7 @@ import org.eclipse.swt.events.MouseAdapter;
 import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.fieldassist.AutoCompleteField;
 import org.eclipse.jface.fieldassist.ComboContentAdapter;
 
@@ -123,16 +124,19 @@ public class Aggiunta_Ingrediente {
 		btnAggiungi.addSelectionListener(new SelectionAdapter() {
 		    @Override
 		    public void widgetSelected(SelectionEvent e) {
-		    	controller.aggiungiIngrediente(text.getText(), Integer.parseInt(spinner.getText()),combo.getText());
-				observer.update();
+		    	String response = controller.aggiungiIngrediente(text.getText(), Integer.parseInt(spinner.getText()),combo.getText());
+				if(response.equals("Ok")) {
+			
+					observer.update();
+				}
+				else {
+					MessageDialog.openWarning(Display.getDefault().getActiveShell(), "Errore", response);
+					
+				}
+				
 		    }
 		});
-		/*btnAggiungi.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseDoubleClick(MouseEvent e) {
-				controller.aggiungiIngrediente(text.getText(), Integer.parseInt(spinner.getText()),combo.getText());
-			}
-		});*/
+
 		btnAggiungi.setBounds(295, 198, 75, 25);
 		btnAggiungi.setText("Aggiungi");
 
