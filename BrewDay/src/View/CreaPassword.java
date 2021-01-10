@@ -97,8 +97,18 @@ public class CreaPassword {
 					}
 					else {
 						controller.savePassword(text.getText());
+						Display.getDefault().asyncExec(new Runnable() {
+					     	
+	                        @Override
+	                        public void run() {
+	                        	
+	                        	
+	                        	shell.close();
+	                        	
+	                        }
+	                    });
 						BrewDayApplication.initialize(text.getText());
-						shell.close();
+						
 					}
 				}
 					

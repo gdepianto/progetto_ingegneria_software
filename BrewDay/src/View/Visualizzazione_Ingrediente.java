@@ -1,9 +1,12 @@
 package View;
 
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Event;
+import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.TableEditor;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -97,7 +100,15 @@ public class Visualizzazione_Ingrediente implements GenericObserver {
 
         viewer = new TableViewer(shell);
         Table table_1 = viewer.getTable();
+      
         table_1.setBounds(0, 0, 503, 261);
+        // resize the row height using a MeasureItem listener
+        table_1.addListener(SWT.MeasureItem, new Listener() {
+            public void handleEvent(Event event) {
+                 
+                event.height = 50;
+            }
+        });
         viewer.getTable().setHeaderVisible(true);
         viewer.getTable().setLinesVisible(true);
         viewer.setContentProvider(new ArrayContentProvider());
@@ -105,7 +116,9 @@ public class Visualizzazione_Ingrediente implements GenericObserver {
         TableColumn column = new TableColumn(viewer.getTable(), SWT.NONE);
         column.setText("Ingrediente");
         column.setWidth(100);
+       
         TableViewerColumn firstNameCol = new TableViewerColumn(viewer, column);
+        
         firstNameCol.setLabelProvider(new ColumnLabelProvider(){
 
             @Override
@@ -151,7 +164,7 @@ public class Visualizzazione_Ingrediente implements GenericObserver {
 
         column = new TableColumn(viewer.getTable(), SWT.NONE);
         column.setText("");
-        column.setWidth(100);
+        column.setWidth(150);
         TableViewerColumn actionsNameCol = new TableViewerColumn(viewer, column);
         
         actionsNameCol.setLabelProvider(new ColumnLabelProvider(){
@@ -172,6 +185,7 @@ public class Visualizzazione_Ingrediente implements GenericObserver {
      	        {
      	        	composite = new Composite((Composite) cell.getViewerRow().getControl(),SWT.NONE);
      	        	composite.setLayout(new RowLayout());
+     	        	
      	            Button buttonRemove = new Button(composite,SWT.NONE);
      	            buttonRemove.setText("Remove");
      	            Ingrediente p = (Ingrediente)cell.getElement();
@@ -216,6 +230,7 @@ public class Visualizzazione_Ingrediente implements GenericObserver {
 
              		    }
              		});
+     	            
      	            compositesAction.put(cell.getElement(), composite);
      	        }
      	        TableEditor editor = new TableEditor(item.getParent());
@@ -242,6 +257,7 @@ public class Visualizzazione_Ingrediente implements GenericObserver {
         
 
         viewer.setInput(listaIngredienti);
+       
 	
 		
 		
@@ -254,10 +270,16 @@ public class Visualizzazione_Ingrediente implements GenericObserver {
 
 	@Override
 	public void update() {
-		
+		System.out.println("sfsdf");
+		for(Control c : shell.getChildren())
+			c.dispose();
 		createContents(shell);
-		//shell.open();
+		shell.redraw(0, 0, shell.getBounds().width,
+				shell.getBounds().height, true);
+		
+		shell.update();
 		shell.layout();
+		
 		
 	}
 }
