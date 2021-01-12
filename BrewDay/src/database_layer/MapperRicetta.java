@@ -12,8 +12,9 @@ import model.Ricetta;
 
 public class MapperRicetta {
 	
-	public void insert(Ricetta ricetta) {
+	public String insert(Ricetta ricetta) {
 		  Connection c = null;
+		  int count = -1;
 	      
 	      try {
 	         Class.forName("org.sqlite.JDBC");
@@ -21,23 +22,29 @@ public class MapperRicetta {
 		    		  BrewDayApplication.password);
 	         c.setAutoCommit(false);
 	         System.out.println("Opened database successfully");
-	         String sql = "INSERT INTO ricetta (nome, descrizione, tempo_preparazione) " +
-                     "VALUES (?,?,?);"; 
-	         PreparedStatement pstmt = c.prepareStatement( sql );
-		     pstmt.setString(1, ricetta.getNome());
-		     pstmt.setString(2,ricetta.getDescrizione());
-		     pstmt.setInt(3, ricetta.getTempoPreparazione());
-		     
-		         
-		         
+	         
+	         String sqlCheck = "SELECT COUNT(*) FROM ricetta WHERE nome = ?";
+	         PreparedStatement checkStatement = c.prepareStatement(sqlCheck);
+	         checkStatement.setString(1, ricetta.getNome());
+	         ResultSet rs = checkStatement.executeQuery();
+	         rs.next();
+	         count = rs.getInt(1);
+	         checkStatement.close();
+	         if(count == 0) {
+		         String sql = "INSERT INTO ricetta (nome, descrizione, tempo_preparazione) " +
+	                     "VALUES (?,?,?);"; 
+		         PreparedStatement pstmt = c.prepareStatement( sql );
+		         pstmt.setString(1, ricetta.getNome());
+		         pstmt.setString(2, ricetta.getDescrizione());
+		         pstmt.setInt(3, ricetta.getTempoPreparazione());
+	            
 		    
 		     pstmt.executeUpdate();
 		         
-
-		     
+	     
 		     pstmt.close();
 
-	         
+	      }   
 	         c.commit();
 	         c.close();
 	      } catch ( Exception e ) {
@@ -45,6 +52,12 @@ public class MapperRicetta {
 	         System.exit(0);
 	      }
 	      System.out.println("Records created successfully");
+	      if(count == 0)
+	    	  return "Ok";
+	      else if(count == -1)
+	    	  return "Errore: problemi al database";
+	      else
+	    	  return "Errore: ricetta con questo nome già esistente";
 	   
 	}
 	
