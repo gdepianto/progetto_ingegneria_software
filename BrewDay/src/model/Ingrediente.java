@@ -6,7 +6,6 @@ public class Ingrediente {
 	private int idIngrediente;
 	private String nome;
 	private float disponibilita;
-	private ArrayList<Quantita> ricette = null;
 	private String unitaMisura;
 	
 
@@ -55,11 +54,4 @@ public class Ingrediente {
 				+ ", unitaMisura=" + unitaMisura + "]";
 	}
 
-	public ArrayList<Quantita> getRicette() {
-		return ricette;
-	}
-
-	public void setRicette(ArrayList<Quantita> ricette) {
-		this.ricette = ricette;
-	}
 }

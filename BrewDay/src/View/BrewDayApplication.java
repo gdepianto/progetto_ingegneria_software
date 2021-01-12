@@ -67,7 +67,7 @@ public class BrewDayApplication {
 		        stmt = c.createStatement();
 		        String sql = "CREATE TABLE IF NOT EXISTS ricetta" + 
 		       		  "(id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL," +
-		       		  "nome VARCHAR(45) NOT NULL, " +
+		       		  "nome VARCHAR(45) UNIQUE NOT NULL, " +
 		       		  "descrizione TEXT(1000) NOT NULL, " +
 		       		  "tempo_preparazione INT NOT NULL)";
 		        stmt.executeUpdate(sql);
@@ -86,6 +86,10 @@ public class BrewDayApplication {
 		
 		     
 		ControllerIngredienti control1 = new ControllerIngredienti();
+		ControllerRicetta controllerRicetta = new ControllerRicetta(control1);
+		AggiuntaRicetta finestraAggiuntaRicetta = new AggiuntaRicetta(controllerRicetta);
+		finestraAggiuntaRicetta.open();
+		
 		Visualizzazione_Ingrediente finestra = new Visualizzazione_Ingrediente(control1);
 		finestra.open();
 		
