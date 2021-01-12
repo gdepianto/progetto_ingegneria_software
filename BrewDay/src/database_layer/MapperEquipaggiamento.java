@@ -4,9 +4,12 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.Statement;
+import java.util.ArrayList;
 
 import View.BrewDayApplication;
 import model.Equipaggiamento;
+import model.Ricetta;
 
 public class MapperEquipaggiamento {
 	public String insert(Equipaggiamento equip) {
@@ -87,6 +90,36 @@ public class MapperEquipaggiamento {
 		delete();
 		insert(equip);
     }
+	
+	public Equipaggiamento getEquipaggiamento() {
+		Connection c = null;
+		Statement stmt = null;
+		
+		Equipaggiamento equip = null;
+		try {
+		      Class.forName("org.sqlite.JDBC");
+		      c = DriverManager.getConnection("jdbc:sqlite:brewday.db","",
+		    		  BrewDayApplication.password);
+		      c.setAutoCommit(false);
+		      System.out.println("Opened database successfully");
+
+		      stmt = c.createStatement();
+		      ResultSet rs = stmt.executeQuery( "SELECT * FROM equipaggiamento;" );
+	          
+		      String nome = rs.getString("nome");
+		      float capacita = rs.getFloat("capacita");
+		      equip = new Equipaggiamento(nome, capacita);
+		      
+		  rs.close();
+	      stmt.close();
+	      c.close(); 
+		} catch ( Exception e ) {
+		      System.err.println( e.getClass().getName() + ": " + e.getMessage() );
+		      System.exit(0);
+		}
+		System.out.println("Operation done successfully");
+		return equip;
+	}  
 }	
 
 	

@@ -17,5 +17,8 @@ public class ControllerEquipaggiamento {
 		mapperEquipaggiamento.update(equip);
 	}
 	
+	public Equipaggiamento getEquipaggiamento() {
+		return mapperEquipaggiamento.getEquipaggiamento();
+	}
 
 }
