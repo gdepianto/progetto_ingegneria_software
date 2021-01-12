@@ -16,5 +16,6 @@ public class ControllerEquipaggiamento {
 		Equipaggiamento equip = new Equipaggiamento(nome, disponibilita);
 		mapperEquipaggiamento.update(equip);
 	}
+	
 
 }

@@ -51,7 +51,7 @@ public class MapperRicetta {
 	         System.err.println( e.getClass().getName() + ": " + e.getMessage() );
 	         System.exit(0);
 	      }
-	      System.out.println("Records created successfully");
+	      System.out.println("Record created successfully");
 	      if(count == 0)
 	    	  return "Ok";
 	      else if(count == -1)

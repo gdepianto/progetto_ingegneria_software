@@ -1,6 +1,9 @@
 package controller;
 
+import java.util.ArrayList;
+
 import database_layer.MapperRicetta;
+import model.Ingrediente;
 import model.Ricetta;
 
 public class ControllerRicetta {
@@ -21,12 +24,15 @@ public class ControllerRicetta {
 	public void setControllerIngredienti(ControllerIngredienti controllerIngredienti) {
 		this.controllerIngredienti = controllerIngredienti;
 	}
+	
+	public ArrayList<Ricetta> getRicette(){
+		return mapperRicetta.getRicette();
+	}
 
 
-	public void aggiungiRicetta(String nome, String descrizione, int tempoPreparazione) {
-
+	public String aggiungiRicetta(String nome, String descrizione, int tempoPreparazione) {
 		Ricetta ricetta = new Ricetta(nome, descrizione, tempoPreparazione);
-		mapperRicetta.insert(ricetta);
+		return mapperRicetta.insert(ricetta);
 	}
 	
 	public void rimuoviRicetta(int id) {
