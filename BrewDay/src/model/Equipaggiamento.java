@@ -5,6 +5,12 @@ public class Equipaggiamento {
 	private String nome;
 	private float capacita;
 	
+	public Equipaggiamento(String nome, float capacita) {
+		this.idEquipaggiamento = -1;
+		this.nome = nome;
+		this.capacita = capacita;
+	}
+	
 	public int getIdEquipaggiamento() {
 		return idEquipaggiamento;
 	}
