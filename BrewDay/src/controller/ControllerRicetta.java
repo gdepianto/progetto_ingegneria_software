@@ -5,11 +5,23 @@ import model.Ricetta;
 
 public class ControllerRicetta {
 	private MapperRicetta mapperRicetta;
+	private ControllerIngredienti controllerIngredienti;
 	
-	public ControllerRicetta () {
+	public ControllerRicetta (ControllerIngredienti contring) {
 		this.mapperRicetta = new MapperRicetta();
+		controllerIngredienti = contring;
 	}
 	
+
+	public ControllerIngredienti getControllerIngredienti() {
+		return controllerIngredienti;
+	}
+
+
+	public void setControllerIngredienti(ControllerIngredienti controllerIngredienti) {
+		this.controllerIngredienti = controllerIngredienti;
+	}
+
 
 	public void aggiungiRicetta(String nome, String descrizione, int tempoPreparazione) {
 
