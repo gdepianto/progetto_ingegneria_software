@@ -28,23 +28,23 @@ import model.Ricetta;
 import org.eclipse.jface.viewers.TableViewerColumn;
 import org.eclipse.jface.viewers.ViewerCell;
 
-public class visualizzazioneRicetta {
+public class VisualizzazioneRicetta {
 
 	protected Shell shell;
 	private Table table;
 	private ControllerRicetta controller;
 	private TableViewer viewer;
-	private visualizzazioneRicetta instance;
+	private VisualizzazioneRicetta instance;
 	private Button btnAggiungiRicetta;
 	
 	
 	
-	public visualizzazioneRicetta(ControllerRicetta c) {
+	public VisualizzazioneRicetta(ControllerRicetta c) {
 		controller = c;
 		instance = this;
 	}
 	
-	public visualizzazioneRicetta() {
+	public VisualizzazioneRicetta() {
 		controller = null;
 		instance = this;
 	}
@@ -57,7 +57,7 @@ public class visualizzazioneRicetta {
 
 	public static void main(String[] args) {
 		try {
-			visualizzazioneRicetta window = new visualizzazioneRicetta();
+			VisualizzazioneRicetta window = new VisualizzazioneRicetta();
 			window.open();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -188,7 +188,7 @@ public class visualizzazioneRicetta {
 
 	});
 		
-		btnAggiungiRicetta = new Button(shell, SWT.NONE);
+		Button btnAggiungiRicetta = new Button(shell, SWT.NONE);
 		btnAggiungiRicetta.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
