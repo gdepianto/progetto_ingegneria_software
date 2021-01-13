@@ -5,11 +5,9 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
-import java.util.ArrayList;
 
 import View.BrewDayApplication;
 import model.Equipaggiamento;
-import model.Ricetta;
 
 public class MapperEquipaggiamento {
 	public String insert(Equipaggiamento equip) {
@@ -54,7 +52,7 @@ public class MapperEquipaggiamento {
 	      else if(count == -1)
 	    	  return "Errore: problemi al database";
 	      else
-	    	  return "Hai già inserito il tuo equipaggiamento";
+	    	  return "Hai giï¿½ inserito il tuo equipaggiamento";
 	    	  
 	}
 

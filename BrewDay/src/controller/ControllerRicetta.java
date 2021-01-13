@@ -3,7 +3,6 @@ package controller;
 import java.util.ArrayList;
 
 import database_layer.MapperRicetta;
-import model.Ingrediente;
 import model.Ricetta;
 
 public class ControllerRicetta {

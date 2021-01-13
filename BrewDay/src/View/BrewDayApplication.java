@@ -8,6 +8,7 @@ import java.util.ArrayList;
 
 import org.eclipse.swt.widgets.Shell;
 
+import controller.ControllerEquipaggiamento;
 import controller.ControllerIngredienti;
 import controller.ControllerRicetta;
 import controller.SecurityController;
@@ -78,7 +79,9 @@ public class BrewDayApplication {
 		        System.exit(0);
 		     }
 		     System.out.println("Table created successfully");
-		     startApplication(pass);
+		     ControllerEquipaggiamento controllerEq = new ControllerEquipaggiamento();
+		     CreaEquipaggiamento finestraCreaEq = new CreaEquipaggiamento(controllerEq,pass);
+		     finestraCreaEq.open();
 	}
 	
 	public static void startApplication(String pass) {

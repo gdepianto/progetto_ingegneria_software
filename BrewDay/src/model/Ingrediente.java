@@ -1,6 +1,6 @@
 package model;
 
-import java.util.ArrayList;
+
 
 public class Ingrediente {
 	private int idIngrediente;
