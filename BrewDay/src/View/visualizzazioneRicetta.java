@@ -37,6 +37,8 @@ public class visualizzazioneRicetta {
 	private visualizzazioneRicetta instance;
 	private Button btnAggiungiRicetta;
 	
+	
+	
 	public visualizzazioneRicetta(ControllerRicetta c) {
 		controller = c;
 		instance = this;
@@ -73,6 +75,8 @@ public class visualizzazioneRicetta {
 			}
 		}
 	}
+	
+	
 	
 	/**
 	 * Launch the application.
@@ -166,10 +170,8 @@ public class visualizzazioneRicetta {
 	            buttonVisualize.addSelectionListener(new SelectionAdapter() {
         		    @Override
         		    public void widgetSelected(SelectionEvent e) {
-
-        		    	
-        		    	
-
+        		    	mostraRicetta FinestraRicetta = new mostraRicetta(controller, p);
+        		    	FinestraRicetta.open();
         		    }
         		});
 	            
