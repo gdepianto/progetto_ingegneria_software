@@ -8,6 +8,7 @@ import java.util.ArrayList;
 
 import org.eclipse.swt.widgets.Shell;
 
+import controller.ControllerEquipaggiamento;
 import controller.ControllerIngredienti;
 import controller.ControllerRicetta;
 import controller.SecurityController;
@@ -78,7 +79,62 @@ public class BrewDayApplication {
 		        System.exit(0);
 		     }
 		     System.out.println("Table created successfully");
-		     startApplication(pass);
+
+		     
+		     try {
+
+			        Class.forName("org.sqlite.JDBC");
+			        c = DriverManager.getConnection("jdbc:sqlite:brewday.db","",
+			                 BrewDayApplication.password);
+			        System.out.println("Opened database successfully");
+			
+			        stmt = c.createStatement();
+			        String sql = "CREATE TABLE IF NOT EXISTS equipaggiamento" + 
+			       		  "(id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL," +
+			       		  "nome VARCHAR(45) NOT NULL, " +
+			       		  "capacita FLOAT NOT NULL)";
+			        stmt.executeUpdate(sql);
+			        stmt.close();
+			        c.close();
+			     } catch ( Exception e ) {
+			        System.err.println( e.getClass().getName() + ": " + e.getMessage() );
+			        System.exit(0);
+			     }
+			     System.out.println("Table created successfully");
+			     
+			     try {
+				        Class.forName("org.sqlite.JDBC");
+				        c = DriverManager.getConnection("jdbc:sqlite:brewday.db","",
+				                 BrewDayApplication.password);
+				        System.out.println("Opened database successfully");
+				
+				        stmt = c.createStatement();
+				        String sql = "CREATE TABLE IF NOT EXISTS quantita" + 
+				       		  "(id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL," +
+				       		  "id_ricetta INTEGER NOT NULL, " +
+				       		  "id_ingrediente INTEGER NOT NULL," +
+				       	      "FOREIGN KEY (id_ingrediente) "+
+				       	      "REFERENCES ingrediente(id) "+
+				       	      "ON DELETE NO ACTION "+
+				       	      "ON UPDATE NO ACTION,"+
+				              "FOREIGN KEY (id_ricetta) "+
+				              "REFERENCES ricetta(id) "+
+				              "ON DELETE NO ACTION "+
+				              "ON UPDATE NO ACTION)";
+				        stmt.executeUpdate(sql);
+				        stmt.close();
+				        c.close();
+				     } catch ( Exception e ) {
+				        System.err.println( e.getClass().getName() + ": " + e.getMessage() );
+				        System.exit(0);
+				     }
+				     System.out.println("Table created successfully");
+
+			     
+		ControllerEquipaggiamento controllerEq = new ControllerEquipaggiamento();
+		CreaEquipaggiamento finestraCreaEq = new CreaEquipaggiamento(controllerEq,pass);
+		finestraCreaEq.open();
+			    
 	}
 	
 	public static void startApplication(String pass) {

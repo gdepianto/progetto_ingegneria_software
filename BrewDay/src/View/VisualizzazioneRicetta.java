@@ -37,8 +37,6 @@ public class VisualizzazioneRicetta {
 	private VisualizzazioneRicetta instance;
 	private Button btnAggiungiRicetta;
 	
-	
-	
 	public VisualizzazioneRicetta(ControllerRicetta c) {
 		controller = c;
 		instance = this;

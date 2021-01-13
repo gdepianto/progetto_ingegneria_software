@@ -1,17 +1,8 @@
 package model;
 
 public class Quantita {
-	private Ricetta ricetta;
 	private Ingrediente ingrediente;
 	private float quantitaNecessaria;	
-	
-	public Ricetta getRicetta() {
-		return ricetta;
-	}
-	
-	public void setRicetta(Ricetta ricetta) {
-		this.ricetta = ricetta;
-	}
 	
 	public Ingrediente getIngrediente() {
 		return ingrediente;

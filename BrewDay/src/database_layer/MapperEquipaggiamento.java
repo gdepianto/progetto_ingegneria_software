@@ -5,16 +5,14 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
-import java.util.ArrayList;
 
 import View.BrewDayApplication;
 import model.Equipaggiamento;
-import model.Ricetta;
 
 public class MapperEquipaggiamento {
 	public String insert(Equipaggiamento equip) {
 		  Connection c = null;
-		  int count = -1;
+		  int contr = -1;
 	      try {
 	         Class.forName("org.sqlite.JDBC");
 	         c = DriverManager.getConnection("jdbc:sqlite:brewday.db","",
@@ -22,39 +20,31 @@ public class MapperEquipaggiamento {
 	         c.setAutoCommit(false);
 	         System.out.println("Opened database successfully");
 	         
-	         String sqlCheck = "SELECT COUNT(*) FROM equipaggiamento";
-	         PreparedStatement checkStatement = c.prepareStatement( sqlCheck );
-	         checkStatement.setString(1, equip.getNome());
-	         ResultSet rs = checkStatement.executeQuery();
-	         rs.next();
-	         count = rs.getInt(1);
-	         checkStatement.close();
-	         if(count == 0) {
-		         String sql = "INSERT INTO equipaggiamento (nome, capacita) " +
-	                     "VALUES (?,?);"; 
-		         PreparedStatement pstmt = c.prepareStatement( sql );
-		         pstmt.setString(1, equip.getNome());
-		         pstmt.setFloat(2, equip.getCapacita());
-		         
-		         	    
-		         pstmt.executeUpdate();
-		         
-	
-		         pstmt.close();
-	         }
+	         String sql = "INSERT INTO equipaggiamento (nome, capacita) " +
+                     "VALUES (?,?);"; 
+	         PreparedStatement pstmt = c.prepareStatement( sql );
+	         pstmt.setString(1, equip.getNome());
+	         pstmt.setFloat(2, equip.getCapacita());
+	         
+	         	    
+	         pstmt.executeUpdate();
+	         
+
+	         pstmt.close();
+	         
 	         c.commit();
 	         c.close();
+	         contr = 0;
 	      } catch ( Exception e ) {
 	         System.err.println( e.getClass().getName() + ": " + e.getMessage() );
 	         System.exit(0);
 	      }
 	      System.out.println("Records created successfully");
-	      if(count == 0)
+	      if(contr == 0)
 	    	  return "Ok";
-	      else if(count == -1)
+	      else 
 	    	  return "Errore: problemi al database";
-	      else
-	    	  return "Hai già inserito il tuo equipaggiamento";
+	     
 	    	  
 	}
 

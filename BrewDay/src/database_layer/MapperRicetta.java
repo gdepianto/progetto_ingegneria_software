@@ -33,18 +33,18 @@ public class MapperRicetta {
 	         if(count == 0) {
 		         String sql = "INSERT INTO ricetta (nome, descrizione, tempo_preparazione) " +
 	                     "VALUES (?,?,?);"; 
-		         PreparedStatement pstmt = c.prepareStatement( sql );
+		         PreparedStatement pstmt = c.prepareStatement( sql,Statement.RETURN_GENERATED_KEYS );
 		         pstmt.setString(1, ricetta.getNome());
 		         pstmt.setString(2, ricetta.getDescrizione());
 		         pstmt.setInt(3, ricetta.getTempoPreparazione());
 	            
 		    
-		     pstmt.executeUpdate();
-		         
-	     
-		     pstmt.close();
+			     
+			         
+		     
+			     pstmt.close();
 
-	      }   
+	        }   
 	         c.commit();
 	         c.close();
 	      } catch ( Exception e ) {
