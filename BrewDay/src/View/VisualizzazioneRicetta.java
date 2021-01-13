@@ -74,6 +74,8 @@ public class VisualizzazioneRicetta {
 		}
 	}
 	
+	
+	
 	/**
 	 * Launch the application.
 	 * @param args
@@ -166,10 +168,8 @@ public class VisualizzazioneRicetta {
 	            buttonVisualize.addSelectionListener(new SelectionAdapter() {
         		    @Override
         		    public void widgetSelected(SelectionEvent e) {
-
-        		    	
-        		    	
-
+        		    	mostraRicetta FinestraRicetta = new mostraRicetta(controller, p);
+        		    	FinestraRicetta.open();
         		    }
         		});
 	            
@@ -186,7 +186,7 @@ public class VisualizzazioneRicetta {
 
 	});
 		
-		btnAggiungiRicetta = new Button(shell, SWT.NONE);
+		Button btnAggiungiRicetta = new Button(shell, SWT.NONE);
 		btnAggiungiRicetta.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
