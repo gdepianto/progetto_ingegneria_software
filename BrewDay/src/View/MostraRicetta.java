@@ -19,7 +19,7 @@ import org.eclipse.jface.viewers.ColumnLabelProvider;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.viewers.TableViewerColumn;
 
-public class mostraRicetta {
+public class MostraRicetta {
 
 	protected Shell shell;
 	private Table table;
@@ -32,19 +32,19 @@ public class mostraRicetta {
 	 */
 	public static void main(String[] args) {
 		try {
-			mostraRicetta window = new mostraRicetta();
+			MostraRicetta window = new MostraRicetta();
 			window.open();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 	
-	public mostraRicetta(ControllerRicetta c, Ricetta r) {
+	public MostraRicetta(ControllerRicetta c, Ricetta r) {
 		controller = c;
 		ricetta=r;
 	}
 	
-	public mostraRicetta() {
+	public MostraRicetta() {
 		controller = null;
 		ricetta = null;
 	}
@@ -120,7 +120,7 @@ public class mostraRicetta {
         });
         
         column = new TableColumn(tableViewer.getTable(), SWT.NONE);
-        column.setText("Quantità");
+        column.setText("Quantitï¿½");
         column.setWidth(100);
         TableViewerColumn lastNameCol = new TableViewerColumn(tableViewer, column);
         lastNameCol.setLabelProvider(new ColumnLabelProvider(){
