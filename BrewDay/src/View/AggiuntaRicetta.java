@@ -27,6 +27,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.ColumnLabelProvider;
 import org.eclipse.jface.viewers.TableViewer;
@@ -42,9 +43,15 @@ public class AggiuntaRicetta {
 	private Text text_1;
 	private Table table;
 	private ControllerRicetta controller;
+	private GenericObserver observer;
 
 	public AggiuntaRicetta(ControllerRicetta controller) {
 		this.controller = controller;
+	}
+
+
+	public void setObserver(GenericObserver observer) {
+		this.observer = observer;
 	}
 
 	public AggiuntaRicetta() {
@@ -243,7 +250,14 @@ public class AggiuntaRicetta {
         	      }
         	    }
         	    
-        	    controller.aggiungiRicetta(text.getText(), text_1.getText(), Integer.parseInt(spinner.getText()), listaQuantita);
+        	    String response = controller.aggiungiRicetta(text.getText(), text_1.getText(), Integer.parseInt(spinner.getText()), listaQuantita);
+        	    if(response.equals("Ok")) {
+        	    	observer.update();
+        	    }
+        	    else {
+        	    	MessageDialog.openWarning(Display.getDefault().getActiveShell(), "Errore", response);
+        	    }
+        	    
         	}
         });
 

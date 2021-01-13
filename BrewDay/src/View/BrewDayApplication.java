@@ -113,6 +113,7 @@ public class BrewDayApplication {
 				       		  "(id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL," +
 				       		  "id_ricetta INTEGER NOT NULL, " +
 				       		  "id_ingrediente INTEGER NOT NULL," +
+				       		  "quantita_necessaria REAL NOT NULL," +
 				       	      "FOREIGN KEY (id_ingrediente) "+
 				       	      "REFERENCES ingrediente(id) "+
 				       	      "ON DELETE NO ACTION "+
@@ -141,7 +142,13 @@ public class BrewDayApplication {
 		password = pass;
 		
 		     
+		
+		ControllerEquipaggiamento controllerEq = new ControllerEquipaggiamento();
+		
 		ControllerIngredienti control1 = new ControllerIngredienti();
+		ControllerRicetta controlRic = new ControllerRicetta(control1,controllerEq);
+		AggiuntaRicetta finestraAggRicetta = new AggiuntaRicetta(controlRic);
+		finestraAggRicetta.open();
 		Visualizzazione_Ingrediente finestra = new Visualizzazione_Ingrediente(control1);
 		finestra.open();
 		

@@ -8,6 +8,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 
 import View.BrewDayApplication;
+import model.Quantita;
 import model.Ricetta;
 
 public class MapperRicetta {
@@ -37,13 +38,40 @@ public class MapperRicetta {
 		         pstmt.setString(1, ricetta.getNome());
 		         pstmt.setString(2, ricetta.getDescrizione());
 		         pstmt.setInt(3, ricetta.getTempoPreparazione());
-	            
-		    
+		         pstmt.executeUpdate();
+		         c.commit();
+		         int idRicetta=-1;
+			     try (ResultSet generatedKeys = pstmt.getGeneratedKeys()) {
+			            if (generatedKeys.next()) {
+			                idRicetta= (int) generatedKeys.getLong(1);
+			            }
+			            else {
+			               count = -1;
+			            }
+			      }
 			     
-			         
-		     
 			     pstmt.close();
-
+			     if(idRicetta != -1) {
+				     String sqlInsertQuantita = "INSERT INTO quantita (id_ricetta, id_ingrediente, quantita_necessaria) " +
+		                     "VALUES ";
+				     int contQ = 1;
+				     for(Quantita q : ricetta.getIngredienti()) {
+				    	 sqlInsertQuantita+=" (?,?,?),";
+				     }
+				     sqlInsertQuantita = sqlInsertQuantita.substring(0, sqlInsertQuantita.length() - 1);
+				     sqlInsertQuantita += ";";
+				     PreparedStatement statementQuantita = c.prepareStatement( sqlInsertQuantita );
+				     for(Quantita q : ricetta.getIngredienti()) {
+				    	 statementQuantita.setInt(contQ, idRicetta);
+				    	 contQ++;
+				    	 statementQuantita.setInt(contQ, q.getIngrediente().getIdIngrediente());
+				    	 contQ++;
+				    	 statementQuantita.setFloat(contQ, q.getQuantitaNecessaria());
+				    	 contQ++;
+				     }
+				     statementQuantita.executeUpdate();
+				     statementQuantita.close();
+			     }
 	        }   
 	         c.commit();
 	         c.close();
