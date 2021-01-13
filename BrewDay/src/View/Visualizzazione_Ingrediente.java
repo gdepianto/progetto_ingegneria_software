@@ -269,7 +269,6 @@ public class Visualizzazione_Ingrediente implements GenericObserver {
 
 	@Override
 	public void update() {
-		System.out.println("sfsdf");
 		for(Control c : shell.getChildren())
 			c.dispose();
 		createContents(shell);

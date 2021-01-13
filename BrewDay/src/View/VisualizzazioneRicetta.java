@@ -2,6 +2,7 @@ package View;
 
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Table;
@@ -28,7 +29,7 @@ import model.Ricetta;
 import org.eclipse.jface.viewers.TableViewerColumn;
 import org.eclipse.jface.viewers.ViewerCell;
 
-public class VisualizzazioneRicetta {
+public class VisualizzazioneRicetta implements GenericObserver {
 
 	protected Shell shell;
 	private Table table;
@@ -64,7 +65,7 @@ public class VisualizzazioneRicetta {
 	
 	public void open() {
 		Display display = Display.getDefault();
-		createContents();
+		createContents(new Shell());
 		shell.open();
 		shell.layout();
 		while (!shell.isDisposed()) {
@@ -80,8 +81,8 @@ public class VisualizzazioneRicetta {
 	 * Launch the application.
 	 * @param args
 	 */
-	protected void createContents() {
-		shell = new Shell();
+	protected void createContents(Shell s) {
+		shell = s;
 		shell.setSize(450, 300);
 		shell.setText("SWT Application");
 		ArrayList <Ricetta> listaRicette = controller.getRicette();
@@ -196,6 +197,19 @@ public class VisualizzazioneRicetta {
 		btnAggiungiRicetta.setBounds(327, 115, 97, 25);
 		btnAggiungiRicetta.setText("Aggiungi Ricetta");
   }
+
+	@Override
+	public void update() {
+		// TODO Auto-generated method stub
+		for(Control c : shell.getChildren())
+			c.dispose();
+		createContents(shell);
+		shell.redraw(0, 0, shell.getBounds().width,
+				shell.getBounds().height, true);
+		
+		shell.update();
+		shell.layout();
+	}
 
 	/**
 	 * Open the window.
