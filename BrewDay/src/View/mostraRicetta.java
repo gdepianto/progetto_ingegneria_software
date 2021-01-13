@@ -85,7 +85,7 @@ public class mostraRicetta {
 		lblTempoPreparazione.setText("Tempo Preparazione :");
 		
 		Label label = new Label(shell, SWT.NONE);
-		label.setBounds(70, 10, 55, 15);
+		label.setBounds(70, 10, 73, 15);
 		label.setText(ricetta.getNome());
 		
 		Label label_1 = new Label(shell, SWT.NONE);
