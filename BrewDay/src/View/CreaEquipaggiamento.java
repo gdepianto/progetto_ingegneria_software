@@ -98,19 +98,25 @@ public class CreaEquipaggiamento {
         				MessageDialog.openWarning(Display.getDefault().getActiveShell(), "Errore", "Capacita deve essere maggiore di zero");
         			}
         			else {
-        				controller.aggiungiEquipaggiamento(text.getText(), Integer.parseInt(spinner.getText()));
-        				Display.getDefault().asyncExec(new Runnable() {
-					     	
-	                        @Override
-	                        public void run() {
-	                        	
-	                        	
-	                        	shell.close();
-	                        	
-	                        }
-	                    });
-        				BrewDayApplication.startApplication(password);
+        				String response = controller.aggiungiEquipaggiamento(text.getText(), Integer.parseInt(spinner.getText()));
+        				if(response.equals("Ok")){
+	        				Display.getDefault().asyncExec(new Runnable() {
+						     	
+		                        @Override
+		                        public void run() {
+		                        	
+		                        	
+		                        	shell.close();
+		                        	
+		                        }
+		                    });
+	        				BrewDayApplication.startApplication(password);
+        				}
+        				else {
+        					MessageDialog.openWarning(Display.getDefault().getActiveShell(), "Errore", "Capacita deve essere maggiore di zero");
+        				}
         			}
+        				
         		}
         	}
         });

@@ -13,6 +13,7 @@ import org.eclipse.swt.widgets.Text;
 
 import controller.ControllerRicetta;
 import model.Ingrediente;
+import model.Quantita;
 import model.Ricetta;
 
 import org.eclipse.swt.widgets.Spinner;
@@ -229,13 +230,20 @@ public class AggiuntaRicetta {
 		btnNewButton.addSelectionListener(new SelectionAdapter() {
         	@Override
         	public void widgetSelected(SelectionEvent e) {
+        		ArrayList<Quantita> listaQuantita = new ArrayList<Quantita>();
+        		
         		TableItem [] items = tableViewer.getTable().getItems();
         	    for (int i = 0; i < items.length; ++i) {
         	      if (items[i].getChecked()) {
-        	    	  System.out.println(listaTextBox.get(i).getText());
+        	    	  Quantita q = new Quantita();
+        	    	  q.setIngrediente(listaIngredienti.get(i));
+        	    	  q.setQuantitaNecessaria(Float.parseFloat(listaTextBox.get(i).getText()));
+        	    	  listaQuantita.add(q);
         	    	  
         	      }
         	    }
+        	    
+        	    controller.aggiungiRicetta(text.getText(), text_1.getText(), Integer.parseInt(spinner.getText()), listaQuantita);
         	}
         });
 

@@ -16,6 +16,14 @@ public class Ricetta {
 		this.tempoPreparazione = tempoPreparazione;
 	}
 	
+	public Ricetta(String nome, String descrizione, int tempoPreparazione,ArrayList<Quantita> ingredienti) {
+		this.idRicetta = -1;
+		this.nome = nome;
+		this.descrizione = descrizione;
+		this.tempoPreparazione = tempoPreparazione;
+		this.ingredienti = ingredienti;
+	}
+	
 	public int getIdRicetta() {
 		return idRicetta;
 	}

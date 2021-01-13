@@ -4,9 +4,12 @@ import database_layer.MapperEquipaggiamento;
 import model.Equipaggiamento;
 
 public class ControllerEquipaggiamento {
-	
 	private MapperEquipaggiamento mapperEquipaggiamento;
 	
+	public ControllerEquipaggiamento() {
+		mapperEquipaggiamento = new MapperEquipaggiamento();
+	}
+
 	public String aggiungiEquipaggiamento(String nome, float disponibilita) {
 		Equipaggiamento equip = new Equipaggiamento(nome, disponibilita);
 		return mapperEquipaggiamento.insert(equip);
