@@ -11,7 +11,6 @@ import View.BrewDayApplication;
 import model.Quantita;
 import model.Ricetta;
 import model.Ingrediente;
-import model.Quantita;
 
 public class MapperRicetta {
 	
@@ -101,22 +100,20 @@ public class MapperRicetta {
 	       c.setAutoCommit(false);
 	       String sql = "DELETE FROM ricetta WHERE ID=?";
 	       System.out.println("Opened database successfully");
+	       
 	       PreparedStatement pstmt = c.prepareStatement( sql );
-		
 		   pstmt.setInt(1, id);
-		     
-		         
-		         
-		    
 		   pstmt.executeUpdate();
-		         
-
+		   
+		   String sql2 = "DELETE FROM quantita WHERE id_ricetta = ?";
+		   PreparedStatement pstmt2 = c.prepareStatement(sql2);
+		   pstmt2.setInt(1, id);
+		   pstmt2.executeUpdate();		         
 		     
+		   pstmt2.close();
 		   pstmt.close();
-	
 	      
 	       c.commit();
-	
 	
 	    c.close();
 	    } catch ( Exception e ) {
@@ -154,7 +151,9 @@ public class MapperRicetta {
 					  	   "WHERE id_ricetta = ?";
 			  
 					  PreparedStatement pstmt2 = c.prepareStatement( sql2 );
-					  pstmt2.setInt(1, id);
+					  pstmt2.setInt(1, q.getIngrediente().getIdIngrediente());
+					  pstmt2.setFloat(2, q.getQuantitaNecessaria());
+					  pstmt2.setInt(3, id);
 					  pstmt2.executeUpdate();
 					  pstmt2.close();
 			  }
