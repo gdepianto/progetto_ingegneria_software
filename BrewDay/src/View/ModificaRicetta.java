@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.ColumnLabelProvider;
 import org.eclipse.jface.viewers.TableViewer;
@@ -29,6 +30,7 @@ import org.eclipse.swt.widgets.Text;
 import controller.ControllerRicetta;
 import model.Ingrediente;
 import model.Quantita;
+import model.Ricetta;
 
 
 
@@ -40,7 +42,23 @@ public class ModificaRicetta {
 	private Text text;
 	private Text text_1;
 	private Table table;
+	private GenericObserver observer;
+	private Ricetta ricetta;
 	
+	
+	
+	public ModificaRicetta(ControllerRicetta controller, Ricetta ricetta) {
+		this.controller = controller;
+		this.ricetta = ricetta;
+	}
+	public ModificaRicetta() {
+		this.controller = null;
+		this.ricetta = null;
+	}
+
+	public void setObserver(GenericObserver observer) {
+		this.observer = observer;
+	}
 	/**
 	 * Launch the application.
 	 * @param args
@@ -79,13 +97,17 @@ public class ModificaRicetta {
 		
 		ArrayList<Ingrediente> listaIngredienti = controller.getControllerIngredienti().getIngredienti();
 		ArrayList<Text> listaTextBox = new ArrayList<Text>();
+		
+		
+		
 		Label lblNewLabel = new Label(shell, SWT.NONE);
 		lblNewLabel.setBounds(10, 10, 70, 17);
 		lblNewLabel.setText("Nome");
 		
 		text = new Text(shell, SWT.BORDER);
-		text.setToolTipText("inserisci nome");
+		text.setToolTipText("Inserisci nome");
 		text.setBounds(10, 33, 117, 25);
+		text.setText(ricetta.getNome());
 		
 		Label lblNewLabel_1 = new Label(shell, SWT.NONE);
 		lblNewLabel_1.setBounds(173, 10, 219, 17);
@@ -93,13 +115,16 @@ public class ModificaRicetta {
 		
 		Spinner spinner = new Spinner(shell, SWT.BORDER);
 		spinner.setBounds(164, 35, 117, 35);
+		spinner.setSelection(ricetta.getTempoPreparazione());
 		
 		text_1 = new Text(shell, SWT.BORDER | SWT.MULTI);
 		text_1.setBounds(10, 119, 468, 135);
+		text_1.setText(ricetta.getDescrizione());
 		
 		Label lblNewLabel_2 = new Label(shell, SWT.NONE);
 		lblNewLabel_2.setBounds(10, 95, 184, 17);
 		lblNewLabel_2.setText("Descrizione ricetta");
+		
 		
 		Label lblNewLabel_3 = new Label(shell, SWT.NONE);
 		lblNewLabel_3.setBounds(512, 10, 184, 17);
@@ -213,6 +238,15 @@ public class ModificaRicetta {
 		
 		
 		tableViewer.setInput(listaIngredienti);
+		for(Ingrediente ing : listaIngredienti) {
+			for(Quantita q : ricetta.getIngredienti()) {
+				if(q.getIngrediente().getNome().equals(ing.getNome())) {
+					listaTextBox.get(listaIngredienti.indexOf(ing)).setText(""+q.getQuantitaNecessaria());
+					tableViewer.getTable().getItems()[listaIngredienti.indexOf(ing)].setChecked(true);
+				}
+					
+			}
+		}
 		
 
 		Button btnNewButton = new Button(shell, SWT.NONE);
@@ -222,19 +256,28 @@ public class ModificaRicetta {
         	@Override
         	public void widgetSelected(SelectionEvent e) {
         		ArrayList<Quantita> listaQuantita = new ArrayList<Quantita>();
-        		
+        		boolean contr = true;
         		TableItem [] items = tableViewer.getTable().getItems();
         	    for (int i = 0; i < items.length; ++i) {
         	      if (items[i].getChecked()) {
-        	    	  Quantita q = new Quantita();
-        	    	  q.setIngrediente(listaIngredienti.get(i));
-        	    	  q.setQuantitaNecessaria(Float.parseFloat(listaTextBox.get(i).getText()));
-        	    	  listaQuantita.add(q);
+        	    	  if(listaTextBox.get(i).getText().isEmpty() ) {
+        	    		  MessageDialog.openWarning(Display.getDefault().getActiveShell(), "Errore", "Non lasciare ingrediente selezionato con quantita vuota");
+        	    		  contr = false;
+        	    	  }
+        	    	  else {
+	        	    	  Quantita q = new Quantita();
+	        	    	  q.setIngrediente(listaIngredienti.get(i));
+	        	    	  q.setQuantitaNecessaria(Float.parseFloat(listaTextBox.get(i).getText()));
+	        	    	  listaQuantita.add(q);
+        	    	  }
         	    	  
         	      }
         	    }
         	    
-        	    controller.aggiungiRicetta(text.getText(), text_1.getText(), Integer.parseInt(spinner.getText()), listaQuantita);
+        	    if(contr) {
+        	    	controller.aggiornaRicetta(ricetta.getIdRicetta(),text.getText(), text_1.getText(), Integer.parseInt(spinner.getText()), listaQuantita);
+        	    	observer.update();
+        	    }
         	}
         });
 

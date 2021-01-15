@@ -133,7 +133,7 @@ public class BrewDayApplication {
 
 			     
 		ControllerEquipaggiamento controllerEq = new ControllerEquipaggiamento();
-		CreaEquipaggiamento finestraCreaEq = new CreaEquipaggiamento(controllerEq,pass);
+		CreaEquipaggiamento finestraCreaEq = new CreaEquipaggiamento(controllerEq);
 		finestraCreaEq.open();
 			    
 	}

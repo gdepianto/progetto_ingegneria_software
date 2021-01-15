@@ -48,8 +48,8 @@ public class ControllerRicetta {
 		
 	}
 	
-	public void aggiornaRicetta (int id, String nome, String descrizione, int tempoPreparazione) {
-		mapperRicetta.update(id, nome, descrizione, tempoPreparazione);
+	public void aggiornaRicetta (int id, String nome, String descrizione, int tempoPreparazione,ArrayList<Quantita> listaQuantita) {
+		mapperRicetta.update(id, nome, descrizione, tempoPreparazione,listaQuantita);
 		
 	}
 }

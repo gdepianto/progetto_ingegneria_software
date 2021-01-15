@@ -189,9 +189,9 @@ public class VisualizzazioneRicetta implements GenericObserver {
 	        		    public void widgetSelected(SelectionEvent e) {
 	
 	        		    	
-	        		    	/*Modifica_Ingrediente FinestraModifica = new Modifica_Ingrediente(controller, p);
-	        		    	FinestraModifica.addObserver(instance);
-	        		    	FinestraModifica.open();*/
+	        		    	ModificaRicetta finestraModifica = new ModificaRicetta(controller, p);
+	        		    	finestraModifica.setObserver(instance);
+	        		    	finestraModifica.open();
 	
 	        		    }
 	        		});
