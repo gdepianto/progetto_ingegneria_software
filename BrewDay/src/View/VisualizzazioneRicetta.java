@@ -39,6 +39,7 @@ public class VisualizzazioneRicetta implements GenericObserver {
 	private ControllerRicetta controller;
 	private TableViewer viewer;
 	private VisualizzazioneRicetta instance;
+	private Button button;
 	
 	public VisualizzazioneRicetta(ControllerRicetta c) {
 		controller = c;
@@ -243,6 +244,17 @@ public class VisualizzazioneRicetta implements GenericObserver {
 		});
 		btnVisualizzaIngrediente.setBounds(583, 42, 193, 25);
 		btnVisualizzaIngrediente.setText("Visualizza ingrediente");
+		Button btnModificaEquip = new Button(shell, SWT.NONE);
+		btnModificaEquip.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				ModificaEquipaggiamento modEquip = new ModificaEquipaggiamento(controller.getControllerEquipaggiamento(),controller.getControllerEquipaggiamento().getEquipaggiamento());
+				modEquip.open();
+						
+			}
+		});
+		btnModificaEquip.setBounds(583, 73, 193, 25);
+		btnModificaEquip.setText("Modifica equipaggiamento");
 		
 		
 		tableViewer.setInput(listaRicette);
