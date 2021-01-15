@@ -255,6 +255,10 @@ public class AggiuntaRicetta {
         	    	  
         	      }
         	    }
+        	    if(listaQuantita.size() == 0) {
+        	    	contr = false;
+        	    	MessageDialog.openWarning(Display.getDefault().getActiveShell(), "Errore", "Non lasciare ingrediente selezionato con quantita vuota");
+        	    }
         	    if(contr) {
 	        	    String response = controller.aggiungiRicetta(text.getText(), text_1.getText(), Integer.parseInt(spinner.getText()), listaQuantita);
 	        	    if(response.equals("Ok")) {

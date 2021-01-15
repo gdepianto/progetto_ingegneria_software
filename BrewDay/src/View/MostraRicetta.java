@@ -8,6 +8,7 @@ import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 
 import controller.ControllerRicetta;
+import model.Equipaggiamento;
 import model.Ingrediente;
 import model.Quantita;
 import model.Ricetta;
@@ -71,6 +72,7 @@ public class MostraRicetta {
 	 * Create contents of the window.
 	 */
 	protected void createContents() {
+		
 		shell = new Shell();
 		shell.setSize(453, 551);
 		shell.setText("SWT Application");

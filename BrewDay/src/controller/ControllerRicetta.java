@@ -29,7 +29,14 @@ public class ControllerRicetta {
 	}
 	
 	public ArrayList<Ricetta> getRicette(){
-		return mapperRicetta.getRicette();
+		ArrayList<Ricetta>  ricette=mapperRicetta.getRicette();
+		for(Ricetta r : ricette) {
+			Equipaggiamento equip = getControllerEquipaggiamento().getEquipaggiamento();
+			for(Quantita q: r.getIngredienti()) {
+				q.setQuantitaNecessaria(q.getQuantitaNecessaria()*equip.getCapacita());
+			}
+		}
+		return ricette;
 	}
 
 
@@ -49,6 +56,10 @@ public class ControllerRicetta {
 	}
 	
 	public void aggiornaRicetta (int id, String nome, String descrizione, int tempoPreparazione,ArrayList<Quantita> listaQuantita) {
+		Equipaggiamento equip = controllerEquipaggiamento.getEquipaggiamento();
+		for(Quantita q: listaQuantita) {
+			q.setQuantitaNecessaria(q.getQuantitaNecessaria()/equip.getCapacita());
+		}
 		mapperRicetta.update(id, nome, descrizione, tempoPreparazione,listaQuantita);
 		
 	}

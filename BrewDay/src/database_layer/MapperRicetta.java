@@ -133,7 +133,7 @@ public class MapperRicetta {
 		      c.setAutoCommit(false);
 		      System.out.println("Opened database successfully");
 		      String sql = "UPDATE ricetta set nome = ?, descrizione = ?"+
-	    		       ", tempoPreparazione = ? where ID =?";
+	    		       ", tempo_preparazione = ? where ID =?";
 		      
 		      PreparedStatement pstmt = c.prepareStatement( sql );
 			  pstmt.setString(1, nome);
@@ -145,18 +145,32 @@ public class MapperRicetta {
 			    
 			  pstmt.executeUpdate();
 			  
-			  for (Quantita q: quantita) {
-				  
-					  String sql2 = "UPDATE Quantita set ingrediente = ?, quantitaNecessaria = ?"+
-					  	   "WHERE id_ricetta = ?";
-			  
-					  PreparedStatement pstmt2 = c.prepareStatement( sql2 );
-					  pstmt2.setInt(1, q.getIngrediente().getIdIngrediente());
-					  pstmt2.setFloat(2, q.getQuantitaNecessaria());
-					  pstmt2.setInt(3, id);
-					  pstmt2.executeUpdate();
-					  pstmt2.close();
-			  }
+			  String sql2 = "DELETE FROM quantita WHERE id_ricetta = ?";
+		  
+			  PreparedStatement pstmt2 = c.prepareStatement( sql2 );
+			  pstmt2.setInt(1, id);
+			  pstmt2.executeUpdate();
+			  pstmt2.close();
+			  String sqlInsertQuantita = "INSERT INTO quantita (id_ricetta, id_ingrediente, quantita_necessaria) " +
+	                     "VALUES ";
+		      int contQ = 1;
+		      for(Quantita q : quantita) {
+		    	 sqlInsertQuantita+=" (?,?,?),";
+		      }
+		      sqlInsertQuantita = sqlInsertQuantita.substring(0, sqlInsertQuantita.length() - 1);
+		      sqlInsertQuantita += ";";
+		      PreparedStatement statementQuantita = c.prepareStatement( sqlInsertQuantita );
+		      for(Quantita q : quantita) {
+		    	 statementQuantita.setInt(contQ, id);
+		    	 contQ++;
+		    	 statementQuantita.setInt(contQ, q.getIngrediente().getIdIngrediente());
+		    	 contQ++;
+		    	 statementQuantita.setFloat(contQ, q.getQuantitaNecessaria());
+		    	 contQ++;
+		      }
+		      statementQuantita.executeUpdate();
+		      statementQuantita.close();
+			
 				  
 			  pstmt.close();
 		      

@@ -28,6 +28,7 @@ import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.swt.widgets.Text;
 
 import controller.ControllerRicetta;
+import model.Equipaggiamento;
 import model.Ingrediente;
 import model.Quantita;
 import model.Ricetta;
@@ -94,6 +95,7 @@ public class ModificaRicetta {
 		shell = new Shell();
 		shell.setSize(957, 357);
 		shell.setText("SWT Application");
+		
 		
 		ArrayList<Ingrediente> listaIngredienti = controller.getControllerIngredienti().getIngredienti();
 		ArrayList<Text> listaTextBox = new ArrayList<Text>();
@@ -251,7 +253,7 @@ public class ModificaRicetta {
 
 		Button btnNewButton = new Button(shell, SWT.NONE);
 		btnNewButton.setBounds(634, 226, 147, 28);
-		btnNewButton.setText("Aggiungi ricetta");
+		btnNewButton.setText("Modifica ricetta");
 		btnNewButton.addSelectionListener(new SelectionAdapter() {
         	@Override
         	public void widgetSelected(SelectionEvent e) {
