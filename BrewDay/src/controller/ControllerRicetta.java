@@ -52,4 +52,9 @@ public class ControllerRicetta {
 		mapperRicetta.update(id, nome, descrizione, tempoPreparazione,listaQuantita);
 		
 	}
+
+
+	public ControllerEquipaggiamento getControllerEquipaggiamento() {
+		return controllerEquipaggiamento;
+	}
 }
