@@ -169,7 +169,7 @@ public class VisualizzazioneRicetta implements GenericObserver {
 	            buttonVisualize.addSelectionListener(new SelectionAdapter() {
         		    @Override
         		    public void widgetSelected(SelectionEvent e) {
-        		    	mostraRicetta FinestraRicetta = new mostraRicetta(controller, p);
+        		    	MostraRicetta FinestraRicetta = new MostraRicetta(controller, p);
         		    	FinestraRicetta.open();
         		    }
         		});
