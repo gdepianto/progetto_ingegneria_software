@@ -10,6 +10,8 @@ import java.util.ArrayList;
 import View.BrewDayApplication;
 import model.Quantita;
 import model.Ricetta;
+import model.Ingrediente;
+import model.Quantita;
 
 public class MapperRicetta {
 	
@@ -164,6 +166,7 @@ public class MapperRicetta {
 	public ArrayList<Ricetta> getRicette() {
 		Connection c = null;
 		Statement stmt = null;
+		Statement stmt2 = null;
 		ArrayList<Ricetta> listaRicette = new ArrayList<Ricetta>();
 		try {
 		      Class.forName("org.sqlite.JDBC");
@@ -180,10 +183,35 @@ public class MapperRicetta {
 		         String nome = rs.getString("nome");
 		         String descrizione = rs.getString("descrizione");
 		         int tempo_preparazione  = rs.getInt("tempo_preparazione");
+		         
+		         String sql = "SELECT ingrediente.nome, ingrediente.disponibilita,"+
+		        		 	  "ingrediente.unitaMisura, quantita.quantita_necessaria"+
+		        		 	  "FROM quantita, ingrediente"+
+		        		 	  "WHERE quantita.idIngrediente = ingrediente.id"+
+		        		 	  "AND quantita.idRicetta = ?";
+		         PreparedStatement pstmt = c.prepareStatement( sql );
+		         pstmt.setInt(1, id);
+		         
+		         ResultSet rs2 = pstmt.executeQuery();
+		         ArrayList<Quantita> listaQuantita = new ArrayList<Quantita>();
+		         while (rs2.next()) {
+		        	 String nomeIng = rs2.getString("ingrediente.nome");
+		        	 float disponibilitaIng = rs2.getFloat("ingrediente.disponibilita");
+		        	 String unitaMisuraIng = rs2.getString("ingrediente.unitaMisura");
+		        	 float quantitaNecessaria = rs2.getFloat("quantita.quantita_necessaria");
+			         Ingrediente ing = new Ingrediente (nomeIng, disponibilitaIng, unitaMisuraIng);
+			         Quantita quantita = new Quantita();
+			         quantita.setIngrediente(ing);
+			         quantita.setQuantitaNecessaria(quantitaNecessaria);
+			         listaQuantita.add(quantita);
+		         }
+		    
 		         Ricetta ricetta = new Ricetta(nome, descrizione, tempo_preparazione);
 		         ricetta.setIdRicetta(id);
+		         ricetta.setIngredienti(listaQuantita);
 		         listaRicette.add(ricetta);
-		         
+		         rs2.close();
+		         pstmt.close();
 		      }
 		      rs.close();
 		      stmt.close();
