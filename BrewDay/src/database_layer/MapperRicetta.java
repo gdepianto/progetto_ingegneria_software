@@ -126,8 +126,8 @@ public class MapperRicetta {
 	    System.out.println("Operation done successfully");
 	 }
 	
-	public void update (int id, String nome, String descrizione, int tempoPreparazione) {
-		 Connection c = null;
+	public void update (int id, String nome, String descrizione, int tempoPreparazione, ArrayList<Quantita> quantita) {
+		Connection c = null;
 		   
 		   try {
 		      Class.forName("org.sqlite.JDBC");
@@ -137,19 +137,28 @@ public class MapperRicetta {
 		      System.out.println("Opened database successfully");
 		      String sql = "UPDATE ricetta set nome = ?, descrizione = ?"+
 	    		       ", tempoPreparazione = ? where ID =?";
+		      
 		      PreparedStatement pstmt = c.prepareStatement( sql );
 			  pstmt.setString(1, nome);
 			  pstmt.setString(2,descrizione);
 			  pstmt.setInt(3, tempoPreparazione);
 			  pstmt.setInt(4, id);
+			  
 			     
-			         
-			         
 			    
 			  pstmt.executeUpdate();
-			         
-
-			     
+			  
+			  for (Quantita q: quantita) {
+				  
+					  String sql2 = "UPDATE Quantita set ingrediente = ?, quantitaNecessaria = ?"+
+					  	   "WHERE id_ricetta = ?";
+			  
+					  PreparedStatement pstmt2 = c.prepareStatement( sql2 );
+					  pstmt2.setInt(1, id);
+					  pstmt2.executeUpdate();
+					  pstmt2.close();
+			  }
+				  
 			  pstmt.close();
 		      
 		      
@@ -162,6 +171,7 @@ public class MapperRicetta {
 		      System.exit(0);
 	   }	
 	  }
+
 	
 	public ArrayList<Ricetta> getRicette() {
 		Connection c = null;

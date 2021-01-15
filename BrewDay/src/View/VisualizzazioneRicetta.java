@@ -136,6 +136,7 @@ public class VisualizzazioneRicetta implements GenericObserver {
 
 			Map<Object, Composite> compositesAction = new HashMap<Object, Composite>();
 
+
 			public void update(ViewerCell cell) {
 	
 	       	 TableItem item = (TableItem) cell.getItem();
@@ -218,6 +219,7 @@ public class VisualizzazioneRicetta implements GenericObserver {
 	       }
 	
 		});
+
 		
 		Button btnAggiungiRicetta = new Button(shell, SWT.NONE);
 		btnAggiungiRicetta.addSelectionListener(new SelectionAdapter() {

@@ -78,7 +78,9 @@ public class Aggiunta_Ingrediente {
 	 */
 	protected void createContents() {
 		
+
 		shell = new Shell();
+
 		
 		shell.setSize(450, 300);
 		shell.setText("SWT Application");
