@@ -77,10 +77,9 @@ public class Aggiunta_Ingrediente {
 	 * Create contents of the window.
 	 */
 	protected void createContents() {
-		if(shell == null)
+		
 			shell = new Shell();
-		else
-			shell = new Shell(modalWindow,SWT.PRIMARY_MODAL);
+		
 		shell.setSize(450, 300);
 		shell.setText("SWT Application");
 		
