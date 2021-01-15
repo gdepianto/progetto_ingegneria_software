@@ -10,13 +10,13 @@ public class ControllerEquipaggiamento {
 		mapperEquipaggiamento = new MapperEquipaggiamento();
 	}
 
-	public String aggiungiEquipaggiamento(String nome, float disponibilita) {
-		Equipaggiamento equip = new Equipaggiamento(nome, disponibilita);
+	public String aggiungiEquipaggiamento(String nome, float capacita) {
+		Equipaggiamento equip = new Equipaggiamento(nome, capacita);
 		return mapperEquipaggiamento.insert(equip);
 	}
 	
-	public void aggiornaEquipaggiamento(String nome, float disponibilita) {
-		Equipaggiamento equip = new Equipaggiamento(nome, disponibilita);
+	public void aggiornaEquipaggiamento(String nome, float capacita) {
+		Equipaggiamento equip = new Equipaggiamento(nome, capacita);
 		mapperEquipaggiamento.update(equip);
 	}
 	

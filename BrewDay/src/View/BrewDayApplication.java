@@ -151,11 +151,7 @@ public class BrewDayApplication {
 		
 		VisualizzazioneRicetta finestraVisRicetta = new VisualizzazioneRicetta(controlRic);
 		finestraVisRicetta.open();
-		
-		AggiuntaRicetta finestraAggRicetta = new AggiuntaRicetta(controlRic);
-		finestraAggRicetta.open();
-		Visualizzazione_Ingrediente finestra = new Visualizzazione_Ingrediente(control1);
-		finestra.open();
+
 		
 	}
 	

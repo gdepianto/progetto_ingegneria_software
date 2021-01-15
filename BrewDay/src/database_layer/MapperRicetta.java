@@ -184,11 +184,11 @@ public class MapperRicetta {
 		         String descrizione = rs.getString("descrizione");
 		         int tempo_preparazione  = rs.getInt("tempo_preparazione");
 		         
-		         String sql = "SELECT nome, ingrediente.disponibilita,"+
-		        		 	  "ingrediente.unitaMisura, quantita.quantita_necessaria "+
+		         String sql = "SELECT nome, disponibilita,"+
+		        		 	  "unitaMisura, quantita_necessaria "+
 		        		 	  "FROM quantita,ingrediente "+
-		        		 	  "WHERE quantita.id_ingrediente = ingrediente.id "+
-		        		 	  "AND quantita.id_ricetta = ?";
+		        		 	  "WHERE id_ingrediente = ingrediente.id "+
+		        		 	  "AND id_ricetta = ?";
 		         PreparedStatement pstmt = c.prepareStatement( sql );
 		         pstmt.setInt(1, id);
 		         
@@ -197,9 +197,9 @@ public class MapperRicetta {
 		         ArrayList<Quantita> listaQuantita = new ArrayList<Quantita>();
 		         while (rs2.next()) {
 		        	 String nomeIng = rs2.getString("nome");
-		        	 float disponibilitaIng = rs2.getFloat("ingrediente.disponibilita");
-		        	 String unitaMisuraIng = rs2.getString("ingrediente.unitaMisura");
-		        	 float quantitaNecessaria = rs2.getFloat("quantita.quantita_necessaria");
+		        	 float disponibilitaIng = rs2.getFloat("disponibilita");
+		        	 String unitaMisuraIng = rs2.getString("unitaMisura");
+		        	 float quantitaNecessaria = rs2.getFloat("quantita_necessaria");
 			         Ingrediente ing = new Ingrediente (nomeIng, disponibilitaIng, unitaMisuraIng);
 			         Quantita quantita = new Quantita();
 			         quantita.setIngrediente(ing);
