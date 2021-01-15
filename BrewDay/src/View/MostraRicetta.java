@@ -120,7 +120,7 @@ public class MostraRicetta {
         });
         
         column = new TableColumn(tableViewer.getTable(), SWT.NONE);
-        column.setText("Quantità");
+        column.setText("Quantitï¿½");
         column.setWidth(100);
         TableViewerColumn lastNameCol = new TableViewerColumn(tableViewer, column);
         lastNameCol.setLabelProvider(new ColumnLabelProvider(){
