@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.ColumnLabelProvider;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.swt.SWT;
@@ -36,7 +37,6 @@ public class VisualizzazioneRicetta implements GenericObserver {
 	private ControllerRicetta controller;
 	private TableViewer viewer;
 	private VisualizzazioneRicetta instance;
-	private Button btnAggiungiRicetta;
 	
 	public VisualizzazioneRicetta(ControllerRicetta c) {
 		controller = c;
@@ -66,6 +66,10 @@ public class VisualizzazioneRicetta implements GenericObserver {
 	public void open() {
 		Display display = Display.getDefault();
 		createContents(new Shell());
+		
+		
+		
+		
 		shell.open();
 		shell.layout();
 		while (!shell.isDisposed()) {
@@ -82,20 +86,40 @@ public class VisualizzazioneRicetta implements GenericObserver {
 	 * @param args
 	 */
 	protected void createContents(Shell s) {
+		
 		shell = s;
-		shell.setSize(450, 300);
+		
+		shell.setSize(643, 300);
 		shell.setText("SWT Application");
 		ArrayList <Ricetta> listaRicette = controller.getRicette();
 		
 		TableViewer tableViewer = new TableViewer(shell);
+		tableViewer.setContentProvider(new ArrayContentProvider());
 		table = tableViewer.getTable();
 		table.setLinesVisible(true);
 		table.setHeaderVisible(true);
 		table.setBounds(0, 0, 295, 261);
 		
 		
+		
 		TableColumn column = new TableColumn(tableViewer.getTable(), SWT.NONE);
         column.setText("Nome");
+        column.setWidth(100);
+       
+        TableViewerColumn nameCol = new TableViewerColumn(tableViewer, column);
+        
+        nameCol.setLabelProvider(new ColumnLabelProvider(){
+
+            @Override
+            public String getText(Object element) {
+                Ricetta p = (Ricetta)element;
+
+                return p.getNome();
+            }
+
+        });
+		column = new TableColumn(tableViewer.getTable(), SWT.NONE);
+        column.setText("Actions");
         column.setWidth(100);
 		TableViewerColumn tableViewerColumn_1 = new TableViewerColumn(tableViewer, column);
 		
@@ -104,98 +128,114 @@ public class VisualizzazioneRicetta implements GenericObserver {
 
 			Map<Object, Composite> compositesAction = new HashMap<Object, Composite>();
 
-		public void update(ViewerCell cell) {
-
-       	 TableItem item = (TableItem) cell.getItem();
-	        Composite composite;
-	        if(compositesAction.containsKey(cell.getElement()))
-	        {
-	            composite = compositesAction.get(cell.getElement());
-	        }
-	        else
-	        {
-	        	composite = new Composite((Composite) cell.getViewerRow().getControl(),SWT.NONE);
-	        	composite.setLayout(new RowLayout());
-	        	
-	            Button buttonRemove = new Button(composite,SWT.NONE);
-	            buttonRemove.setText("Remove");
-	            Ricetta p = (Ricetta)cell.getElement();
-	            buttonRemove.addSelectionListener(new SelectionAdapter() {
-	    		    @Override
-	    		    public void widgetSelected(SelectionEvent e) {
-	    		    	
-	    		    	
-	    		    	/**/
-	    		    	
-	    		    	
-	    		    	controller.rimuoviRicetta(p.getIdRicetta() );/**/
-	    		    	listaRicette.remove(p);
-	    		    	
-	    		    	//buttons.remove(p);
-	    		    	viewer.setInput(listaRicette);
-	    		    	composite.dispose();
-	    		    	Display.getDefault().asyncExec(new Runnable() {
+			public void update(ViewerCell cell) {
 	
-	                        @Override
-	                        public void run() {
-	                        	for(Ricetta r : listaRicette)
-	                        		System.out.println(r);
-	                        	
-	                        	
-	                        	updateTableViewer();
-	                        	
-	                        }
-	                    });
-	    		    }
-	    		});
-	            
-	            Button buttonUpdate = new Button(composite,SWT.NONE);
-	            buttonUpdate.setText("Modifica");
-	            buttonUpdate.addSelectionListener(new SelectionAdapter() {
-        		    @Override
-        		    public void widgetSelected(SelectionEvent e) {
-
-        		    	
-        		    	/*Modifica_Ingrediente FinestraModifica = new Modifica_Ingrediente(controller, p);
-        		    	FinestraModifica.addObserver(instance);
-        		    	FinestraModifica.open();*/
-
-        		    }
-        		});
-	            
-	            
-	            Button buttonVisualize = new Button(composite,SWT.NONE);
-	            buttonVisualize.setText("Visualizza");
-	            buttonVisualize.addSelectionListener(new SelectionAdapter() {
-        		    @Override
-        		    public void widgetSelected(SelectionEvent e) {
-        		    	MostraRicetta FinestraRicetta = new MostraRicetta(controller, p);
-        		    	FinestraRicetta.open();
-        		    }
-        		});
-	            
-	            
-	            
-	            compositesAction.put(cell.getElement(), composite);
-	        }
-	        TableEditor editor = new TableEditor(item.getParent());
-	        editor.grabHorizontal  = true;
-	        editor.grabVertical = true;
-	        editor.setEditor(composite , item, cell.getColumnIndex());
-	        editor.layout();
-       }
-
-	});
+	       	 TableItem item = (TableItem) cell.getItem();
+		        Composite composite;
+		        if(compositesAction.containsKey(cell.getElement()))
+		        {
+		            composite = compositesAction.get(cell.getElement());
+		        }
+		        else
+		        {
+		        	composite = new Composite((Composite) cell.getViewerRow().getControl(),SWT.NONE);
+		        	composite.setLayout(new RowLayout());
+		        	
+		            Button buttonRemove = new Button(composite,SWT.NONE);
+		            buttonRemove.setText("Remove");
+		            Ricetta p = (Ricetta)cell.getElement();
+		            buttonRemove.addSelectionListener(new SelectionAdapter() {
+		    		    @Override
+		    		    public void widgetSelected(SelectionEvent e) {
+		    		    	
+		    		    	
+		    		    	/**/
+		    		    	
+		    		    	
+		    		    	controller.rimuoviRicetta(p.getIdRicetta() );/**/
+		    		    	listaRicette.remove(p);
+		    		    	
+		    		    	//buttons.remove(p);
+		    		    	viewer.setInput(listaRicette);
+		    		    	composite.dispose();
+		    		    	Display.getDefault().asyncExec(new Runnable() {
+		
+		                        @Override
+		                        public void run() {
+		                        	for(Ricetta r : listaRicette)
+		                        		System.out.println(r);
+		                        	
+		                        	
+		                        	updateTableViewer();
+		                        	
+		                        }
+		                    });
+		    		    }
+		    		});
+		            
+		            Button buttonUpdate = new Button(composite,SWT.NONE);
+		            buttonUpdate.setText("Modifica");
+		            buttonUpdate.addSelectionListener(new SelectionAdapter() {
+	        		    @Override
+	        		    public void widgetSelected(SelectionEvent e) {
+	
+	        		    	
+	        		    	/*Modifica_Ingrediente FinestraModifica = new Modifica_Ingrediente(controller, p);
+	        		    	FinestraModifica.addObserver(instance);
+	        		    	FinestraModifica.open();*/
+	
+	        		    }
+	        		});
+		            
+		            
+		            Button buttonVisualize = new Button(composite,SWT.NONE);
+		            buttonVisualize.setText("Visualizza");
+		            buttonVisualize.addSelectionListener(new SelectionAdapter() {
+	        		    @Override
+	        		    public void widgetSelected(SelectionEvent e) {
+	        		    	MostraRicetta FinestraRicetta = new MostraRicetta(controller, p);
+	        		    	FinestraRicetta.open();
+	        		    }
+	        		});
+		            
+		            
+		            
+		            compositesAction.put(cell.getElement(), composite);
+		        }
+		        TableEditor editor = new TableEditor(item.getParent());
+		        editor.grabHorizontal  = true;
+		        editor.grabVertical = true;
+		        editor.setEditor(composite , item, cell.getColumnIndex());
+		        editor.layout();
+	       }
+	
+		});
 		
 		Button btnAggiungiRicetta = new Button(shell, SWT.NONE);
 		btnAggiungiRicetta.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				
+				AggiuntaRicetta finestraAggiunta = new AggiuntaRicetta(controller);
+				finestraAggiunta.setObserver(instance);
+				finestraAggiunta.open();
 			}
 		});
-		btnAggiungiRicetta.setBounds(327, 115, 97, 25);
+		btnAggiungiRicetta.setBounds(363, 10, 193, 25);
 		btnAggiungiRicetta.setText("Aggiungi Ricetta");
+		
+		Button btnVisualizzaIngrediente = new Button(shell, SWT.NONE);
+		btnVisualizzaIngrediente.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				Visualizzazione_Ingrediente finestraIngredienti = new Visualizzazione_Ingrediente(controller.getControllerIngredienti());
+				finestraIngredienti.open();
+			}
+		});
+		btnVisualizzaIngrediente.setBounds(363, 41, 193, 25);
+		btnVisualizzaIngrediente.setText("Visualizza ingrediente");
+		
+		
+		tableViewer.setInput(listaRicette);
   }
 
 	@Override
@@ -220,29 +260,5 @@ public class VisualizzazioneRicetta implements GenericObserver {
 	
 	
 
-	/**
-	 * Create contents of the window.
-	 */
-	
-   
-   
-   
-   
-
-
-		
-		
-		
-	
-		
-		
-   
-
-
-		
-		
-		
-		
-
-	}
+}
 

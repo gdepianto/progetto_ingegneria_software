@@ -177,25 +177,26 @@ public class MapperRicetta {
 
 		      stmt = c.createStatement();
 		      ResultSet rs = stmt.executeQuery( "SELECT * FROM ricetta;" );
-		      
+		      System.out.println("prima sel");
 		      while ( rs.next() ) {
 		    	 int id = rs.getInt("id");
 		         String nome = rs.getString("nome");
 		         String descrizione = rs.getString("descrizione");
 		         int tempo_preparazione  = rs.getInt("tempo_preparazione");
 		         
-		         String sql = "SELECT ingrediente.nome, ingrediente.disponibilita,"+
-		        		 	  "ingrediente.unitaMisura, quantita.quantita_necessaria"+
-		        		 	  "FROM quantita, ingrediente"+
-		        		 	  "WHERE quantita.idIngrediente = ingrediente.id"+
-		        		 	  "AND quantita.idRicetta = ?";
+		         String sql = "SELECT nome, ingrediente.disponibilita,"+
+		        		 	  "ingrediente.unitaMisura, quantita.quantita_necessaria "+
+		        		 	  "FROM quantita,ingrediente "+
+		        		 	  "WHERE quantita.id_ingrediente = ingrediente.id "+
+		        		 	  "AND quantita.id_ricetta = ?";
 		         PreparedStatement pstmt = c.prepareStatement( sql );
 		         pstmt.setInt(1, id);
 		         
 		         ResultSet rs2 = pstmt.executeQuery();
+		         System.out.println("seconda sel");
 		         ArrayList<Quantita> listaQuantita = new ArrayList<Quantita>();
 		         while (rs2.next()) {
-		        	 String nomeIng = rs2.getString("ingrediente.nome");
+		        	 String nomeIng = rs2.getString("nome");
 		        	 float disponibilitaIng = rs2.getFloat("ingrediente.disponibilita");
 		        	 String unitaMisuraIng = rs2.getString("ingrediente.unitaMisura");
 		        	 float quantitaNecessaria = rs2.getFloat("quantita.quantita_necessaria");

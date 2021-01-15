@@ -45,8 +45,8 @@ public class BrewDayApplication {
 	         System.out.println("Opened database successfully");
 	         
 	         stmt = c.createStatement();
-	         String sql = "CREATE TABLE IF NOT EXISTS ingrediente" + 
-	        		  "(id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL," +
+	         String sql = "CREATE TABLE IF NOT EXISTS ingrediente " + 
+	        		  "(id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, " +
 	        		  "nome VARCHAR(45) UNIQUE NOT NULL, " +
 	        		  "unitaMisura VARCHAR(45) NOT NULL, " +
 	        		  "disponibilita FLOAT NOT NULL)";
@@ -66,7 +66,7 @@ public class BrewDayApplication {
 		        System.out.println("Opened database successfully");
 		
 		        stmt = c.createStatement();
-		        String sql = "CREATE TABLE IF NOT EXISTS ricetta" + 
+		        String sql = "CREATE TABLE IF NOT EXISTS ricetta " + 
 		       		  "(id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL," +
 		       		  "nome VARCHAR(45) NOT NULL, " +
 		       		  "descrizione TEXT(1000) NOT NULL, " +
@@ -89,7 +89,7 @@ public class BrewDayApplication {
 			        System.out.println("Opened database successfully");
 			
 			        stmt = c.createStatement();
-			        String sql = "CREATE TABLE IF NOT EXISTS equipaggiamento" + 
+			        String sql = "CREATE TABLE IF NOT EXISTS equipaggiamento " + 
 			       		  "(id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL," +
 			       		  "nome VARCHAR(45) NOT NULL, " +
 			       		  "capacita FLOAT NOT NULL)";
@@ -109,7 +109,7 @@ public class BrewDayApplication {
 				        System.out.println("Opened database successfully");
 				
 				        stmt = c.createStatement();
-				        String sql = "CREATE TABLE IF NOT EXISTS quantita" + 
+				        String sql = "CREATE TABLE IF NOT EXISTS quantita " + 
 				       		  "(id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL," +
 				       		  "id_ricetta INTEGER NOT NULL, " +
 				       		  "id_ingrediente INTEGER NOT NULL," +
@@ -146,7 +146,12 @@ public class BrewDayApplication {
 		ControllerEquipaggiamento controllerEq = new ControllerEquipaggiamento();
 		
 		ControllerIngredienti control1 = new ControllerIngredienti();
+		
 		ControllerRicetta controlRic = new ControllerRicetta(control1,controllerEq);
+		
+		VisualizzazioneRicetta finestraVisRicetta = new VisualizzazioneRicetta(controlRic);
+		finestraVisRicetta.open();
+		
 		AggiuntaRicetta finestraAggRicetta = new AggiuntaRicetta(controlRic);
 		finestraAggRicetta.open();
 		Visualizzazione_Ingrediente finestra = new Visualizzazione_Ingrediente(control1);
