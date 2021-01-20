@@ -20,17 +20,14 @@ public class CreaEquipaggiamento {
 	protected Shell shell;
 	private Text text;
 	private ControllerEquipaggiamento controller;
-	String password;
 	
 
-	public CreaEquipaggiamento(ControllerEquipaggiamento controller,String password) {
+	public CreaEquipaggiamento(ControllerEquipaggiamento controller) {
 		this.controller = controller;
-		this.password = password;
 	}
 	
 	public CreaEquipaggiamento() {
 		this.controller = null;
-		this.password = null;
 	}
 
 	/**
@@ -110,7 +107,7 @@ public class CreaEquipaggiamento {
 		                        	
 		                        }
 		                    });
-	        				BrewDayApplication.startApplication(password);
+	        				BrewDayApplication.startApplication(BrewDayApplication.password);
         				}
         				else {
         					MessageDialog.openWarning(Display.getDefault().getActiveShell(), "Errore", "Capacita deve essere maggiore di zero");

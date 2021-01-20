@@ -21,14 +21,14 @@ public class MapperEquipaggiamento {
 	         System.out.println("Opened database successfully");
 	         
 	         String sql = "INSERT INTO equipaggiamento (nome, capacita) " +
-                     "VALUES (?,?);"; 
+                
+	              "VALUES (?,?);"; 
 	         PreparedStatement pstmt = c.prepareStatement( sql );
 	         pstmt.setString(1, equip.getNome());
 	         pstmt.setFloat(2, equip.getCapacita());
 	         
 	         	    
 	         pstmt.executeUpdate();
-	         
 
 	         pstmt.close();
 	         
@@ -40,10 +40,7 @@ public class MapperEquipaggiamento {
 	         System.exit(0);
 	      }
 	      System.out.println("Records created successfully");
-	      if(contr == 0)
-	    	  return "Ok";
-	      else 
-	    	  return "Errore: problemi al database";
+	      return "Ok";
 	     
 	    	  
 	}

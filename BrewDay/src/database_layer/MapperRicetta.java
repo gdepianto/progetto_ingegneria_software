@@ -11,7 +11,6 @@ import View.BrewDayApplication;
 import model.Quantita;
 import model.Ricetta;
 import model.Ingrediente;
-import model.Quantita;
 
 public class MapperRicetta {
 	
@@ -101,22 +100,20 @@ public class MapperRicetta {
 	       c.setAutoCommit(false);
 	       String sql = "DELETE FROM ricetta WHERE ID=?";
 	       System.out.println("Opened database successfully");
+	       
 	       PreparedStatement pstmt = c.prepareStatement( sql );
-		
 		   pstmt.setInt(1, id);
-		     
-		         
-		         
-		    
 		   pstmt.executeUpdate();
-		         
-
+		   
+		   String sql2 = "DELETE FROM quantita WHERE id_ricetta = ?";
+		   PreparedStatement pstmt2 = c.prepareStatement(sql2);
+		   pstmt2.setInt(1, id);
+		   pstmt2.executeUpdate();		         
 		     
+		   pstmt2.close();
 		   pstmt.close();
-	
 	      
 	       c.commit();
-	
 	
 	    c.close();
 	    } catch ( Exception e ) {
@@ -126,8 +123,8 @@ public class MapperRicetta {
 	    System.out.println("Operation done successfully");
 	 }
 	
-	public void update (int id, String nome, String descrizione, int tempoPreparazione) {
-		 Connection c = null;
+	public void update (int id, String nome, String descrizione, int tempoPreparazione, ArrayList<Quantita> quantita) {
+		Connection c = null;
 		   
 		   try {
 		      Class.forName("org.sqlite.JDBC");
@@ -136,20 +133,45 @@ public class MapperRicetta {
 		      c.setAutoCommit(false);
 		      System.out.println("Opened database successfully");
 		      String sql = "UPDATE ricetta set nome = ?, descrizione = ?"+
-	    		       ", tempoPreparazione = ? where ID =?";
+	    		       ", tempo_preparazione = ? where ID =?";
+		      
 		      PreparedStatement pstmt = c.prepareStatement( sql );
 			  pstmt.setString(1, nome);
 			  pstmt.setString(2,descrizione);
 			  pstmt.setInt(3, tempoPreparazione);
 			  pstmt.setInt(4, id);
+			  
 			     
-			         
-			         
 			    
 			  pstmt.executeUpdate();
-			         
-
-			     
+			  
+			  String sql2 = "DELETE FROM quantita WHERE id_ricetta = ?";
+		  
+			  PreparedStatement pstmt2 = c.prepareStatement( sql2 );
+			  pstmt2.setInt(1, id);
+			  pstmt2.executeUpdate();
+			  pstmt2.close();
+			  String sqlInsertQuantita = "INSERT INTO quantita (id_ricetta, id_ingrediente, quantita_necessaria) " +
+	                     "VALUES ";
+		      int contQ = 1;
+		      for(Quantita q : quantita) {
+		    	 sqlInsertQuantita+=" (?,?,?),";
+		      }
+		      sqlInsertQuantita = sqlInsertQuantita.substring(0, sqlInsertQuantita.length() - 1);
+		      sqlInsertQuantita += ";";
+		      PreparedStatement statementQuantita = c.prepareStatement( sqlInsertQuantita );
+		      for(Quantita q : quantita) {
+		    	 statementQuantita.setInt(contQ, id);
+		    	 contQ++;
+		    	 statementQuantita.setInt(contQ, q.getIngrediente().getIdIngrediente());
+		    	 contQ++;
+		    	 statementQuantita.setFloat(contQ, q.getQuantitaNecessaria());
+		    	 contQ++;
+		      }
+		      statementQuantita.executeUpdate();
+		      statementQuantita.close();
+			
+				  
 			  pstmt.close();
 		      
 		      
@@ -162,6 +184,7 @@ public class MapperRicetta {
 		      System.exit(0);
 	   }	
 	  }
+
 	
 	public ArrayList<Ricetta> getRicette() {
 		Connection c = null;
@@ -184,11 +207,11 @@ public class MapperRicetta {
 		         String descrizione = rs.getString("descrizione");
 		         int tempo_preparazione  = rs.getInt("tempo_preparazione");
 		         
-		         String sql = "SELECT nome, ingrediente.disponibilita,"+
-		        		 	  "ingrediente.unitaMisura, quantita.quantita_necessaria "+
+		         String sql = "SELECT nome, disponibilita,"+
+		        		 	  "unitaMisura, quantita_necessaria "+
 		        		 	  "FROM quantita,ingrediente "+
-		        		 	  "WHERE quantita.id_ingrediente = ingrediente.id "+
-		        		 	  "AND quantita.id_ricetta = ?";
+		        		 	  "WHERE id_ingrediente = ingrediente.id "+
+		        		 	  "AND id_ricetta = ?";
 		         PreparedStatement pstmt = c.prepareStatement( sql );
 		         pstmt.setInt(1, id);
 		         
@@ -197,9 +220,9 @@ public class MapperRicetta {
 		         ArrayList<Quantita> listaQuantita = new ArrayList<Quantita>();
 		         while (rs2.next()) {
 		        	 String nomeIng = rs2.getString("nome");
-		        	 float disponibilitaIng = rs2.getFloat("ingrediente.disponibilita");
-		        	 String unitaMisuraIng = rs2.getString("ingrediente.unitaMisura");
-		        	 float quantitaNecessaria = rs2.getFloat("quantita.quantita_necessaria");
+		        	 float disponibilitaIng = rs2.getFloat("disponibilita");
+		        	 String unitaMisuraIng = rs2.getString("unitaMisura");
+		        	 float quantitaNecessaria = rs2.getFloat("quantita_necessaria");
 			         Ingrediente ing = new Ingrediente (nomeIng, disponibilitaIng, unitaMisuraIng);
 			         Quantita quantita = new Quantita();
 			         quantita.setIngrediente(ing);

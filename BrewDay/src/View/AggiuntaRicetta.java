@@ -238,24 +238,35 @@ public class AggiuntaRicetta {
         	@Override
         	public void widgetSelected(SelectionEvent e) {
         		ArrayList<Quantita> listaQuantita = new ArrayList<Quantita>();
-        		
+        		boolean contr = true;
         		TableItem [] items = tableViewer.getTable().getItems();
-        	    for (int i = 0; i < items.length; ++i) {
+        	    for (int i = 0; i < items.length && contr; ++i) {
         	      if (items[i].getChecked()) {
-        	    	  Quantita q = new Quantita();
-        	    	  q.setIngrediente(listaIngredienti.get(i));
-        	    	  q.setQuantitaNecessaria(Float.parseFloat(listaTextBox.get(i).getText()));
-        	    	  listaQuantita.add(q);
+        	    	  if(listaTextBox.get(i).getText().isEmpty() ) {
+        	    		  MessageDialog.openWarning(Display.getDefault().getActiveShell(), "Errore", "Non lasciare ingrediente selezionato con quantita vuota");
+        	    		  contr = false;
+        	    	  }
+        	    	  else {
+	        	    	  Quantita q = new Quantita();
+	        	    	  q.setIngrediente(listaIngredienti.get(i));
+	        	    	  q.setQuantitaNecessaria(Float.parseFloat(listaTextBox.get(i).getText()));
+	        	    	  listaQuantita.add(q);
+        	    	  }
         	    	  
         	      }
         	    }
-        	    
-        	    String response = controller.aggiungiRicetta(text.getText(), text_1.getText(), Integer.parseInt(spinner.getText()), listaQuantita);
-        	    if(response.equals("Ok")) {
-        	    	observer.update();
+        	    if(listaQuantita.size() == 0) {
+        	    	contr = false;
+        	    	MessageDialog.openWarning(Display.getDefault().getActiveShell(), "Errore", "Non lasciare ingrediente selezionato con quantita vuota");
         	    }
-        	    else {
-        	    	MessageDialog.openWarning(Display.getDefault().getActiveShell(), "Errore", response);
+        	    if(contr) {
+	        	    String response = controller.aggiungiRicetta(text.getText(), text_1.getText(), Integer.parseInt(spinner.getText()), listaQuantita);
+	        	    if(response.equals("Ok")) {
+	        	    	observer.update();
+	        	    }
+	        	    else {
+	        	    	MessageDialog.openWarning(Display.getDefault().getActiveShell(), "Errore", response);
+	        	    }
         	    }
         	    
         	}

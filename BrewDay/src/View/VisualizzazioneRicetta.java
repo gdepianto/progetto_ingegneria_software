@@ -4,6 +4,8 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Event;
+import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Table;
 
@@ -37,6 +39,7 @@ public class VisualizzazioneRicetta implements GenericObserver {
 	private ControllerRicetta controller;
 	private TableViewer viewer;
 	private VisualizzazioneRicetta instance;
+	private Button button;
 	
 	public VisualizzazioneRicetta(ControllerRicetta c) {
 		controller = c;
@@ -89,22 +92,28 @@ public class VisualizzazioneRicetta implements GenericObserver {
 		
 		shell = s;
 		
-		shell.setSize(643, 300);
+		shell.setSize(838, 300);
 		shell.setText("SWT Application");
 		ArrayList <Ricetta> listaRicette = controller.getRicette();
 		
 		TableViewer tableViewer = new TableViewer(shell);
 		tableViewer.setContentProvider(new ArrayContentProvider());
 		table = tableViewer.getTable();
+		table.addListener(SWT.MeasureItem, new Listener() {
+            public void handleEvent(Event event) {
+                 
+                event.height = 50;
+            }
+        });
 		table.setLinesVisible(true);
 		table.setHeaderVisible(true);
-		table.setBounds(0, 0, 295, 261);
+		table.setBounds(0, 0, 538, 261);
 		
 		
 		
 		TableColumn column = new TableColumn(tableViewer.getTable(), SWT.NONE);
         column.setText("Nome");
-        column.setWidth(100);
+        column.setWidth(200);
        
         TableViewerColumn nameCol = new TableViewerColumn(tableViewer, column);
         
@@ -120,7 +129,7 @@ public class VisualizzazioneRicetta implements GenericObserver {
         });
 		column = new TableColumn(tableViewer.getTable(), SWT.NONE);
         column.setText("Actions");
-        column.setWidth(100);
+        column.setWidth(200);
 		TableViewerColumn tableViewerColumn_1 = new TableViewerColumn(tableViewer, column);
 		
 		
@@ -157,7 +166,7 @@ public class VisualizzazioneRicetta implements GenericObserver {
 		    		    	listaRicette.remove(p);
 		    		    	
 		    		    	//buttons.remove(p);
-		    		    	viewer.setInput(listaRicette);
+		    		    	tableViewer.setInput(listaRicette);
 		    		    	composite.dispose();
 		    		    	Display.getDefault().asyncExec(new Runnable() {
 		
@@ -181,9 +190,9 @@ public class VisualizzazioneRicetta implements GenericObserver {
 	        		    public void widgetSelected(SelectionEvent e) {
 	
 	        		    	
-	        		    	/*Modifica_Ingrediente FinestraModifica = new Modifica_Ingrediente(controller, p);
-	        		    	FinestraModifica.addObserver(instance);
-	        		    	FinestraModifica.open();*/
+	        		    	ModificaRicetta finestraModifica = new ModificaRicetta(controller, p);
+	        		    	finestraModifica.setObserver(instance);
+	        		    	finestraModifica.open();
 	
 	        		    }
 	        		});
@@ -222,7 +231,7 @@ public class VisualizzazioneRicetta implements GenericObserver {
 				finestraAggiunta.open();
 			}
 		});
-		btnAggiungiRicetta.setBounds(363, 10, 193, 25);
+		btnAggiungiRicetta.setBounds(583, 11, 193, 25);
 		btnAggiungiRicetta.setText("Aggiungi Ricetta");
 		
 		Button btnVisualizzaIngrediente = new Button(shell, SWT.NONE);
@@ -233,8 +242,19 @@ public class VisualizzazioneRicetta implements GenericObserver {
 				finestraIngredienti.open();
 			}
 		});
-		btnVisualizzaIngrediente.setBounds(363, 41, 193, 25);
+		btnVisualizzaIngrediente.setBounds(583, 42, 193, 25);
 		btnVisualizzaIngrediente.setText("Visualizza ingrediente");
+		Button btnModificaEquip = new Button(shell, SWT.NONE);
+		btnModificaEquip.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				ModificaEquipaggiamento modEquip = new ModificaEquipaggiamento(controller.getControllerEquipaggiamento(),controller.getControllerEquipaggiamento().getEquipaggiamento());
+				modEquip.open();
+						
+			}
+		});
+		btnModificaEquip.setBounds(583, 73, 193, 25);
+		btnModificaEquip.setText("Modifica equipaggiamento");
 		
 		
 		tableViewer.setInput(listaRicette);

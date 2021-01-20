@@ -8,12 +8,14 @@ import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 
 import controller.ControllerRicetta;
+import model.Equipaggiamento;
 import model.Ingrediente;
 import model.Quantita;
 import model.Ricetta;
 
 import java.util.ArrayList;
 
+import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.CheckboxTableViewer;
 import org.eclipse.jface.viewers.ColumnLabelProvider;
 import org.eclipse.jface.viewers.TableViewer;
@@ -70,45 +72,47 @@ public class MostraRicetta {
 	 * Create contents of the window.
 	 */
 	protected void createContents() {
+		
 		shell = new Shell();
-		shell.setSize(450, 468);
+		shell.setSize(453, 551);
 		shell.setText("SWT Application");
 		
 		Label lblNome = new Label(shell, SWT.NONE);
-		lblNome.setBounds(10, 10, 55, 15);
+		lblNome.setBounds(10, 10, 48, 15);
 		lblNome.setText("Nome :");
 		
 		
 		
 		Label lblTempoPreparazione = new Label(shell, SWT.NONE);
-		lblTempoPreparazione.setBounds(10, 42, 115, 15);
+		lblTempoPreparazione.setBounds(10, 42, 162, 25);
 		lblTempoPreparazione.setText("Tempo Preparazione :");
 		
 		Label label = new Label(shell, SWT.NONE);
-		label.setBounds(70, 10, 73, 15);
+		label.setBounds(70, 10, 299, 25);
 		label.setText(ricetta.getNome());
 		
 		Label label_1 = new Label(shell, SWT.NONE);
-		label_1.setBounds(131, 42, 55, 15);
+		label_1.setBounds(269, 42, 117, 25);
 		label_1.setText(""+ricetta.getTempoPreparazione());
 		
 		Label lblIngredienti = new Label(shell, SWT.NONE);
-		lblIngredienti.setBounds(10, 63, 63, 15);
+		lblIngredienti.setBounds(10, 78, 162, 24);
 		lblIngredienti.setText("Ingredienti :");
 		
 		TableViewer tableViewer = new TableViewer(shell, SWT.BORDER | SWT.FULL_SELECTION);
+		tableViewer.setContentProvider(new ArrayContentProvider());
 		table = tableViewer.getTable();
 		table.setLinesVisible(true);
 		table.setHeaderVisible(true);
-		table.setBounds(10, 84, 414, 85);
+		table.setBounds(10, 108, 414, 159);
 		
 		TableColumn column = new TableColumn(tableViewer.getTable(), SWT.NONE);
         column.setText("Nome");
         column.setWidth(100);
        
-        TableViewerColumn firstNameCol = new TableViewerColumn(tableViewer, column);
+        TableViewerColumn nameCol = new TableViewerColumn(tableViewer, column);
         
-        firstNameCol.setLabelProvider(new ColumnLabelProvider(){
+        nameCol.setLabelProvider(new ColumnLabelProvider(){
 
             @Override
             public String getText(Object element) {
@@ -120,10 +124,10 @@ public class MostraRicetta {
         });
         
         column = new TableColumn(tableViewer.getTable(), SWT.NONE);
-        column.setText("Quantit�");
+        column.setText("Quantita");
         column.setWidth(100);
-        TableViewerColumn lastNameCol = new TableViewerColumn(tableViewer, column);
-        lastNameCol.setLabelProvider(new ColumnLabelProvider(){
+        TableViewerColumn quantitaCol = new TableViewerColumn(tableViewer, column);
+        quantitaCol.setLabelProvider(new ColumnLabelProvider(){
 
             @Override
             public String getText(Object element) {
@@ -136,15 +140,32 @@ public class MostraRicetta {
 
         });
         
+        column = new TableColumn(tableViewer.getTable(), SWT.NONE);
+        column.setText("Unita di misura");
+        column.setWidth(100);
+        TableViewerColumn unitaMisuraCol = new TableViewerColumn(tableViewer, column);
+        unitaMisuraCol.setLabelProvider(new ColumnLabelProvider(){
+
+            @Override
+            public String getText(Object element) {
+               
+            	Quantita w = (Quantita)element;
+            	return w.getIngrediente().getUnitaMisura();
+            	
+            	
+            }
+
+        });
+        
         Label lblProcedimento = new Label(shell, SWT.NONE);
-        lblProcedimento.setBounds(10, 194, 88, 15);
+        lblProcedimento.setBounds(10, 279, 152, 15);
         lblProcedimento.setText("Procedimento:");
         
         Label label_2 = new Label(shell, SWT.NONE);
-        label_2.setBounds(10, 215, 414, 204);
+        label_2.setBounds(10, 305, 414, 204);
         label_2.setText(ricetta.getDescrizione());
         
-        
+        tableViewer.setInput(ricetta.getIngredienti());
 		
 		
 
