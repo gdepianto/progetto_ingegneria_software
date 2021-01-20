@@ -4,15 +4,11 @@ import java.io.File;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.Statement;
-import java.util.ArrayList;
-
-import org.eclipse.swt.widgets.Shell;
 
 import controller.ControllerEquipaggiamento;
 import controller.ControllerIngredienti;
 import controller.ControllerRicetta;
 import controller.SecurityController;
-import model.Ingrediente;
 
 public class BrewDayApplication {
 	public static String password;
@@ -132,7 +128,7 @@ public class BrewDayApplication {
 				     System.out.println("Table created successfully");
 
 			     
-		ControllerEquipaggiamento controllerEq = new ControllerEquipaggiamento();
+		ControllerEquipaggiamento controllerEq = new ControllerEquipaggiamento(pass);
 		CreaEquipaggiamento finestraCreaEq = new CreaEquipaggiamento(controllerEq);
 		finestraCreaEq.open();
 			    
@@ -143,11 +139,11 @@ public class BrewDayApplication {
 		
 		     
 		
-		ControllerEquipaggiamento controllerEq = new ControllerEquipaggiamento();
+		ControllerEquipaggiamento controllerEq = new ControllerEquipaggiamento(password);
 		
-		ControllerIngredienti control1 = new ControllerIngredienti();
+		ControllerIngredienti control1 = new ControllerIngredienti(password);
 		
-		ControllerRicetta controlRic = new ControllerRicetta(control1,controllerEq);
+		ControllerRicetta controlRic = new ControllerRicetta(control1,controllerEq,password);
 		
 		VisualizzazioneRicetta finestraVisRicetta = new VisualizzazioneRicetta(controlRic);
 		finestraVisRicetta.open();

@@ -6,17 +6,21 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 
-import View.BrewDayApplication;
 import model.Equipaggiamento;
 
 public class MapperEquipaggiamento {
+	private String pass;
+	
+	public MapperEquipaggiamento(String pass) {
+		this.pass = pass;
+	}
+
 	public String insert(Equipaggiamento equip) {
 		  Connection c = null;
-		  int contr = -1;
 	      try {
 	         Class.forName("org.sqlite.JDBC");
 	         c = DriverManager.getConnection("jdbc:sqlite:brewday.db","",
-	                 BrewDayApplication.password);
+	                 pass);
 	         c.setAutoCommit(false);
 	         System.out.println("Opened database successfully");
 	         
@@ -34,7 +38,6 @@ public class MapperEquipaggiamento {
 	         
 	         c.commit();
 	         c.close();
-	         contr = 0;
 	      } catch ( Exception e ) {
 	         System.err.println( e.getClass().getName() + ": " + e.getMessage() );
 	         System.exit(0);
@@ -51,7 +54,7 @@ public class MapperEquipaggiamento {
 	    try {
 	       Class.forName("org.sqlite.JDBC");
 	       c = DriverManager.getConnection("jdbc:sqlite:brewday.db","",
-	    		   BrewDayApplication.password);
+	    		   pass);
 	       c.setAutoCommit(false);
 	       String sql = "DELETE FROM equipaggiamento";
 	       System.out.println("Opened database successfully");
@@ -86,7 +89,7 @@ public class MapperEquipaggiamento {
 		try {
 		      Class.forName("org.sqlite.JDBC");
 		      c = DriverManager.getConnection("jdbc:sqlite:brewday.db","",
-		    		  BrewDayApplication.password);
+		    		  pass);
 		      c.setAutoCommit(false);
 		      System.out.println("Opened database successfully");
 

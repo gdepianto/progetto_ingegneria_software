@@ -7,13 +7,18 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
 
-import View.BrewDayApplication;
 import model.Quantita;
 import model.Ricetta;
 import model.Ingrediente;
 
 public class MapperRicetta {
+	private String pass;
 	
+	
+	public MapperRicetta(String pass) {
+		this.pass = pass;
+	}
+
 	public String insert(Ricetta ricetta) {
 		  Connection c = null;
 		  int count = -1;
@@ -21,7 +26,7 @@ public class MapperRicetta {
 	      try {
 	         Class.forName("org.sqlite.JDBC");
 	         c = DriverManager.getConnection("jdbc:sqlite:brewday.db","",
-		    		  BrewDayApplication.password);
+	        		 pass);
 	         c.setAutoCommit(false);
 	         System.out.println("Opened database successfully");
 	         
@@ -96,7 +101,7 @@ public class MapperRicetta {
 	    try {
 	       Class.forName("org.sqlite.JDBC");
 	       c = DriverManager.getConnection("jdbc:sqlite:brewday.db","",
-		    		  BrewDayApplication.password);
+	    		   pass);
 	       c.setAutoCommit(false);
 	       String sql = "DELETE FROM ricetta WHERE ID=?";
 	       System.out.println("Opened database successfully");
@@ -129,7 +134,7 @@ public class MapperRicetta {
 		   try {
 		      Class.forName("org.sqlite.JDBC");
 		      c = DriverManager.getConnection("jdbc:sqlite:brewday.db","",
-		    		  BrewDayApplication.password);
+		    		  pass);
 		      c.setAutoCommit(false);
 		      System.out.println("Opened database successfully");
 		      String sql = "UPDATE ricetta set nome = ?, descrizione = ?"+
@@ -194,7 +199,7 @@ public class MapperRicetta {
 		try {
 		      Class.forName("org.sqlite.JDBC");
 		      c = DriverManager.getConnection("jdbc:sqlite:brewday.db","",
-		    		  BrewDayApplication.password);
+		    		  pass);
 		      c.setAutoCommit(false);
 		      System.out.println("Opened database successfully");
 

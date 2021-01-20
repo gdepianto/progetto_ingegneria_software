@@ -7,17 +7,25 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
 
-import View.BrewDayApplication;
 import model.Ingrediente;
 
 public class MapperIngrediente {
+	private String pass;
+	
+	
+	
+	
+	public MapperIngrediente(String pass) {
+		this.pass = pass;
+	}
+
 	public String insert(Ingrediente ing) {
 		  Connection c = null;
 		  int count = -1;
 	      try {
 	         Class.forName("org.sqlite.JDBC");
 	         c = DriverManager.getConnection("jdbc:sqlite:brewday.db","",
-	                 BrewDayApplication.password);
+	                 pass);
 	         c.setAutoCommit(false);
 	         System.out.println("Opened database successfully");
 	         
@@ -67,7 +75,7 @@ public class MapperIngrediente {
 		try {
 		      Class.forName("org.sqlite.JDBC");
 		      c = DriverManager.getConnection("jdbc:sqlite:brewday.db","",
-		    		  BrewDayApplication.password);
+		    		  pass);
 		      c.setAutoCommit(false);
 		      System.out.println("Opened database successfully");
 
@@ -102,7 +110,7 @@ public class MapperIngrediente {
 	    try {
 	       Class.forName("org.sqlite.JDBC");
 	       c = DriverManager.getConnection("jdbc:sqlite:brewday.db","",
-	    		   BrewDayApplication.password);
+	    		   pass);
 	       c.setAutoCommit(false);
 	       String sql = "DELETE FROM ingrediente WHERE ID=?";
 	       System.out.println("Opened database successfully");
@@ -133,7 +141,7 @@ public class MapperIngrediente {
 	   try {
 	      Class.forName("org.sqlite.JDBC");
 	      c = DriverManager.getConnection("jdbc:sqlite:brewday.db","",
-	    		  BrewDayApplication.password);
+	    		  pass);
 	      c.setAutoCommit(false);
 	      System.out.println("Opened database successfully");
 	      String sql = "UPDATE INGREDIENTE set nome = ?, disponibilita =?, unitaMisura=? where ID =?";
