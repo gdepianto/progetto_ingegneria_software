@@ -13,10 +13,11 @@ import model.Ingrediente;
 
 public class MapperRicetta {
 	private String pass;
+	private String dbName;
 	
-	
-	public MapperRicetta(String pass) {
+	public MapperRicetta(String pass,String dbName) {
 		this.pass = pass;
+		this.dbName = dbName;
 	}
 
 	public String insert(Ricetta ricetta) {
@@ -25,7 +26,7 @@ public class MapperRicetta {
 	      
 	      try {
 	         Class.forName("org.sqlite.JDBC");
-	         c = DriverManager.getConnection("jdbc:sqlite:brewday.db","",
+	         c = DriverManager.getConnection("jdbc:sqlite:"+dbName,"",
 	        		 pass);
 	         c.setAutoCommit(false);
 	         System.out.println("Opened database successfully");
@@ -100,7 +101,7 @@ public class MapperRicetta {
 	    
 	    try {
 	       Class.forName("org.sqlite.JDBC");
-	       c = DriverManager.getConnection("jdbc:sqlite:brewday.db","",
+	       c = DriverManager.getConnection("jdbc:sqlite:"+dbName,"",
 	    		   pass);
 	       c.setAutoCommit(false);
 	       String sql = "DELETE FROM ricetta WHERE ID=?";
@@ -133,7 +134,7 @@ public class MapperRicetta {
 		   
 		   try {
 		      Class.forName("org.sqlite.JDBC");
-		      c = DriverManager.getConnection("jdbc:sqlite:brewday.db","",
+		      c = DriverManager.getConnection("jdbc:sqlite:"+dbName,"",
 		    		  pass);
 		      c.setAutoCommit(false);
 		      System.out.println("Opened database successfully");
@@ -194,11 +195,10 @@ public class MapperRicetta {
 	public ArrayList<Ricetta> getRicette() {
 		Connection c = null;
 		Statement stmt = null;
-		Statement stmt2 = null;
 		ArrayList<Ricetta> listaRicette = new ArrayList<Ricetta>();
 		try {
 		      Class.forName("org.sqlite.JDBC");
-		      c = DriverManager.getConnection("jdbc:sqlite:brewday.db","",
+		      c = DriverManager.getConnection("jdbc:sqlite:"+dbName,"",
 		    		  pass);
 		      c.setAutoCommit(false);
 		      System.out.println("Opened database successfully");

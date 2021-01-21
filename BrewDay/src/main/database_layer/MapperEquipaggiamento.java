@@ -10,16 +10,18 @@ import model.Equipaggiamento;
 
 public class MapperEquipaggiamento {
 	private String pass;
+	private String dbName;
 	
-	public MapperEquipaggiamento(String pass) {
+	public MapperEquipaggiamento(String pass,String dbName) {
 		this.pass = pass;
+		this.dbName = dbName;
 	}
 
 	public String insert(Equipaggiamento equip) {
 		  Connection c = null;
 	      try {
 	         Class.forName("org.sqlite.JDBC");
-	         c = DriverManager.getConnection("jdbc:sqlite:brewday.db","",
+	         c = DriverManager.getConnection("jdbc:sqlite:"+dbName,"",
 	                 pass);
 	         c.setAutoCommit(false);
 	         System.out.println("Opened database successfully");
@@ -53,7 +55,7 @@ public class MapperEquipaggiamento {
 	    
 	    try {
 	       Class.forName("org.sqlite.JDBC");
-	       c = DriverManager.getConnection("jdbc:sqlite:brewday.db","",
+	       c = DriverManager.getConnection("jdbc:sqlite:"+dbName,"",
 	    		   pass);
 	       c.setAutoCommit(false);
 	       String sql = "DELETE FROM equipaggiamento";
@@ -88,7 +90,7 @@ public class MapperEquipaggiamento {
 		Equipaggiamento equip = null;
 		try {
 		      Class.forName("org.sqlite.JDBC");
-		      c = DriverManager.getConnection("jdbc:sqlite:brewday.db","",
+		      c = DriverManager.getConnection("jdbc:sqlite:"+dbName,"",
 		    		  pass);
 		      c.setAutoCommit(false);
 		      System.out.println("Opened database successfully");

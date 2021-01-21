@@ -12,6 +12,7 @@ import controller.SecurityController;
 
 public class BrewDayApplication {
 	public static String password;
+	public static String dbName = "brewday.db";
 	
 	
 	public static void main(String[] args) {
@@ -30,14 +31,13 @@ public class BrewDayApplication {
 	     
 	  }	
 	
-	public static void initialize(String pass) {
-		 password = pass;
-		 Connection c = null;
+	public static void initializeDB(String pass,String dbName) {
+		Connection c = null;
 	     Statement stmt = null;
 		 try {
 	         Class.forName("org.sqlite.JDBC");
-	         c = DriverManager.getConnection("jdbc:sqlite:brewday.db","",
-	                 BrewDayApplication.password);
+	         c = DriverManager.getConnection("jdbc:sqlite:"+dbName,"",
+	                 pass);
 	         System.out.println("Opened database successfully");
 	         
 	         stmt = c.createStatement();
@@ -80,8 +80,8 @@ public class BrewDayApplication {
 		     try {
 
 			        Class.forName("org.sqlite.JDBC");
-			        c = DriverManager.getConnection("jdbc:sqlite:brewday.db","",
-			                 BrewDayApplication.password);
+			        c = DriverManager.getConnection("jdbc:sqlite:"+dbName,"",
+			                 pass);
 			        System.out.println("Opened database successfully");
 			
 			        stmt = c.createStatement();
@@ -100,8 +100,8 @@ public class BrewDayApplication {
 			     
 			     try {
 				        Class.forName("org.sqlite.JDBC");
-				        c = DriverManager.getConnection("jdbc:sqlite:brewday.db","",
-				                 BrewDayApplication.password);
+				        c = DriverManager.getConnection("jdbc:sqlite:"+dbName,"",
+				                 pass);
 				        System.out.println("Opened database successfully");
 				
 				        stmt = c.createStatement();
@@ -127,8 +127,13 @@ public class BrewDayApplication {
 				     }
 				     System.out.println("Table created successfully");
 
+	}
+	
+	public static void initialize(String pass) {
+		password = pass;
+		initializeDB(pass,dbName); 
 			     
-		ControllerEquipaggiamento controllerEq = new ControllerEquipaggiamento(pass);
+		ControllerEquipaggiamento controllerEq = new ControllerEquipaggiamento(pass,dbName);
 		CreaEquipaggiamento finestraCreaEq = new CreaEquipaggiamento(controllerEq);
 		finestraCreaEq.open();
 			    
@@ -139,11 +144,11 @@ public class BrewDayApplication {
 		
 		     
 		
-		ControllerEquipaggiamento controllerEq = new ControllerEquipaggiamento(password);
+		ControllerEquipaggiamento controllerEq = new ControllerEquipaggiamento(password,dbName);
 		
-		ControllerIngredienti control1 = new ControllerIngredienti(password);
+		ControllerIngredienti control1 = new ControllerIngredienti(password,dbName);
 		
-		ControllerRicetta controlRic = new ControllerRicetta(control1,controllerEq,password);
+		ControllerRicetta controlRic = new ControllerRicetta(control1,controllerEq,password,dbName);
 		
 		VisualizzazioneRicetta finestraVisRicetta = new VisualizzazioneRicetta(controlRic);
 		finestraVisRicetta.open();

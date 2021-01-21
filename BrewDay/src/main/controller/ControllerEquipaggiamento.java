@@ -4,12 +4,10 @@ import database_layer.MapperEquipaggiamento;
 import model.Equipaggiamento;
 
 public class ControllerEquipaggiamento {
-	private String pass;
 	private MapperEquipaggiamento mapperEquipaggiamento;
 	
-	public ControllerEquipaggiamento(String pass) {
-		this.pass = pass;
-		mapperEquipaggiamento = new MapperEquipaggiamento(this.pass);
+	public ControllerEquipaggiamento(String pass,String dbName) {
+		mapperEquipaggiamento = new MapperEquipaggiamento(pass,dbName);
 	}
 
 	public String aggiungiEquipaggiamento(String nome, float capacita) {

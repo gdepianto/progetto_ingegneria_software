@@ -7,11 +7,9 @@ import model.Ingrediente;
 
 public class ControllerIngredienti {
 	private MapperIngrediente mapperIngrediente;
-	private String pass;
 	
-	public ControllerIngredienti (String pass) {
-		this.pass = pass;
-		this.mapperIngrediente = new MapperIngrediente(this.pass);
+	public ControllerIngredienti (String pass,String dbName) {
+		this.mapperIngrediente = new MapperIngrediente(pass,dbName);
 		
 	}
 	
