@@ -14,7 +14,7 @@ import database_layer.MapperIngrediente;
 import database_layer.MapperRicetta;
 import model.Ingrediente;
 
-public class ControllerTest {
+public class ControllerIngredientiTest {
 
 	@BeforeClass
 	public static void setupDb() {
