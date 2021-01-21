@@ -29,7 +29,6 @@ public class MapperRicetta {
 	         c = DriverManager.getConnection("jdbc:sqlite:"+dbName,"",
 	        		 pass);
 	         c.setAutoCommit(false);
-	         System.out.println("Opened database successfully");
 	         
 	         String sqlCheck = "SELECT COUNT(*) FROM ricetta WHERE nome = ?";
 	         PreparedStatement checkStatement = c.prepareStatement(sqlCheck);
@@ -105,7 +104,6 @@ public class MapperRicetta {
 	    		   pass);
 	       c.setAutoCommit(false);
 	       String sql = "DELETE FROM ricetta WHERE ID=?";
-	       System.out.println("Opened database successfully");
 	       
 	       PreparedStatement pstmt = c.prepareStatement( sql );
 		   pstmt.setInt(1, id);
@@ -126,7 +124,6 @@ public class MapperRicetta {
 	       System.err.println( e.getClass().getName() + ": " + e.getMessage() );
 	       System.exit(0);
 	    }
-	    System.out.println("Operation done successfully");
 	 }
 	
 	public void update (int id, String nome, String descrizione, int tempoPreparazione, ArrayList<Quantita> quantita) {
@@ -201,7 +198,6 @@ public class MapperRicetta {
 		      c = DriverManager.getConnection("jdbc:sqlite:"+dbName,"",
 		    		  pass);
 		      c.setAutoCommit(false);
-		      System.out.println("Opened database successfully");
 
 		      stmt = c.createStatement();
 		      ResultSet rs = stmt.executeQuery( "SELECT * FROM ricetta;" );
@@ -249,7 +245,6 @@ public class MapperRicetta {
 		      System.err.println( e.getClass().getName() + ": " + e.getMessage() );
 		      System.exit(0);
 		}
-		System.out.println("Operation done successfully");
 		return listaRicette;
 	}
 	
@@ -262,7 +257,6 @@ public class MapperRicetta {
 	    		   pass);
 	       c.setAutoCommit(false);
 	       String sql = "DELETE FROM ricetta";
-	       System.out.println("Opened database successfully");
 	       
 	       PreparedStatement pstmt = c.prepareStatement( sql );
 
@@ -283,7 +277,6 @@ public class MapperRicetta {
 	       System.err.println( e.getClass().getName() + ": " + e.getMessage() );
 	       System.exit(0);
 	    }
-	    System.out.println("Operation done successfully");
 	}
 
 }

@@ -24,7 +24,6 @@ public class MapperEquipaggiamento {
 	         c = DriverManager.getConnection("jdbc:sqlite:"+dbName,"",
 	                 pass);
 	         c.setAutoCommit(false);
-	         System.out.println("Opened database successfully");
 	         
 	         String sql = "INSERT INTO equipaggiamento (nome, capacita) " +
                 
@@ -44,7 +43,6 @@ public class MapperEquipaggiamento {
 	         System.err.println( e.getClass().getName() + ": " + e.getMessage() );
 	         System.exit(0);
 	      }
-	      System.out.println("Records created successfully");
 	      return "Ok";
 	     
 	    	  
@@ -59,7 +57,6 @@ public class MapperEquipaggiamento {
 	    		   pass);
 	       c.setAutoCommit(false);
 	       String sql = "DELETE FROM equipaggiamento";
-	       System.out.println("Opened database successfully");
 	       PreparedStatement pstmt = c.prepareStatement( sql );
 	         
 	         
@@ -75,7 +72,6 @@ public class MapperEquipaggiamento {
 	       System.err.println( e.getClass().getName() + ": " + e.getMessage() );
 	       System.exit(0);
 	    }
-	    System.out.println("Operation done successfully");
 	 }
 
 	public void update(Equipaggiamento equip) {
@@ -93,7 +89,6 @@ public class MapperEquipaggiamento {
 		      c = DriverManager.getConnection("jdbc:sqlite:"+dbName,"",
 		    		  pass);
 		      c.setAutoCommit(false);
-		      System.out.println("Opened database successfully");
 
 		      stmt = c.createStatement();
 		      ResultSet rs = stmt.executeQuery( "SELECT * FROM equipaggiamento;" );
@@ -109,7 +104,6 @@ public class MapperEquipaggiamento {
 		      System.err.println( e.getClass().getName() + ": " + e.getMessage() );
 		      System.exit(0);
 		}
-		System.out.println("Operation done successfully");
 		return equip;
 	}  
 }	

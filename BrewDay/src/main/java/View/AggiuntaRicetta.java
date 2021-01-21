@@ -243,7 +243,7 @@ public class AggiuntaRicetta {
         	    for (int i = 0; i < items.length && contr; ++i) {
         	      if (items[i].getChecked()) {
         	    	  if(listaTextBox.get(i).getText().isEmpty() ) {
-        	    		  MessageDialog.openWarning(Display.getDefault().getActiveShell(), "Errore", "Non lasciare ingrediente selezionato con quantita vuota");
+        	    		  MessageDialog.openWarning(Display.getDefault().getActiveShell(), "Attenzione", "Non lasciare ingrediente selezionato con quantita vuota");
         	    		  contr = false;
         	    	  }
         	    	  else {

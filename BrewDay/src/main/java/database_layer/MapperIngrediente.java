@@ -28,7 +28,6 @@ public class MapperIngrediente {
 	         c = DriverManager.getConnection("jdbc:sqlite:"+dbName,"",
 	                 pass);
 	         c.setAutoCommit(false);
-	         System.out.println("Opened database successfully");
 	         
 	         String sqlCheck = "SELECT COUNT(*) FROM ingrediente WHERE nome = ?";
 	         PreparedStatement checkStatement = c.prepareStatement( sqlCheck );
@@ -59,7 +58,7 @@ public class MapperIngrediente {
 	         System.err.println( e.getClass().getName() + ": " + e.getMessage() );
 	         System.exit(0);
 	      }
-	      System.out.println("Records created successfully");
+	      
 	      if(count == 0)
 	    	  return "Ok";
 	      else if(count == -1)
@@ -78,7 +77,6 @@ public class MapperIngrediente {
 		      c = DriverManager.getConnection("jdbc:sqlite:"+dbName,"",
 		    		  pass);
 		      c.setAutoCommit(false);
-		      System.out.println("Opened database successfully");
 
 		      stmt = c.createStatement();
 		      ResultSet rs = stmt.executeQuery( "SELECT * FROM ingrediente;" );
@@ -100,7 +98,7 @@ public class MapperIngrediente {
 		      System.err.println( e.getClass().getName() + ": " + e.getMessage() );
 		      System.exit(0);
 		}
-		System.out.println("Operation done successfully");
+		
 		return listaIngredienti;
 	}
 	
@@ -114,15 +112,12 @@ public class MapperIngrediente {
 	    		   pass);
 	       c.setAutoCommit(false);
 	       String sql = "DELETE FROM ingrediente WHERE ID=?";
-	       System.out.println("Opened database successfully");
 	       PreparedStatement pstmt = c.prepareStatement( sql );
-	       pstmt.setInt(1, id);
-	         
+	       pstmt.setInt(1, id);      
 	         
 	    
 	       pstmt.executeUpdate();
 	         
-
 	     
 	       pstmt.close();
 	       c.commit();
@@ -133,7 +128,6 @@ public class MapperIngrediente {
 	       System.err.println( e.getClass().getName() + ": " + e.getMessage() );
 	       System.exit(0);
 	    }
-	    System.out.println("Operation done successfully");
 	 }
 
 	public void update (int id, String nome, float disponibilita, String unitaMisura) {
@@ -151,12 +145,10 @@ public class MapperIngrediente {
 		      pstmt.setFloat(2,disponibilita);
 		      pstmt.setString(3, unitaMisura);
 		      pstmt.setInt(4, id);
-		         
-		         
+		               
 		    
 		      pstmt.executeUpdate();
-		         
-	
+		         	
 		     
 		      pstmt.close();
 		      
@@ -179,14 +171,11 @@ public class MapperIngrediente {
 	    		   pass);
 	       c.setAutoCommit(false);
 	       String sql = "DELETE FROM ingrediente";
-	       System.out.println("Opened database successfully");
 	       PreparedStatement pstmt = c.prepareStatement( sql );
 	         
 	         
-	    
 	       pstmt.executeUpdate();
 	         
-
 	     
 	       pstmt.close();
 	       c.commit();
@@ -197,8 +186,6 @@ public class MapperIngrediente {
 	       System.err.println( e.getClass().getName() + ": " + e.getMessage() );
 	       System.exit(0);
 	    }
-	    System.out.println("Operation done successfully");
 	}
-	
-	
+		
 }

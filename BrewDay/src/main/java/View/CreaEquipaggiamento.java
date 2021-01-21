@@ -12,7 +12,6 @@ import org.eclipse.swt.widgets.Text;
 import controller.ControllerEquipaggiamento;
 
 import org.eclipse.swt.widgets.Spinner;
-import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.swt.widgets.Button;
 
 public class CreaEquipaggiamento {
@@ -88,7 +87,7 @@ public class CreaEquipaggiamento {
         	@Override
         	public void widgetSelected(SelectionEvent e) {
         		if(text.getText().isEmpty()) {
-        			MessageDialog.openWarning(Display.getDefault().getActiveShell(), "Errore", "Nome non deve essere vuoto");
+        			MessageDialog.openWarning(Display.getDefault().getActiveShell(), "Attenzione", "Nome non deve essere vuoto");
         		}
         		else {
         			if(Integer.parseInt(spinner.getText()) <= 0) {

@@ -12,6 +12,8 @@ import controller.SecurityController;
 public class BrewDayApplication {
 	public static String password;
 	public static String dbName = "brewday.db";
+	static String table = "(id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, ";
+	
 	
 	
 	public static void main(String[] args) {
@@ -37,11 +39,10 @@ public class BrewDayApplication {
 	         Class.forName("org.sqlite.JDBC");
 	         c = DriverManager.getConnection("jdbc:sqlite:"+dbName,"",
 	                 pass);
-	         System.out.println("Opened database successfully");
 	         
 	         stmt = c.createStatement();
 	         String sql = "CREATE TABLE IF NOT EXISTS ingrediente " + 
-	        		  "(id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, " +
+	        		  "(id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,"+
 	        		  "nome VARCHAR(45) UNIQUE NOT NULL, " +
 	        		  "unitaMisura VARCHAR(45) NOT NULL, " +
 	        		  "disponibilita FLOAT NOT NULL)";
@@ -52,17 +53,15 @@ public class BrewDayApplication {
 	         System.err.println( e.getClass().getName() + ": " + e.getMessage() );
 	         System.exit(0);
 	      }
-	      System.out.println("Table created successfully");
 	      
 	      try {
 		        Class.forName("org.sqlite.JDBC");
 		        c = DriverManager.getConnection("jdbc:sqlite:"+dbName,"",
 		                 BrewDayApplication.password);
-		        System.out.println("Opened database successfully");
 		
 		        stmt = c.createStatement();
 		        String sql = "CREATE TABLE IF NOT EXISTS ricetta " + 
-		       		  "(id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL," +
+		        	  "(id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL," +
 		       		  "nome VARCHAR(45) NOT NULL, " +
 		       		  "descrizione TEXT(1000) NOT NULL, " +
 		       		  "tempo_preparazione INT NOT NULL)";
@@ -73,7 +72,6 @@ public class BrewDayApplication {
 		        System.err.println( e.getClass().getName() + ": " + e.getMessage() );
 		        System.exit(0);
 		     }
-		     System.out.println("Table created successfully");
 
 		     
 		     try {
@@ -81,11 +79,10 @@ public class BrewDayApplication {
 			        Class.forName("org.sqlite.JDBC");
 			        c = DriverManager.getConnection("jdbc:sqlite:"+dbName,"",
 			                 pass);
-			        System.out.println("Opened database successfully");
 			
 			        stmt = c.createStatement();
 			        String sql = "CREATE TABLE IF NOT EXISTS equipaggiamento " + 
-			       		  "(id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL," +
+			        	  "(id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL," +
 			       		  "nome VARCHAR(45) NOT NULL, " +
 			       		  "capacita FLOAT NOT NULL)";
 			        stmt.executeUpdate(sql);
@@ -95,17 +92,16 @@ public class BrewDayApplication {
 			        System.err.println( e.getClass().getName() + ": " + e.getMessage() );
 			        System.exit(0);
 			     }
-			     System.out.println("Table created successfully");
+			     
 			     
 			     try {
 				        Class.forName("org.sqlite.JDBC");
 				        c = DriverManager.getConnection("jdbc:sqlite:"+dbName,"",
 				                 pass);
-				        System.out.println("Opened database successfully");
 				
 				        stmt = c.createStatement();
 				        String sql = "CREATE TABLE IF NOT EXISTS quantita " + 
-				       		  "(id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL," +
+				        	  "(id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL," +
 				       		  "id_ricetta INTEGER NOT NULL, " +
 				       		  "id_ingrediente INTEGER NOT NULL," +
 				       		  "quantita_necessaria REAL NOT NULL," +
@@ -124,7 +120,7 @@ public class BrewDayApplication {
 				        System.err.println( e.getClass().getName() + ": " + e.getMessage() );
 				        System.exit(0);
 				     }
-				     System.out.println("Table created successfully");
+				     
 
 	}
 	
