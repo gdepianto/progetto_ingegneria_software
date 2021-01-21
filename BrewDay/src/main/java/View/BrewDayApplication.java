@@ -56,7 +56,7 @@ public class BrewDayApplication {
 	      
 	      try {
 		        Class.forName("org.sqlite.JDBC");
-		        c = DriverManager.getConnection("jdbc:sqlite:brewday.db","",
+		        c = DriverManager.getConnection("jdbc:sqlite:"+dbName,"",
 		                 BrewDayApplication.password);
 		        System.out.println("Opened database successfully");
 		

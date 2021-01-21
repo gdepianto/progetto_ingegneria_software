@@ -137,36 +137,68 @@ public class MapperIngrediente {
 	 }
 
 	public void update (int id, String nome, float disponibilita, String unitaMisura) {
-	 Connection c = null;
-	   
-	   try {
-	      Class.forName("org.sqlite.JDBC");
-	      c = DriverManager.getConnection("jdbc:sqlite:"+dbName,"",
-	    		  pass);
-	      c.setAutoCommit(false);
-	      System.out.println("Opened database successfully");
-	      String sql = "UPDATE INGREDIENTE set nome = ?, disponibilita =?, unitaMisura=? where ID =?";
-	      PreparedStatement pstmt = c.prepareStatement( sql );
-	      pstmt.setString(1, nome);
-	      pstmt.setFloat(2,disponibilita);
-	      pstmt.setString(3, unitaMisura);
-	      pstmt.setInt(4, id);
+		 Connection c = null;
+		   
+		   try {
+		      Class.forName("org.sqlite.JDBC");
+		      c = DriverManager.getConnection("jdbc:sqlite:"+dbName,"",
+		    		  pass);
+		      c.setAutoCommit(false);
+		      System.out.println("Opened database successfully");
+		      String sql = "UPDATE INGREDIENTE set nome = ?, disponibilita =?, unitaMisura=? where ID =?";
+		      PreparedStatement pstmt = c.prepareStatement( sql );
+		      pstmt.setString(1, nome);
+		      pstmt.setFloat(2,disponibilita);
+		      pstmt.setString(3, unitaMisura);
+		      pstmt.setInt(4, id);
+		         
+		         
+		    
+		      pstmt.executeUpdate();
+		         
+	
+		     
+		      pstmt.close();
+		      
+		      
+		      c.commit();
+		   
+		      c.close();
+	   }  catch ( Exception e ) {
+		      System.err.println( e.getClass().getName() + ": " + e.getMessage() );
+		      System.exit(0);
+	   }	
+	}
+	
+	public void deleteAll() {
+		Connection c = null;
+	    
+	    try {
+	       Class.forName("org.sqlite.JDBC");
+	       c = DriverManager.getConnection("jdbc:sqlite:"+dbName,"",
+	    		   pass);
+	       c.setAutoCommit(false);
+	       String sql = "DELETE FROM ingrediente";
+	       System.out.println("Opened database successfully");
+	       PreparedStatement pstmt = c.prepareStatement( sql );
 	         
 	         
 	    
-	      pstmt.executeUpdate();
+	       pstmt.executeUpdate();
 	         
 
 	     
-	      pstmt.close();
-	      
-	      
-	      c.commit();
-	   
-	      c.close();
-   }  catch ( Exception e ) {
-	      System.err.println( e.getClass().getName() + ": " + e.getMessage() );
-	      System.exit(0);
-   }	
-  }
+	       pstmt.close();
+	       c.commit();
+	
+	       
+	       c.close();
+	    } catch ( Exception e ) {
+	       System.err.println( e.getClass().getName() + ": " + e.getMessage() );
+	       System.exit(0);
+	    }
+	    System.out.println("Operation done successfully");
+	}
+	
+	
 }

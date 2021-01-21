@@ -252,5 +252,38 @@ public class MapperRicetta {
 		System.out.println("Operation done successfully");
 		return listaRicette;
 	}
+	
+	public void deleteAll() {
+		Connection c = null;
+	    
+	    try {
+	       Class.forName("org.sqlite.JDBC");
+	       c = DriverManager.getConnection("jdbc:sqlite:"+dbName,"",
+	    		   pass);
+	       c.setAutoCommit(false);
+	       String sql = "DELETE FROM ricetta";
+	       System.out.println("Opened database successfully");
+	       
+	       PreparedStatement pstmt = c.prepareStatement( sql );
+
+		   pstmt.executeUpdate();
+		   
+		   String sql2 = "DELETE FROM quantita";
+		   PreparedStatement pstmt2 = c.prepareStatement(sql2);
+		
+		   pstmt2.executeUpdate();		         
+		     
+		   pstmt2.close();
+		   pstmt.close();
+	      
+	       c.commit();
+	
+	    c.close();
+	    } catch ( Exception e ) {
+	       System.err.println( e.getClass().getName() + ": " + e.getMessage() );
+	       System.exit(0);
+	    }
+	    System.out.println("Operation done successfully");
+	}
 
 }
