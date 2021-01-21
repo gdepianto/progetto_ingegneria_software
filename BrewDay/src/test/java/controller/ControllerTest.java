@@ -19,12 +19,10 @@ public class ControllerTest {
 	@BeforeClass
 	public static void setupDb() {
 		BrewDayApplication.initializeDB("password","test.db");
-		System.out.println("Ciaone");
 	}
 	
 	@After
 	public void resetDB() {
-		System.out.println("Ciaone2");
 		MapperRicetta mapRicetta = new MapperRicetta("password","test.db");
 		MapperIngrediente mapIngrediente = new MapperIngrediente("password","test.db");
 		MapperEquipaggiamento mapEquipaggiamento = new MapperEquipaggiamento("password","test.db");
@@ -61,4 +59,21 @@ public class ControllerTest {
 		assertTrue(listaIng.isEmpty());
 	}
 	
+	@Test
+	public void addIngredientAlreadyExistTest() {
+		ControllerIngredienti contrIng = new ControllerIngredienti("password","test.db");
+		contrIng.aggiungiIngrediente("Malto",15.6f,"Grammi");
+		String resp = contrIng.aggiungiIngrediente("Malto",15.6f,"Grammi");
+		assertEquals("Errore: ingrediente con questo nome già esistente",resp);
+	}
+	
+	@Test
+	public void updateIngredienteTest() {
+		ControllerIngredienti contrIng = new ControllerIngredienti("password","test.db");
+		contrIng.aggiungiIngrediente("Malto",15.6f,"Grammi");
+		Ingrediente ing = contrIng.getIngredienti().get(0);
+		contrIng.aggiornaIngrediente(ing.getIdIngrediente(), "Malto",2, "litri");
+		ing = contrIng.getIngredienti().get(0);
+		assertEquals("litri",ing.getUnitaMisura());
+	}
 }
