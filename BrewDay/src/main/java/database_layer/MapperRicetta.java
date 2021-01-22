@@ -344,6 +344,7 @@ public class MapperRicetta {
 		     
 	         ric = new Ricetta(nome,descrizione,tempo_preparazione);
 	         ric.setIngredienti(listaQuantita);
+	         ric.setIdRicetta(id);
 	         rs2.close();
 		     pstmt.close();
 		     c.close();

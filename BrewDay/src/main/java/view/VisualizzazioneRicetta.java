@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.ColumnLabelProvider;
 import org.eclipse.jface.viewers.TableViewer;
@@ -42,7 +43,6 @@ public class VisualizzazioneRicetta implements GenericObserver {
 	private ControllerRicetta controller;
 	private TableViewer viewer;
 	private VisualizzazioneRicetta instance;
-	private Button button;
 	private Equipaggiamento equip;
 	
 	
@@ -287,8 +287,14 @@ public class VisualizzazioneRicetta implements GenericObserver {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				Ricetta ric = controller.getBirraDelGiorno();
-				MostraRicetta FinestraRicetta = new MostraRicetta(controller, ric);
-		    	FinestraRicetta.open();	
+				if(ric.getIdRicetta() != -1) {
+					MostraRicetta FinestraRicetta = new MostraRicetta(controller, ric);
+			    	FinestraRicetta.open();	
+				}
+				else{
+					 MessageDialog.openWarning(Display.getDefault().getActiveShell(), "Errore", "Non hai disponibilita di ingredienti per fare nessuna ricetta!");
+	        	    	
+				}
 			}
 		});
 		btnBirraGiorno.setBounds(583, 104, 193, 25);
