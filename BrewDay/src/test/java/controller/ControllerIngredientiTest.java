@@ -8,11 +8,11 @@ import org.junit.After;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import View.BrewDayApplication;
 import database_layer.MapperEquipaggiamento;
 import database_layer.MapperIngrediente;
 import database_layer.MapperRicetta;
 import model.Ingrediente;
+import view.BrewDayApplication;
 
 public class ControllerIngredientiTest {
 

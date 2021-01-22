@@ -1,4 +1,4 @@
-package View;
+package view;
 
 import org.eclipse.swt.widgets.Combo;
 

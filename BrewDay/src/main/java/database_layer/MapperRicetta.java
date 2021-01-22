@@ -54,6 +54,9 @@ public class MapperRicetta {
 			            else {
 			               count = -1;
 			            }
+			      } catch ( Exception e ) {
+				         System.err.println( e.getClass().getName() + ": " + e.getMessage() );
+				         System.exit(0);
 			      }
 			     
 			     pstmt.close();
@@ -78,14 +81,13 @@ public class MapperRicetta {
 				     statementQuantita.executeUpdate();
 				     statementQuantita.close();
 			     }
-	        }   
+	        }
 	         c.commit();
-	         c.close();
+	         c.close();  
 	      } catch ( Exception e ) {
 	         System.err.println( e.getClass().getName() + ": " + e.getMessage() );
 	         System.exit(0);
 	      }
-	      System.out.println("Record created successfully");
 	      if(count == 0)
 	    	  return "Ok";
 	      else if(count == -1)
