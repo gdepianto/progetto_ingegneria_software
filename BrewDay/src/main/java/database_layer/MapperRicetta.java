@@ -289,9 +289,10 @@ public class MapperRicetta {
 		      c = DriverManager.getConnection("jdbc:sqlite:"+dbName,"",
 		    		  pass);
 		      c.setAutoCommit(false);
-		      String sql = "SELECT id as idRic FROM ricetta WHERE (SELECT COUNT(*) FROM quantita WHERE id_ricetta = idRic) = (SELECT COUNT(*) FROM quantita,ingrediente WHERE id_ricetta = idRic and id_ingrediente = ingrediente.id and (quantita_necessaria * ?)  <= disponibilita) ";
-		      sql = "SELECT id_ricetta,SUM(quantita_necessaria * ?) as quantita_totale FROM quantita WHERE  id_ricetta IN ("+sql+") GROUP BY id_ricetta ORDER BY quantita_totale DESC LIMIT 1;";
-		     
+		      String sql = "SELECT id_ricetta,SUM(quantita_necessaria * ?) as quantita_totale FROM quantita WHERE  id_ricetta IN ("+
+		    		  "SELECT id as idRic FROM ricetta WHERE (SELECT COUNT(*) FROM quantita WHERE id_ricetta = idRic) = (SELECT COUNT(*) FROM quantita,ingrediente WHERE id_ricetta = idRic and id_ingrediente = ingrediente.id and (quantita_necessaria * ?)  <= disponibilita) "
+		    		  +") GROUP BY id_ricetta ORDER BY quantita_totale DESC LIMIT 1;";
+		      System.out.println(sql);
 		      PreparedStatement stmt = c.prepareStatement(sql);
 		      stmt.setFloat(1, capacitaEquipaggiamento);
 		      stmt.setFloat(2, capacitaEquipaggiamento);

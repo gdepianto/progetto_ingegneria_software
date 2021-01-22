@@ -33,7 +33,6 @@ import org.eclipse.jface.viewers.ViewerCell;
 public class Visualizzazione_Ingrediente implements GenericObserver {
 
 	protected Shell shell;
-	private Table table;
 	private ControllerIngredienti controller;
 	private TableViewer viewer;
 	private Visualizzazione_Ingrediente instance;
