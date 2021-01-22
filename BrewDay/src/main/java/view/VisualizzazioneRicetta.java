@@ -103,7 +103,7 @@ public class VisualizzazioneRicetta implements GenericObserver {
 		
 		shell = s;
 		
-		shell.setSize(838, 300);
+		shell.setSize(855, 532);
 		shell.setText("SWT Application");
 		ArrayList <Ricetta> listaRicette = controller.getRicette();
 		
@@ -118,23 +118,23 @@ public class VisualizzazioneRicetta implements GenericObserver {
         });
 		table.setLinesVisible(true);
 		table.setHeaderVisible(true);
-		table.setBounds(0, 0, 538, 261);
+		table.setBounds(0, 0, 537, 490);
 		
 		Label lblNomeEquipaggiamento = new Label(shell, SWT.NONE);
-		lblNomeEquipaggiamento.setBounds(583, 139, 136, 15);
+		lblNomeEquipaggiamento.setBounds(583, 335, 193, 15);
 		lblNomeEquipaggiamento.setText("Nome equipaggiamento:");
 		
 		Label lblCapacit = new Label(shell, SWT.NONE);
-		lblCapacit.setBounds(583, 196, 55, 15);
+		lblCapacit.setBounds(583, 411, 101, 15);
 		lblCapacit.setText("Capacit\u00E0:");
 		
 		Label lblNewLabel = new Label(shell, SWT.NONE);
-		lblNewLabel.setBounds(583, 161, 136, 15);
+		lblNewLabel.setBounds(583, 369, 136, 15);
 		lblNewLabel.setText(equip.getNome());
 		
 		
 		Label label = new Label(shell, SWT.NONE);
-		label.setBounds(583, 217, 136, 15);
+		label.setBounds(583, 457, 152, 15);
 		label.setText(""+equip.getCapacita());
 		
 		TableColumn column = new TableColumn(tableViewer.getTable(), SWT.NONE);
@@ -297,8 +297,19 @@ public class VisualizzazioneRicetta implements GenericObserver {
 				}
 			}
 		});
-		btnBirraGiorno.setBounds(583, 104, 193, 25);
+		btnBirraGiorno.setBounds(583, 135, 193, 25);
 		btnBirraGiorno.setText("Birra del Giorno");
+		
+		Button btnListaSpesa = new Button(shell, SWT.NONE);
+		btnListaSpesa.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				VisualizzaListaSpesa finestraListaSpesa = new VisualizzaListaSpesa(controller);
+				finestraListaSpesa.open();
+			}
+		});
+		btnListaSpesa.setBounds(583, 104, 193, 25);
+		btnListaSpesa.setText("Lista della spesa");
 		
 		
 		tableViewer.setInput(listaRicette);

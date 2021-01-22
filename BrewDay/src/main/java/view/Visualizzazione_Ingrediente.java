@@ -145,7 +145,7 @@ public class Visualizzazione_Ingrediente implements GenericObserver {
         });
 
         column = new TableColumn(viewer.getTable(), SWT.NONE);
-        column.setText("Unit� Misura");
+        column.setText("Unita Misura");
         column.setWidth(100);
         TableViewerColumn unitNameCol = new TableViewerColumn(viewer, column);
         unitNameCol.setLabelProvider(new ColumnLabelProvider(){

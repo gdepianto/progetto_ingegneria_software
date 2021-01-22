@@ -76,6 +76,25 @@ public class ControllerRicetta {
 		return ric;
 	}
 
+	public ArrayList<Ricetta> getRicetteScarsaDisponibilita() {
+		ArrayList<Ricetta> listaRicetta = getRicette();
+		boolean contr = false;
+		for(Ricetta r : listaRicetta) {
+			contr = false;
+			for(Quantita q : r.getIngredienti()) {
+				if(q.getQuantitaNecessaria() > q.getIngrediente().getDisponibilita()) {
+					contr = true;
+				}
+				else {
+					r.getIngredienti().remove(q);
+				}
+			}
+			if(!contr) {
+				listaRicetta.remove(r);
+			}
+		}
+		return listaRicetta;
+	}
 
 	public ControllerEquipaggiamento getControllerEquipaggiamento() {
 		return controllerEquipaggiamento;
