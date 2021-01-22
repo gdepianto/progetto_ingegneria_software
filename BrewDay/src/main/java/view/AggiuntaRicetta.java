@@ -94,7 +94,7 @@ public class AggiuntaRicetta {
 		shell.setSize(921, 309);
 		shell.setText("SWT Application");
 		ArrayList<Ingrediente> listaIngredienti = controller.getControllerIngredienti().getIngredienti();
-		ArrayList<Text> listaTextBox = new ArrayList<Text>();
+		ArrayList<Text> listaTextBox = new ArrayList<>();
 		Label lblNewLabel = new Label(shell, SWT.NONE);
 		lblNewLabel.setBounds(10, 10, 70, 17);
 		lblNewLabel.setText("Nome");
