@@ -65,6 +65,16 @@ public class ControllerRicetta {
 		mapperRicetta.update(id, nome, descrizione, tempoPreparazione,listaQuantita);
 		
 	}
+	
+	
+	public Ricetta getBirraDelGiorno() {
+		Ricetta ric = mapperRicetta.selectBirraDelGiorno(controllerEquipaggiamento.getEquipaggiamento().getCapacita());
+		Equipaggiamento equip = getControllerEquipaggiamento().getEquipaggiamento();
+		for(Quantita q: ric.getIngredienti()) {
+			q.setQuantitaNecessaria(q.getQuantitaNecessaria()*equip.getCapacita());
+		}
+		return ric;
+	}
 
 
 	public ControllerEquipaggiamento getControllerEquipaggiamento() {

@@ -1,4 +1,4 @@
-package View;
+package view;
 
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
@@ -255,6 +255,17 @@ public class VisualizzazioneRicetta implements GenericObserver {
 		});
 		btnModificaEquip.setBounds(583, 73, 193, 25);
 		btnModificaEquip.setText("Modifica equipaggiamento");
+		Button btnBirraGiorno = new Button(shell, SWT.NONE);
+		btnBirraGiorno.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				Ricetta ric = controller.getBirraDelGiorno();
+				MostraRicetta FinestraRicetta = new MostraRicetta(controller, ric);
+		    	FinestraRicetta.open();	
+			}
+		});
+		btnBirraGiorno.setBounds(583, 104, 193, 25);
+		btnBirraGiorno.setText("Birra del Giorno");
 		
 		
 		tableViewer.setInput(listaRicette);
@@ -272,15 +283,5 @@ public class VisualizzazioneRicetta implements GenericObserver {
 		shell.update();
 		shell.layout();
 	}
-
-	/**
-	 * Open the window.
-	 */
-	
-	
-	
-	
-	
-
 }
 
