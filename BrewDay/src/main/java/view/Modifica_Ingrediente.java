@@ -9,6 +9,7 @@ import controller.ControllerIngredienti;
 import model.Ingrediente;
 
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
@@ -113,8 +114,18 @@ public class Modifica_Ingrediente {
 		btnModifica.addSelectionListener(new SelectionAdapter() {
 		    @Override
 		    public void widgetSelected(SelectionEvent e) {
+		    	
+		    	if(combo.getText().equals(""))
+						MessageDialog.openWarning(Display.getDefault().getActiveShell(), "Errore", "Selezionare obbligatoriamente un'unità di misura");
+		    	else if (spinner.getText().equals(""))
+						MessageDialog.openWarning(Display.getDefault().getActiveShell(), "Errore", "Selezionare obbligatoriamente una qantita");
+		    	else if (text.getText().equals(""))
+		    			MessageDialog.openWarning(Display.getDefault().getActiveShell(), "Errore", "Selezionare obbligatoriamente un nome");
+		    	else {
 		    	controller.aggiornaIngrediente(i.getIdIngrediente(), text.getText(), Integer.parseInt(spinner.getText()),combo.getText());
 				observer.update();
+				shell.close();
+		    	}
 		    }
 		});
 		

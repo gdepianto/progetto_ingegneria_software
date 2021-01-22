@@ -101,6 +101,34 @@ public class ControllerRicettaTest {
 		assertEquals("Errore: ricetta con questo nome gia esistente",resp);
 	}
 	
+	/*@Test
+	public void AggiuntaRicettaSenzaDescrizioneTest(){
+		ControllerEquipaggiamento contrEquip = new ControllerEquipaggiamento("password","test.db");
+		ControllerIngredienti contrIng = new ControllerIngredienti("password","test.db");
+		contrIng.aggiungiIngrediente("Malto",15.6f,"Grammi");
+		contrIng.aggiungiIngrediente("Luppolo",13,"Grammi");
+		contrIng.aggiungiIngrediente("Acqua",50,"Litri");
+		ArrayList<Ingrediente> listaIng = contrIng.getIngredienti();
+		ArrayList<Quantita> listaQuantita = new ArrayList<Quantita>();
+		Quantita q1 = new Quantita();
+		q1.setIngrediente(listaIng.get(0));
+		q1.setQuantitaNecessaria(20);
+		Quantita q2 = new Quantita();
+		q2.setIngrediente(listaIng.get(1));
+		q2.setQuantitaNecessaria(30);
+		Quantita q3 = new Quantita();
+		q3.setIngrediente(listaIng.get(2));
+		q3.setQuantitaNecessaria(40);
+		listaQuantita.add(q1);
+		listaQuantita.add(q2);
+		listaQuantita.add(q3);
+		contrEquip.aggiungiEquipaggiamento("Equip", 70);
+		ControllerRicetta contrRic = new ControllerRicetta(contrIng,contrEquip,"password","test.db");
+		contrRic.aggiungiRicetta("Ricetta1", "", 23, listaQuantita);
+		String resp = contrRic.aggiungiRicetta("Ricetta1", "", 23, listaQuantita);
+		assertEquals("Errore: ricetta sprovvista di descrizione",resp);
+	}*/
+	
 		
 
 }

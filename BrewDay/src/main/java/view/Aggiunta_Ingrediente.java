@@ -107,6 +107,7 @@ public class Aggiunta_Ingrediente {
 		Combo combo = new Combo(shell, SWT.NONE);
 		combo.setBounds(10, 127, 91, 23);
 		combo.setItems(items);
+		
 		/*new AutoCompleteField(combo, new ComboContentAdapter(), new String[] {"litri", "grammi"});*/
 		
 		
@@ -125,16 +126,24 @@ public class Aggiunta_Ingrediente {
 		btnAggiungi.addSelectionListener(new SelectionAdapter() {
 		    @Override
 		    public void widgetSelected(SelectionEvent e) {
-		    	String response = controller.aggiungiIngrediente(text.getText(), Integer.parseInt(spinner.getText()),combo.getText());
-				if(response.equals("Ok")) {
+				if(combo.getText().equals(""))
+						MessageDialog.openWarning(Display.getDefault().getActiveShell(), "Errore", "Selezionare obbligatoriamente un'unità di misura");
+				else {
+				String response = controller.aggiungiIngrediente(text.getText(), Integer.parseInt(spinner.getText()),combo.getText());	
+		    	if(response.equals("Ok")) {
 			
 					observer.update();
+					shell.close();
 				}
 				else {
 					MessageDialog.openWarning(Display.getDefault().getActiveShell(), "Errore", response);
-					
+					shell.close();
 				}
-				shell.close();
+				}
+				
+				
+				
+				
 				
 		    }
 		});
