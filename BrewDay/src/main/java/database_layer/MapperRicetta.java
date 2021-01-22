@@ -136,7 +136,6 @@ public class MapperRicetta {
 		      c = DriverManager.getConnection("jdbc:sqlite:"+dbName,"",
 		    		  pass);
 		      c.setAutoCommit(false);
-		      System.out.println("Opened database successfully");
 		      String sql = "UPDATE ricetta set nome = ?, descrizione = ?"+
 	    		       ", tempo_preparazione = ? where ID =?";
 		      
@@ -219,7 +218,6 @@ public class MapperRicetta {
 		         pstmt.setInt(1, id);
 		         
 		         ResultSet rs2 = pstmt.executeQuery();
-		         System.out.println("seconda sel");
 		         ArrayList<Quantita> listaQuantita = new ArrayList<Quantita>();
 		         while (rs2.next()) {
 		        	 String nomeIng = rs2.getString("nome");
@@ -292,12 +290,11 @@ public class MapperRicetta {
 		      String sql = "SELECT id_ricetta,SUM(quantita_necessaria * ?) as quantita_totale FROM quantita WHERE  id_ricetta IN ("+
 		    		  "SELECT id as idRic FROM ricetta WHERE (SELECT COUNT(*) FROM quantita WHERE id_ricetta = idRic) = (SELECT COUNT(*) FROM quantita,ingrediente WHERE id_ricetta = idRic and id_ingrediente = ingrediente.id and (quantita_necessaria * ?)  <= disponibilita) "
 		    		  +") GROUP BY id_ricetta ORDER BY quantita_totale DESC LIMIT 1;";
-		      System.out.println(sql);
+		     
 		      PreparedStatement stmt = c.prepareStatement(sql);
 		      stmt.setFloat(1, capacitaEquipaggiamento);
 		      stmt.setFloat(2, capacitaEquipaggiamento);
 		      ResultSet rs = stmt.executeQuery(  );
-		      System.out.println("prima sel");
 		      int id=-1;
 		      while ( rs.next() ) {
 		    	id = rs.getInt(1);
