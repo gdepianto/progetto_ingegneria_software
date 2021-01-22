@@ -73,5 +73,14 @@ public class ControllerRicettaTest {
 		
 	}
 	
+	public void AggiuntaRicettaNomeEsistenteTest() {
+		ControllerIngredienti contrIng = new ControllerIngredienti("password","test.db");
+		ControllerEquipaggiamento contrEquip = new ControllerEquipaggiamento("password","test.db");
+		
+		ControllerRicetta contrRic = new ControllerRicetta(contrIng,contrEquip,"password","test.db");
+		contrRic.aggiungiRicetta("Ricetta1", "Preparare e poi assaggiare", 23, listaQuantita);
+	}
+	
+		
 
 }

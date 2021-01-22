@@ -64,7 +64,7 @@ public class MapperIngrediente {
 	      else if(count == -1)
 	    	  return "Errore: problemi al database";
 	      else
-	    	  return "Errore: ingrediente con questo nome gi√† esistente";
+	    	  return "Errore: ingrediente con questo nome gia† esistente";
 	    	  
 	}
 	

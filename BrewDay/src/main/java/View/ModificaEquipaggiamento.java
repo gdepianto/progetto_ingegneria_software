@@ -22,6 +22,7 @@ public class ModificaEquipaggiamento {
 	private Text text;
 	private ControllerEquipaggiamento controller;
 	private Equipaggiamento eq;
+	private GenericObserver observer;
 	
 
 	/**
@@ -44,6 +45,10 @@ public class ModificaEquipaggiamento {
 	
 	public ModificaEquipaggiamento() {
 		controller = null;
+	}
+	
+	public void addObserver(GenericObserver obs) {
+		observer = obs;
 	}
 
 	/**
@@ -82,6 +87,7 @@ public class ModificaEquipaggiamento {
 		
 		Spinner spinner = new Spinner(shell, SWT.BORDER);
 		spinner.setBounds(221, 111, 127, 22);
+		spinner.setMaximum(100000000);
 		
 		
 		Button btnAggiorna = new Button(shell, SWT.NONE);
@@ -91,6 +97,8 @@ public class ModificaEquipaggiamento {
 			public void widgetSelected(SelectionEvent e) {
 				
 				controller.aggiornaEquipaggiamento(text.getText(), Integer.parseInt(spinner.getText()));
+				observer.update();
+				shell.close();
 				
 				
 			}

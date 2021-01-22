@@ -134,6 +134,7 @@ public class Aggiunta_Ingrediente {
 					MessageDialog.openWarning(Display.getDefault().getActiveShell(), "Errore", response);
 					
 				}
+				shell.close();
 				
 		    }
 		});

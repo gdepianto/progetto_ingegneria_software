@@ -268,6 +268,7 @@ public class AggiuntaRicetta {
 	        	    	MessageDialog.openWarning(Display.getDefault().getActiveShell(), "Errore", response);
 	        	    }
         	    }
+        	    shell.close();
         	    
         	}
         });

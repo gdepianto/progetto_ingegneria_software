@@ -66,18 +66,19 @@ public class CreaEquipaggiamento {
 		shell.setText("SWT Application");
 		
 		Label lblNewLabel = new Label(shell, SWT.NONE);
-		lblNewLabel.setBounds(53, 27, 115, 17);
-		lblNewLabel.setText("Nome equipaggiamento");
+		lblNewLabel.setBounds(53, 27, 142, 17);
+		lblNewLabel.setText("Nome equipaggiamento:");
 		
 		text = new Text(shell, SWT.BORDER);
 		text.setBounds(53, 61, 73, 25);
 		
 		Label lblNewLabel_1 = new Label(shell, SWT.NONE);
-		lblNewLabel_1.setBounds(53, 112, 170, 17);
-		lblNewLabel_1.setText("Capacita equipaggiamento");
+		lblNewLabel_1.setBounds(53, 112, 158, 17);
+		lblNewLabel_1.setText("Capacita equipaggiamento:");
 		
 		Spinner spinner = new Spinner(shell, SWT.BORDER);
 		spinner.setBounds(53, 164, 130, 37);
+		spinner.setMaximum(100000000);
 		
 		Button btnNewButton = new Button(shell, SWT.NONE);
 		btnNewButton.setBounds(218, 217, 202, 28);

@@ -64,7 +64,7 @@ public class ControllerIngredientiTest {
 		ControllerIngredienti contrIng = new ControllerIngredienti("password","test.db");
 		contrIng.aggiungiIngrediente("Malto",15.6f,"Grammi");
 		String resp = contrIng.aggiungiIngrediente("Malto",15.6f,"Grammi");
-		assertEquals("Errore: ingrediente con questo nome già esistente",resp);
+		assertEquals("Errore: ingrediente con questo nome gia esistente",resp);
 	}
 	
 	@Test

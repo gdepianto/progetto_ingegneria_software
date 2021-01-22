@@ -91,7 +91,7 @@ public class MapperRicetta {
 	      else if(count == -1)
 	    	  return "Errore: problemi al database";
 	      else
-	    	  return "Errore: ricetta con questo nome gi√† esistente";
+	    	  return "Errore: ricetta con questo nome gia† esistente";
 	   
 	}
 	

@@ -24,13 +24,16 @@ import org.eclipse.swt.layout.RowLayout;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.TableItem;
 
+import controller.ControllerEquipaggiamento;
 import controller.ControllerIngredienti;
 import controller.ControllerRicetta;
+import model.Equipaggiamento;
 import model.Ingrediente;
 import model.Ricetta;
 
 import org.eclipse.jface.viewers.TableViewerColumn;
 import org.eclipse.jface.viewers.ViewerCell;
+import org.eclipse.swt.widgets.Label;
 
 public class VisualizzazioneRicetta implements GenericObserver {
 
@@ -40,7 +43,10 @@ public class VisualizzazioneRicetta implements GenericObserver {
 	private TableViewer viewer;
 	private VisualizzazioneRicetta instance;
 	private Button button;
+	private Equipaggiamento equip;
 	
+	
+
 	public VisualizzazioneRicetta(ControllerRicetta c) {
 		controller = c;
 		instance = this;
@@ -73,6 +79,9 @@ public class VisualizzazioneRicetta implements GenericObserver {
 		
 		
 		
+		
+		
+		
 		shell.open();
 		shell.layout();
 		while (!shell.isDisposed()) {
@@ -89,6 +98,8 @@ public class VisualizzazioneRicetta implements GenericObserver {
 	 * @param args
 	 */
 	protected void createContents(Shell s) {
+		
+		equip=controller.getControllerEquipaggiamento().getEquipaggiamento();
 		
 		shell = s;
 		
@@ -109,7 +120,22 @@ public class VisualizzazioneRicetta implements GenericObserver {
 		table.setHeaderVisible(true);
 		table.setBounds(0, 0, 538, 261);
 		
+		Label lblNomeEquipaggiamento = new Label(shell, SWT.NONE);
+		lblNomeEquipaggiamento.setBounds(583, 139, 136, 15);
+		lblNomeEquipaggiamento.setText("Nome equipaggiamento:");
 		
+		Label lblCapacit = new Label(shell, SWT.NONE);
+		lblCapacit.setBounds(583, 196, 55, 15);
+		lblCapacit.setText("Capacit\u00E0:");
+		
+		Label lblNewLabel = new Label(shell, SWT.NONE);
+		lblNewLabel.setBounds(583, 161, 136, 15);
+		lblNewLabel.setText(equip.getNome());
+		
+		
+		Label label = new Label(shell, SWT.NONE);
+		label.setBounds(583, 217, 136, 15);
+		label.setText(""+equip.getCapacita());
 		
 		TableColumn column = new TableColumn(tableViewer.getTable(), SWT.NONE);
         column.setText("Nome");
@@ -249,6 +275,7 @@ public class VisualizzazioneRicetta implements GenericObserver {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				ModificaEquipaggiamento modEquip = new ModificaEquipaggiamento(controller.getControllerEquipaggiamento(),controller.getControllerEquipaggiamento().getEquipaggiamento());
+				modEquip.addObserver(instance);
 				modEquip.open();
 						
 			}
@@ -272,15 +299,5 @@ public class VisualizzazioneRicetta implements GenericObserver {
 		shell.update();
 		shell.layout();
 	}
-
-	/**
-	 * Open the window.
-	 */
-	
-	
-	
-	
-	
-
 }
 

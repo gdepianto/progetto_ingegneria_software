@@ -280,6 +280,8 @@ public class ModificaRicetta {
         	    	controller.aggiornaRicetta(ricetta.getIdRicetta(),text.getText(), text_1.getText(), Integer.parseInt(spinner.getText()), listaQuantita);
         	    	observer.update();
         	    }
+        	    
+        	    shell.close();
         	}
         });
 
