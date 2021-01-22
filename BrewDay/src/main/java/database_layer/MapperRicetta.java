@@ -203,7 +203,7 @@ public class MapperRicetta {
 
 		      stmt = c.createStatement();
 		      ResultSet rs = stmt.executeQuery( "SELECT * FROM ricetta;" );
-		      System.out.println("prima sel");
+		
 		      while ( rs.next() ) {
 		    	 int id = rs.getInt("id");
 		         String nome = rs.getString("nome");
@@ -281,4 +281,78 @@ public class MapperRicetta {
 	    }
 	}
 
+	public Ricetta selectBirraDelGiorno(float capacitaEquipaggiamento) {
+		Connection c = null;
+		Ricetta ric = null;
+		try {
+		      Class.forName("org.sqlite.JDBC");
+		      c = DriverManager.getConnection("jdbc:sqlite:"+dbName,"",
+		    		  pass);
+		      c.setAutoCommit(false);
+		      String sql = "SELECT id as idRic FROM ricetta WHERE (SELECT COUNT(*) FROM quantita WHERE id_ricetta = idRic) = (SELECT COUNT(*) FROM quantita,ingrediente WHERE id_ricetta = idRic and id_ingrediente = ingrediente.id and (quantita_necessaria * ?)  <= disponibilita) ";
+		      sql = "SELECT id_ricetta,SUM(quantita_necessaria * ?) as quantita_totale FROM quantita WHERE  id_ricetta IN ("+sql+") GROUP BY id_ricetta ORDER BY quantita_totale DESC LIMIT 1;";
+		     
+		      PreparedStatement stmt = c.prepareStatement(sql);
+		      stmt.setFloat(1, capacitaEquipaggiamento);
+		      stmt.setFloat(2, capacitaEquipaggiamento);
+		      ResultSet rs = stmt.executeQuery(  );
+		      System.out.println("prima sel");
+		      int id=-1;
+		      while ( rs.next() ) {
+		    	id = rs.getInt(1);
+		      
+		      }
+		      rs.close();
+		      stmt.close();
+		      
+		      String sql1 = "SELECT * FROM ricetta where id = ? ;";
+		      stmt = c.prepareStatement(sql1);
+		      stmt.setInt(1, id);
+		      rs = stmt.executeQuery(  );
+		      String nome="";
+		      String descrizione="";
+		      int tempo_preparazione = -1;
+		      while ( rs.next() ) {
+			         nome = rs.getString("nome");
+			         descrizione = rs.getString("descrizione");
+			         tempo_preparazione  = rs.getInt("tempo_preparazione");
+			      
+			  }
+		      rs.close();
+		      stmt.close();
+		      String sql2 = "SELECT nome, disponibilita,"+
+        		 	  "unitaMisura, quantita_necessaria "+
+        		 	  "FROM quantita,ingrediente "+
+        		 	  "WHERE id_ingrediente = ingrediente.id "+
+        		 	  "AND id_ricetta = ?";
+	         PreparedStatement pstmt = c.prepareStatement( sql2 );
+	         pstmt.setInt(1, id);
+	         
+	         ResultSet rs2 = pstmt.executeQuery();
+	         ArrayList<Quantita> listaQuantita = new ArrayList<Quantita>();
+	         while (rs2.next()) {
+	        	 String nomeIng = rs2.getString("nome");
+	        	 float disponibilitaIng = rs2.getFloat("disponibilita");
+	        	 String unitaMisuraIng = rs2.getString("unitaMisura");
+	        	 float quantitaNecessaria = rs2.getFloat("quantita_necessaria");
+		         Ingrediente ing = new Ingrediente (nomeIng, disponibilitaIng, unitaMisuraIng);
+		         Quantita quantita = new Quantita();
+		         quantita.setIngrediente(ing);
+		         quantita.setQuantitaNecessaria(quantitaNecessaria);
+		         listaQuantita.add(quantita);
+	         }
+		     
+	         ric = new Ricetta(nome,descrizione,tempo_preparazione);
+	         ric.setIngredienti(listaQuantita);
+	         rs2.close();
+		     pstmt.close();
+		     c.close();
+		      
+		} catch ( Exception e ) {
+		      System.err.println( e.getClass().getName() + ": " + e.getMessage() );
+		      System.exit(0);
+		}
+		return ric;
+	}
+	
 }
