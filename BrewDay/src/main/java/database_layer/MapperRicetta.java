@@ -201,7 +201,7 @@ public class MapperRicetta {
 		      c.setAutoCommit(false);
 
 		      stmt = c.createStatement();
-		      ResultSet rs = stmt.executeQuery( "SELECT * FROM ricetta;" );
+		      ResultSet rs = stmt.executeQuery( "SELECT * FROM ricetta ORDER BY nome ASC" );
 		
 		      while ( rs.next() ) {
 		    	 int id = rs.getInt("id");

@@ -79,7 +79,7 @@ public class MapperIngrediente {
 		      c.setAutoCommit(false);
 
 		      stmt = c.createStatement();
-		      ResultSet rs = stmt.executeQuery( "SELECT * FROM ingrediente;" );
+		      ResultSet rs = stmt.executeQuery( "SELECT * FROM ingrediente ORDER BY nome ASC;" );
 		      
 		      while ( rs.next() ) {
 		    	 int id = rs.getInt("id");
