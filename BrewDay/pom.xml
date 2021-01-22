@@ -138,5 +138,8 @@
 	        </dependency>
 	    </dependencies>
 	  </profile>
-</profiles>
+	</profiles>
+  <properties>
+  	<sonar.coverage.jacoco.xmlReportPaths>target/site/jacoco-aggregate/jacoco.xml</sonar.coverage.jacoco.xmlReportPaths>
+  </properties>
 </project>
