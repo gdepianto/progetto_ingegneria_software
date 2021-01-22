@@ -72,13 +72,32 @@ public class ControllerRicettaTest {
 		assertTrue(contr1 && contr2 && contr3 && contr4 && contr5 && contr6);
 		
 	}
-	
+	@Test
 	public void AggiuntaRicettaNomeEsistenteTest() {
-		ControllerIngredienti contrIng = new ControllerIngredienti("password","test.db");
 		ControllerEquipaggiamento contrEquip = new ControllerEquipaggiamento("password","test.db");
-		
+		ControllerIngredienti contrIng = new ControllerIngredienti("password","test.db");
+		contrIng.aggiungiIngrediente("Malto",15.6f,"Grammi");
+		contrIng.aggiungiIngrediente("Luppolo",13,"Grammi");
+		contrIng.aggiungiIngrediente("Acqua",50,"Litri");
+		ArrayList<Ingrediente> listaIng = contrIng.getIngredienti();
+		ArrayList<Quantita> listaQuantita = new ArrayList<Quantita>();
+		Quantita q1 = new Quantita();
+		q1.setIngrediente(listaIng.get(0));
+		q1.setQuantitaNecessaria(20);
+		Quantita q2 = new Quantita();
+		q2.setIngrediente(listaIng.get(1));
+		q2.setQuantitaNecessaria(30);
+		Quantita q3 = new Quantita();
+		q3.setIngrediente(listaIng.get(2));
+		q3.setQuantitaNecessaria(40);
+		listaQuantita.add(q1);
+		listaQuantita.add(q2);
+		listaQuantita.add(q3);
+		contrEquip.aggiungiEquipaggiamento("Equip", 70);
 		ControllerRicetta contrRic = new ControllerRicetta(contrIng,contrEquip,"password","test.db");
 		contrRic.aggiungiRicetta("Ricetta1", "Preparare e poi assaggiare", 23, listaQuantita);
+		String resp = contrRic.aggiungiRicetta("Ricetta1", "Preparare e poi assaggiare", 23, listaQuantita);
+		assertEquals("Errore: ricetta con questo nome gia esistente",resp);
 	}
 	
 		
