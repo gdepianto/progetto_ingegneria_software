@@ -72,6 +72,7 @@ public class ControllerRicettaTest {
 		assertTrue(contr1 && contr2 && contr3 && contr4 && contr5 && contr6);
 		
 	}
+	
 	@Test
 	public void AggiuntaRicettaNomeEsistenteTest() {
 		ControllerEquipaggiamento contrEquip = new ControllerEquipaggiamento("password","test.db");
