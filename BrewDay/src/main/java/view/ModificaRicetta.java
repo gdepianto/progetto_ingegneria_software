@@ -1,27 +1,4 @@
-package View;
-
-import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.widgets.Shell;
-import org.eclipse.swt.widgets.Label;
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.custom.TableEditor;
-import org.eclipse.swt.events.SelectionAdapter;
-import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.events.VerifyEvent;
-import org.eclipse.swt.events.VerifyListener;
-import org.eclipse.swt.widgets.Text;
-
-import controller.ControllerRicetta;
-import model.Ingrediente;
-import model.Quantita;
-import model.Ricetta;
-
-import org.eclipse.swt.widgets.Spinner;
-import org.eclipse.swt.widgets.Table;
-import org.eclipse.swt.widgets.TableColumn;
-import org.eclipse.swt.widgets.TableItem;
-
-import org.eclipse.swt.widgets.Composite;
+package view;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -32,39 +9,64 @@ import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.ColumnLabelProvider;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.viewers.TableViewerColumn;
-import org.eclipse.jface.viewers.TextCellEditor;
 import org.eclipse.jface.viewers.ViewerCell;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.TableEditor;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.events.VerifyEvent;
+import org.eclipse.swt.events.VerifyListener;
 import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Shell;
+import org.eclipse.swt.widgets.Spinner;
+import org.eclipse.swt.widgets.Table;
+import org.eclipse.swt.widgets.TableColumn;
+import org.eclipse.swt.widgets.TableItem;
+import org.eclipse.swt.widgets.Text;
 
-public class AggiuntaRicetta {
+import controller.ControllerRicetta;
+import model.Equipaggiamento;
+import model.Ingrediente;
+import model.Quantita;
+import model.Ricetta;
+
+
+
+
+public class ModificaRicetta {
 
 	protected Shell shell;
+	private ControllerRicetta controller;
 	private Text text;
 	private Text text_1;
 	private Table table;
-	private ControllerRicetta controller;
 	private GenericObserver observer;
-
-	public AggiuntaRicetta(ControllerRicetta controller) {
+	private Ricetta ricetta;
+	
+	
+	
+	public ModificaRicetta(ControllerRicetta controller, Ricetta ricetta) {
 		this.controller = controller;
+		this.ricetta = ricetta;
 	}
-
+	public ModificaRicetta() {
+		this.controller = null;
+		this.ricetta = null;
+	}
 
 	public void setObserver(GenericObserver observer) {
 		this.observer = observer;
 	}
-
-	public AggiuntaRicetta() {
-		this.controller = null;
-	}
-	
 	/**
 	 * Launch the application.
 	 * @param args
 	 */
 	public static void main(String[] args) {
 		try {
-			AggiuntaRicetta window = new AggiuntaRicetta();
+			ModificaRicetta window = new ModificaRicetta();
 			window.open();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -91,17 +93,23 @@ public class AggiuntaRicetta {
 	 */
 	protected void createContents() {
 		shell = new Shell();
-		shell.setSize(921, 309);
+		shell.setSize(957, 357);
 		shell.setText("SWT Application");
+		
+		
 		ArrayList<Ingrediente> listaIngredienti = controller.getControllerIngredienti().getIngredienti();
 		ArrayList<Text> listaTextBox = new ArrayList<Text>();
+		
+		
+		
 		Label lblNewLabel = new Label(shell, SWT.NONE);
 		lblNewLabel.setBounds(10, 10, 70, 17);
 		lblNewLabel.setText("Nome");
 		
 		text = new Text(shell, SWT.BORDER);
-		text.setToolTipText("inserisci nome");
+		text.setToolTipText("Inserisci nome");
 		text.setBounds(10, 33, 117, 25);
+		text.setText(ricetta.getNome());
 		
 		Label lblNewLabel_1 = new Label(shell, SWT.NONE);
 		lblNewLabel_1.setBounds(173, 10, 219, 17);
@@ -109,13 +117,16 @@ public class AggiuntaRicetta {
 		
 		Spinner spinner = new Spinner(shell, SWT.BORDER);
 		spinner.setBounds(164, 35, 117, 35);
+		spinner.setSelection(ricetta.getTempoPreparazione());
 		
 		text_1 = new Text(shell, SWT.BORDER | SWT.MULTI);
 		text_1.setBounds(10, 119, 468, 135);
+		text_1.setText(ricetta.getDescrizione());
 		
 		Label lblNewLabel_2 = new Label(shell, SWT.NONE);
 		lblNewLabel_2.setBounds(10, 95, 184, 17);
 		lblNewLabel_2.setText("Descrizione ricetta");
+		
 		
 		Label lblNewLabel_3 = new Label(shell, SWT.NONE);
 		lblNewLabel_3.setBounds(512, 10, 184, 17);
@@ -229,21 +240,30 @@ public class AggiuntaRicetta {
 		
 		
 		tableViewer.setInput(listaIngredienti);
+		for(Ingrediente ing : listaIngredienti) {
+			for(Quantita q : ricetta.getIngredienti()) {
+				if(q.getIngrediente().getNome().equals(ing.getNome())) {
+					listaTextBox.get(listaIngredienti.indexOf(ing)).setText(""+q.getQuantitaNecessaria());
+					tableViewer.getTable().getItems()[listaIngredienti.indexOf(ing)].setChecked(true);
+				}
+					
+			}
+		}
 		
 
 		Button btnNewButton = new Button(shell, SWT.NONE);
 		btnNewButton.setBounds(634, 226, 147, 28);
-		btnNewButton.setText("Aggiungi ricetta");
+		btnNewButton.setText("Modifica ricetta");
 		btnNewButton.addSelectionListener(new SelectionAdapter() {
         	@Override
         	public void widgetSelected(SelectionEvent e) {
         		ArrayList<Quantita> listaQuantita = new ArrayList<Quantita>();
         		boolean contr = true;
         		TableItem [] items = tableViewer.getTable().getItems();
-        	    for (int i = 0; i < items.length && contr; ++i) {
+        	    for (int i = 0; i < items.length; ++i) {
         	      if (items[i].getChecked()) {
         	    	  if(listaTextBox.get(i).getText().isEmpty() ) {
-        	    		  MessageDialog.openWarning(Display.getDefault().getActiveShell(), "Attenzione", "Non lasciare ingrediente selezionato con quantita vuota");
+        	    		  MessageDialog.openWarning(Display.getDefault().getActiveShell(), "Errore", "Non lasciare ingrediente selezionato con quantita vuota");
         	    		  contr = false;
         	    	  }
         	    	  else {
@@ -255,23 +275,16 @@ public class AggiuntaRicetta {
         	    	  
         	      }
         	    }
-        	    if(listaQuantita.size() == 0) {
-        	    	contr = false;
-        	    	MessageDialog.openWarning(Display.getDefault().getActiveShell(), "Errore", "Non lasciare ingrediente selezionato con quantita vuota");
-        	    }
-        	    if(contr) {
-	        	    String response = controller.aggiungiRicetta(text.getText(), text_1.getText(), Integer.parseInt(spinner.getText()), listaQuantita);
-	        	    if(response.equals("Ok")) {
-	        	    	observer.update();
-	        	    }
-	        	    else {
-	        	    	MessageDialog.openWarning(Display.getDefault().getActiveShell(), "Errore", response);
-	        	    }
-        	    }
-        	    shell.close();
         	    
+        	    if(contr) {
+        	    	controller.aggiornaRicetta(ricetta.getIdRicetta(),text.getText(), text_1.getText(), Integer.parseInt(spinner.getText()), listaQuantita);
+        	    	observer.update();
+        	    }
+        	    
+        	    shell.close();
         	}
         });
 
 	}
+
 }
