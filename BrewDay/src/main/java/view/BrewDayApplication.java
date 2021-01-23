@@ -140,15 +140,7 @@ public class BrewDayApplication {
 				        		  "FOREIGN KEY (ricetta_id) "+
 				        		     "REFERENCES ricetta (id) "+
 				        		     "ON DELETE NO ACTION "+
-				        		     "ON UPDATE NO ACTION, "+
-				        		  "FOREIGN KEY (nomeEquipaggiamento) "+
-				        		     "REFERENCES equipaggiamento (nome) "+
-				        		     "ON DELETE NO ACTION "+
-				        		     "ON UPDATE NO ACTION, "+
-				        		  "FOREIGN KEY (capacitaEquipaggiamento) "+
-				        		     "REFERENCES equipaggiamento (capacita) "+
-				        		     "ON DELETE NO ACTION "+
-				        		     "ON UPDATE NO ACTION) ";
+				        		     "ON UPDATE NO ACTION, ";
 				        stmt.executeUpdate(sql);
 				        stmt.close();
 				        c.close();
