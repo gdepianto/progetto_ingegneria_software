@@ -119,4 +119,8 @@ public class ControllerRicetta {
 	public ControllerEquipaggiamento getControllerEquipaggiamento() {
 		return controllerEquipaggiamento;
 	}
+	
+	public ControllerNota getControllerNota() {
+		return controllerNota;
+	}
 }
