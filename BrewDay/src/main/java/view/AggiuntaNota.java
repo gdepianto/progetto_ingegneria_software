@@ -30,14 +30,16 @@ public class AggiuntaNota {
 	private Text text_1;
 	private ControllerNota controller;
 	private Equipaggiamento equip;
+	private int idRicetta;
 	
-	
-	public AggiuntaNota(ControllerNota controller, Equipaggiamento equip) {
+	public AggiuntaNota(int idRicetta,ControllerNota controller, Equipaggiamento equip) {
+		this.idRicetta = idRicetta;
 		this.controller = controller;
 		this.equip = equip;
 	}
 
 	public AggiuntaNota() {
+		this.idRicetta = -1;
 		this.controller = null;
 		this.equip = null;
 	}
@@ -164,7 +166,11 @@ public class AggiuntaNota {
 					val = Integer.parseInt(spinner.getText());
 				else
 					val = -1;
-				//controller.inserisciNota(text.getText(), Calendar.set(dateTime.getYear(),dateTime.getMonth(),dateTime.getDay()),Float.parseFloat( text_1.getText()), equip, val);
+				Calendar cal = Calendar.getInstance();
+				cal.set(Calendar.YEAR, dateTime.getYear());
+				cal.set(Calendar.MONTH, dateTime.getMonth());
+				cal.set(Calendar.DAY_OF_MONTH, dateTime.getDay());
+				controller.inserisciNota(idRicetta,text.getText(),cal.getTime() ,Float.parseFloat( text_1.getText()), equip, val);
 			}
 		});
 		btnNewButton.setBounds(515, 262, 118, 28);
