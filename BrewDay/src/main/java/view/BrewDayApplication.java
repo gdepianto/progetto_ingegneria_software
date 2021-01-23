@@ -6,7 +6,6 @@ import java.sql.Statement;
 
 import controller.ControllerEquipaggiamento;
 import controller.ControllerIngredienti;
-import controller.ControllerNota;
 import controller.ControllerRicetta;
 import controller.SecurityController;
 
@@ -141,19 +140,10 @@ public class BrewDayApplication {
 				        		  "FOREIGN KEY (ricetta_id) "+
 				        		     "REFERENCES ricetta (id) "+
 				        		     "ON DELETE NO ACTION "+
-				        		     "ON UPDATE NO ACTION, "+
-				        		  "FOREIGN KEY (nomeEquipaggiamento) "+
-				        		     "REFERENCES equipaggiamento (nome) "+
-				        		     "ON DELETE NO ACTION "+
-				        		     "ON UPDATE NO ACTION, "+
-				        		  "FOREIGN KEY (capacitaEquipaggiamento) "+
-				        		     "REFERENCES equipaggiamento (capacita) "+
-				        		     "ON DELETE NO ACTION "+
-				        		     "ON UPDATE NO ACTION) ";
+				        		     "ON UPDATE NO ACTION, ";
 				        stmt.executeUpdate(sql);
 				        stmt.close();
 				        c.close();
-				        System.out.println("Tabello lotto creata");
 				     } catch ( Exception e ) {
 				        System.err.println( e.getClass().getName() + ": " + e.getMessage() );
 				        System.exit(0);
@@ -182,9 +172,7 @@ public class BrewDayApplication {
 		
 		ControllerIngredienti control1 = new ControllerIngredienti(password,dbName);
 		
-		ControllerNota controlNota = new ControllerNota(password,dbName);
-		
-		ControllerRicetta controlRic = new ControllerRicetta(control1,controllerEq,controlNota,password,dbName);
+		ControllerRicetta controlRic = new ControllerRicetta(control1,controllerEq,password,dbName);
 		
 		VisualizzazioneRicetta finestraVisRicetta = new VisualizzazioneRicetta(controlRic);
 		finestraVisRicetta.open();
