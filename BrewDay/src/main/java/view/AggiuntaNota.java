@@ -3,10 +3,18 @@ package view;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Label;
+
+import java.util.Calendar;
+import java.util.Date;
+
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.DateTime;
 import org.eclipse.swt.widgets.Text;
+
+import controller.ControllerNota;
+import model.Equipaggiamento;
+
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Spinner;
 import org.eclipse.swt.widgets.Slider;
@@ -20,7 +28,20 @@ public class AggiuntaNota {
 	protected Shell shell;
 	private Text text;
 	private Text text_1;
+	private ControllerNota controller;
+	private Equipaggiamento equip;
+	
+	
+	public AggiuntaNota(ControllerNota controller, Equipaggiamento equip) {
+		this.controller = controller;
+		this.equip = equip;
+	}
 
+	public AggiuntaNota() {
+		this.controller = null;
+		this.equip = null;
+	}
+	
 	/**
 	 * Launch the application.
 	 * @param args
@@ -33,6 +54,8 @@ public class AggiuntaNota {
 			e.printStackTrace();
 		}
 	}
+
+	
 
 	/**
 	 * Open the window.
@@ -131,8 +154,17 @@ public class AggiuntaNota {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				if(text.getText().isEmpty()) {
-					
+					MessageDialog.openWarning(Display.getDefault().getActiveShell(), "Errore", "Non puoi lasciare il commento vuoto");
 				}
+				else if(text_1.getText().isEmpty()) {
+					MessageDialog.openWarning(Display.getDefault().getActiveShell(), "Errore", "Non puoi lasciare la quantita prodotta vuota");
+				}
+				int val;
+				if(spinner.isEnabled())
+					val = Integer.parseInt(spinner.getText());
+				else
+					val = -1;
+				//controller.inserisciNota(text.getText(), Calendar.set(dateTime.getYear(),dateTime.getMonth(),dateTime.getDay()),Float.parseFloat( text_1.getText()), equip, val);
 			}
 		});
 		btnNewButton.setBounds(515, 262, 118, 28);

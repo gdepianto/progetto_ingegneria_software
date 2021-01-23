@@ -36,6 +36,7 @@ public class ControllerRicettaTest {
 
 	@Test
 	public void AggiuntaRicettaTest() {
+		ControllerNota contrNota = new ControllerNota("password","test.db");
 		ControllerIngredienti contrIng = new ControllerIngredienti("password","test.db");
 		contrIng.aggiungiIngrediente("Malto",15.6f,"Grammi");
 		contrIng.aggiungiIngrediente("Luppolo",13,"Grammi");
@@ -56,7 +57,7 @@ public class ControllerRicettaTest {
 		listaQuantita.add(q3);
 		ControllerEquipaggiamento contrEquip = new ControllerEquipaggiamento("password","test.db");
 		contrEquip.aggiungiEquipaggiamento("Equip", 70f);
-		ControllerRicetta contrRic = new ControllerRicetta(contrIng,contrEquip,"password","test.db");
+		ControllerRicetta contrRic = new ControllerRicetta(contrIng,contrEquip,contrNota,"password","test.db");
 		contrRic.aggiungiRicetta("Ricetta1", "Preparare e poi assaggiare", 23, listaQuantita);
 	
 		Ricetta ric = contrRic.getRicette().get(0);
@@ -75,6 +76,7 @@ public class ControllerRicettaTest {
 	
 	@Test
 	public void AggiuntaRicettaNomeEsistenteTest() {
+		ControllerNota contrNota = new ControllerNota("password","test.db");
 		ControllerEquipaggiamento contrEquip = new ControllerEquipaggiamento("password","test.db");
 		ControllerIngredienti contrIng = new ControllerIngredienti("password","test.db");
 		contrIng.aggiungiIngrediente("Malto",15.6f,"Grammi");
@@ -95,7 +97,7 @@ public class ControllerRicettaTest {
 		listaQuantita.add(q2);
 		listaQuantita.add(q3);
 		contrEquip.aggiungiEquipaggiamento("Equip", 70);
-		ControllerRicetta contrRic = new ControllerRicetta(contrIng,contrEquip,"password","test.db");
+		ControllerRicetta contrRic = new ControllerRicetta(contrIng,contrEquip,contrNota,"password","test.db");
 		contrRic.aggiungiRicetta("Ricetta1", "Preparare e poi assaggiare", 23, listaQuantita);
 		String resp = contrRic.aggiungiRicetta("Ricetta1", "Preparare e poi assaggiare", 23, listaQuantita);
 		assertEquals("Errore: ricetta con questo nome gia esistente",resp);
@@ -131,6 +133,7 @@ public class ControllerRicettaTest {
 	
 	@Test
 	public void birraDelGiornoTest() {
+		ControllerNota contrNota = new ControllerNota("password","test.db");
 		ControllerEquipaggiamento contrEquip = new ControllerEquipaggiamento("password","test.db");
 		ControllerIngredienti contrIng = new ControllerIngredienti("password","test.db");
 		contrIng.aggiungiIngrediente("Malto",15.6f,"Grammi");
@@ -164,7 +167,7 @@ public class ControllerRicettaTest {
 		listaQuantita2.add(q2);
 		listaQuantita2.add(q3);
 		contrEquip.aggiungiEquipaggiamento("Equip", 30);
-		ControllerRicetta contrRic = new ControllerRicetta(contrIng,contrEquip,"password","test.db");
+		ControllerRicetta contrRic = new ControllerRicetta(contrIng,contrEquip,contrNota,"password","test.db");
 		contrRic.aggiungiRicetta("Ricetta1", "Preparare e poi assaggiare", 23, listaQuantita);
 		contrRic.aggiungiRicetta("Ricetta2", "Preparare e poi assaggiare", 23, listaQuantita2);
 		Ricetta ricDelGiorno = contrRic.getBirraDelGiorno();
@@ -173,6 +176,7 @@ public class ControllerRicettaTest {
 	
 	@Test
 	public void quantitaCambioEquipaggiamentoTest() {
+		ControllerNota contrNota = new ControllerNota("password","test.db");
 		ControllerIngredienti contrIng = new ControllerIngredienti("password","test.db");
 		contrIng.aggiungiIngrediente("Malto",15.6f,"Grammi");
 		contrIng.aggiungiIngrediente("Luppolo",13,"Grammi");
@@ -193,7 +197,7 @@ public class ControllerRicettaTest {
 		listaQuantita.add(q3);
 		ControllerEquipaggiamento contrEquip = new ControllerEquipaggiamento("password","test.db");
 		contrEquip.aggiungiEquipaggiamento("Equip", 70);
-		ControllerRicetta contrRic = new ControllerRicetta(contrIng,contrEquip,"password","test.db");
+		ControllerRicetta contrRic = new ControllerRicetta(contrIng,contrEquip,contrNota,"password","test.db");
 		contrRic.aggiungiRicetta("Ricetta1", "Preparare e poi assaggiare", 23, listaQuantita);
 		contrEquip.aggiornaEquipaggiamento("Equip2", 40);
 		
@@ -209,6 +213,7 @@ public class ControllerRicettaTest {
 	
 	@Test
 	public void updateRicettaTest() {
+		ControllerNota contrNota = new ControllerNota("password","test.db");
 		ControllerIngredienti contrIng = new ControllerIngredienti("password","test.db");
 		contrIng.aggiungiIngrediente("Malto",15.6f,"Grammi");
 		contrIng.aggiungiIngrediente("Luppolo",13,"Grammi");
@@ -229,7 +234,7 @@ public class ControllerRicettaTest {
 		listaQuantita.add(q3);
 		ControllerEquipaggiamento contrEquip = new ControllerEquipaggiamento("password","test.db");
 		contrEquip.aggiungiEquipaggiamento("Equip", 70);
-		ControllerRicetta contrRic = new ControllerRicetta(contrIng,contrEquip,"password","test.db");
+		ControllerRicetta contrRic = new ControllerRicetta(contrIng,contrEquip,contrNota,"password","test.db");
 		contrRic.aggiungiRicetta("Ricetta1", "Preparare e poi assaggiare", 23, listaQuantita);
 		Ricetta ric = contrRic.getRicette().get(0);
 		int id = ric.getIdRicetta();
@@ -263,6 +268,7 @@ public class ControllerRicettaTest {
 	
 	@Test
 	public void deleteRicetta() {
+		ControllerNota contrNota = new ControllerNota("password","test.db");
 		ControllerIngredienti contrIng = new ControllerIngredienti("password","test.db");
 		contrIng.aggiungiIngrediente("Malto",15.6f,"Grammi");
 		contrIng.aggiungiIngrediente("Luppolo",13,"Grammi");
@@ -283,7 +289,7 @@ public class ControllerRicettaTest {
 		listaQuantita.add(q3);
 		ControllerEquipaggiamento contrEquip = new ControllerEquipaggiamento("password","test.db");
 		contrEquip.aggiungiEquipaggiamento("Equip", 70);
-		ControllerRicetta contrRic = new ControllerRicetta(contrIng,contrEquip,"password","test.db");
+		ControllerRicetta contrRic = new ControllerRicetta(contrIng,contrEquip,contrNota,"password","test.db");
 		contrRic.aggiungiRicetta("Ricetta1", "Preparare e poi assaggiare", 23, listaQuantita);
 		Ricetta ric = contrRic.getRicette().get(0);
 		contrRic.rimuoviRicetta(ric.getIdRicetta());

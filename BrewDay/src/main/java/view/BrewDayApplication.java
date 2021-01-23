@@ -182,7 +182,7 @@ public class BrewDayApplication {
 		
 		ControllerIngredienti control1 = new ControllerIngredienti(password,dbName);
 		
-		ControllerNota controlNota = new ControllerNota();
+		ControllerNota controlNota = new ControllerNota(password,dbName);
 		
 		ControllerRicetta controlRic = new ControllerRicetta(control1,controllerEq,controlNota,password,dbName);
 		
