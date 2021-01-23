@@ -100,7 +100,7 @@ public class MostraRicetta {
 		lblNome.setBounds(10, 10, 48, 15);
 		lblNome.setText("Nome :");
 		
-		/*ArrayList <Lotto> listaNote = controller.getNote();*/
+		ArrayList <Lotto> listaNote = controller.getControllerNota().getLotti(ricetta.getIdRicetta());
 		
 		Label lblTempoPreparazione = new Label(shell, SWT.NONE);
 		lblTempoPreparazione.setBounds(10, 42, 162, 25);
@@ -261,29 +261,21 @@ public class MostraRicetta {
 		        	
 		            Button buttonRemove = new Button(composite,SWT.NONE);
 		            buttonRemove.setText("Remove");
-		            //Lotto p = (Lotto)cell.getElement();
+		            Lotto p = (Lotto)cell.getElement();
 		            buttonRemove.addSelectionListener(new SelectionAdapter() {
 		    		    @Override
 		    		    public void widgetSelected(SelectionEvent e) {
 		    		    	
+		    		    	controller.getControllerNota().rimuoviNota(p.getIdLotto());
+		    		    	listaNote.remove(p);
 		    		    	
 		    		    	
-		    		    	
-		    		    	
-		    		    	//controller.rimuoviNota(p.getIdRicetta() );
-		    		    	//listaNote.remove(p);
-		    		    	
-		    		    	//buttons.remove(p);
-		    		    	tableViewer.setInput(/*listaNote*/);
+		    		    	tableViewer_1.setInput(listaNote);
 		    		    	composite.dispose();
 		    		    	Display.getDefault().asyncExec(new Runnable() {
 		
 		                        @Override
 		                        public void run() {
-		                        	for(Lotto l : listaNote)
-		                        		System.out.println(l);
-		                        	
-		                        	
 		                        	updateTableViewer();
 		                        	
 		                        }
@@ -301,8 +293,8 @@ public class MostraRicetta {
         buttonVisualize.addSelectionListener(new SelectionAdapter() {
 		    @Override
 		    public void widgetSelected(SelectionEvent e) {
-		    	MostraRicetta FinestraRicetta = new MostraRicetta(controller, p);
-		    	FinestraRicetta.open();
+		    	/*MostraNota FinestraNota = new MostraNota(controller, p);
+		    	FinestraNota.open();*/
 		    }
 		});
 		
@@ -335,6 +327,9 @@ public class MostraRicetta {
 		btnAggiungiNota.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
+				AggiuntaNota finestraAggiungi = new AggiuntaNota(ricetta.getIdRicetta(), controller.getControllerNota(), controller.getControllerEquipaggiamento().getEquipaggiamento());
+				finestraAggiungi.open();
+				
 			}
 		});
 		btnAggiungiNota.setBounds(496, 310, 117, 25);
