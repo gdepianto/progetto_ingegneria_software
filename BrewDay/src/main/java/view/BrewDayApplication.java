@@ -6,6 +6,7 @@ import java.sql.Statement;
 
 import controller.ControllerEquipaggiamento;
 import controller.ControllerIngredienti;
+import controller.ControllerNota;
 import controller.ControllerRicetta;
 import controller.SecurityController;
 
@@ -143,7 +144,9 @@ public class BrewDayApplication {
 		
 		ControllerIngredienti control1 = new ControllerIngredienti(password,dbName);
 		
-		ControllerRicetta controlRic = new ControllerRicetta(control1,controllerEq,password,dbName);
+		ControllerNota controlNota = new ControllerNota();
+		
+		ControllerRicetta controlRic = new ControllerRicetta(control1,controllerEq,controlNota,password,dbName);
 		
 		VisualizzazioneRicetta finestraVisRicetta = new VisualizzazioneRicetta(controlRic);
 		finestraVisRicetta.open();
