@@ -1,5 +1,6 @@
 package controller;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 import model.Equipaggiamento;
@@ -24,6 +25,15 @@ public class ControllerNota {
 		else {
 			lotto = new Lotto(idRicetta,commento,data,quantita,equip);
 		}
+		
+	}
+	
+	public ArrayList<Lotto> getNote(int idRicetta) {
+		
+	}
+	
+	
+	public void rimuoviNota(int idNota) {
 		
 	}
 }
