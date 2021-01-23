@@ -74,6 +74,25 @@ public class ControllerRicetta {
 			q.setQuantitaNecessaria(q.getQuantitaNecessaria()*equip.getCapacita());
 		}
 		return ric;
+		
+		/*ArrayList<Ricetta> listaRicette = getRicette();
+		float max = 0;
+		Ricetta ric = null;
+		for(Ricetta r : listaRicette) {
+			float tmp = 0;
+			boolean contr = true;
+			for(Quantita q : r.getIngredienti()) {
+				if(q.getQuantitaNecessaria() > q.getIngrediente().getDisponibilita()) {
+					contr = false;
+				}
+				tmp+=q.getQuantitaNecessaria();
+			}
+			if(contr && tmp >= max) {
+				ric = r;
+				max = tmp;
+			}
+		}
+		return ric;*/
 	}
 
 	public ArrayList<Ricetta> getRicetteScarsaDisponibilita() {

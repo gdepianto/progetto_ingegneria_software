@@ -33,8 +33,15 @@
 	                <goals>
 	                    <goal>report</goal>
 	                </goals>
+	                
 	            </execution>
 	        </executions>
+	        <configuration>
+                 
+               <excludes>
+               		<exclude>src/main/java/view/*.java</exclude>
+               </excludes>
+            </configuration>
 	    </plugin>
     </plugins>
   </build>

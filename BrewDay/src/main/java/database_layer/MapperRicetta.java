@@ -280,6 +280,7 @@ public class MapperRicetta {
 	}
 
 	public Ricetta selectBirraDelGiorno(float capacitaEquipaggiamento) {
+		System.out.println(""+capacitaEquipaggiamento);
 		Connection c = null;
 		Ricetta ric = null;
 		try {
@@ -298,11 +299,10 @@ public class MapperRicetta {
 		      int id=-1;
 		      while ( rs.next() ) {
 		    	id = rs.getInt(1);
-		      
+		    	System.out.println(""+rs.getInt(1));
 		      }
 		      rs.close();
 		      stmt.close();
-		      
 		      String sql1 = "SELECT * FROM ricetta where id = ? ;";
 		      stmt = c.prepareStatement(sql1);
 		      stmt.setInt(1, id);
@@ -314,7 +314,7 @@ public class MapperRicetta {
 			         nome = rs.getString("nome");
 			         descrizione = rs.getString("descrizione");
 			         tempo_preparazione  = rs.getInt("tempo_preparazione");
-			      
+			         
 			  }
 		      rs.close();
 		      stmt.close();
