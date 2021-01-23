@@ -3,12 +3,21 @@ package model;
 import java.util.Date;
 
 public class Lotto {
+	private int idRicetta;
 	private int idLotto;
 	private String commento;
 	private Date data;
 	private float quantitaProdotta;
 	private Equipaggiamento equipaggiamento;
 	
+
+	public Lotto(int idRicetta, String commento, Date data, float quantitaProdotta, Equipaggiamento equipaggiamento) {
+		this.idRicetta = idRicetta;
+		this.commento = commento;
+		this.data = data;
+		this.quantitaProdotta = quantitaProdotta;
+		this.equipaggiamento = equipaggiamento;
+	}
 
 	public int getIdLotto() {
 		return idLotto;

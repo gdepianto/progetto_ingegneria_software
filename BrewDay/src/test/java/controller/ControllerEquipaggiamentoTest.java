@@ -29,7 +29,7 @@ public class ControllerEquipaggiamentoTest {
 		
 	}
 	
-    @Test
+	@Test
 	public void aggiungiEquipaggiamentoTest() {
     	ControllerEquipaggiamento controllerEquipaggiamento = new ControllerEquipaggiamento("password","test.db");
     	controllerEquipaggiamento.aggiungiEquipaggiamento("equip1", 20);

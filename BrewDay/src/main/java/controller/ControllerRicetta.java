@@ -11,13 +11,14 @@ public class ControllerRicetta {
 	private MapperRicetta mapperRicetta;
 	private ControllerIngredienti controllerIngredienti;
 	private ControllerEquipaggiamento controllerEquipaggiamento;
+	private ControllerNota controllerNota;
 	
 	
-	public ControllerRicetta (ControllerIngredienti contring,ControllerEquipaggiamento contrEq,String pass,String dbName) {
-		
+	public ControllerRicetta (ControllerIngredienti contring,ControllerEquipaggiamento contrEq,ControllerNota contrNota,String pass,String dbName) {
 		this.mapperRicetta = new MapperRicetta(pass,dbName);
 		controllerIngredienti = contring;
 		controllerEquipaggiamento = contrEq;
+		controllerNota = contrNota;
 	}
 	
 
