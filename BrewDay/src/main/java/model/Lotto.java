@@ -59,5 +59,9 @@ public class Lotto {
 		this.equipaggiamento = equipaggiamento;
 	}
 	
+	public int getRicetta() {
+		return this.idRicetta;
+	}
+	
 	
 }
