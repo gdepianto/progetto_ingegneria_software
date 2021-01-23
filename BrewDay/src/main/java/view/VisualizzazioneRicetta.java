@@ -191,15 +191,12 @@ public class VisualizzazioneRicetta implements GenericObserver {
 		    		    	controller.rimuoviRicetta(p.getIdRicetta() );/**/
 		    		    	listaRicette.remove(p);
 		    		    	
-		    		    	//buttons.remove(p);
 		    		    	tableViewer.setInput(listaRicette);
 		    		    	composite.dispose();
 		    		    	Display.getDefault().asyncExec(new Runnable() {
 		
 		                        @Override
 		                        public void run() {
-		                        	for(Ricetta r : listaRicette)
-		                        		System.out.println(r);
 		                        	
 		                        	
 		                        	updateTableViewer();
