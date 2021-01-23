@@ -105,6 +105,7 @@ public class VisualizzazioneRicetta implements GenericObserver {
 		
 		shell.setSize(855, 532);
 		shell.setText("SWT Application");
+		
 		ArrayList <Ricetta> listaRicette = controller.getRicette();
 		
 		TableViewer tableViewer = new TableViewer(shell);
@@ -256,6 +257,7 @@ public class VisualizzazioneRicetta implements GenericObserver {
 		});
 		btnAggiungiRicetta.setBounds(583, 11, 193, 25);
 		btnAggiungiRicetta.setText("Aggiungi Ricetta");
+		
 		
 		Button btnVisualizzaIngrediente = new Button(shell, SWT.NONE);
 		btnVisualizzaIngrediente.addSelectionListener(new SelectionAdapter() {

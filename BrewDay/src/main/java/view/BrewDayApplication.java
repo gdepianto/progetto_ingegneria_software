@@ -6,6 +6,7 @@ import java.sql.Statement;
 
 import controller.ControllerEquipaggiamento;
 import controller.ControllerIngredienti;
+import controller.ControllerNota;
 import controller.ControllerRicetta;
 import controller.SecurityController;
 
@@ -140,7 +141,7 @@ public class BrewDayApplication {
 				        		  "FOREIGN KEY (ricetta_id) "+
 				        		     "REFERENCES ricetta (id) "+
 				        		     "ON DELETE NO ACTION "+
-				        		     "ON UPDATE NO ACTION, ";
+				        		     "ON UPDATE NO ACTION )";
 				        stmt.executeUpdate(sql);
 				        stmt.close();
 				        c.close();
@@ -166,13 +167,13 @@ public class BrewDayApplication {
 	public static void startApplication(String pass) {
 		password = pass;
 		
-		     
+		ControllerNota controllNota = new ControllerNota(password,dbName);     
 		
 		ControllerEquipaggiamento controllerEq = new ControllerEquipaggiamento(password,dbName);
 		
 		ControllerIngredienti control1 = new ControllerIngredienti(password,dbName);
 		
-		ControllerRicetta controlRic = new ControllerRicetta(control1,controllerEq,password,dbName);
+		ControllerRicetta controlRic = new ControllerRicetta(control1,controllerEq,controllNota,password,dbName);
 		
 		VisualizzazioneRicetta finestraVisRicetta = new VisualizzazioneRicetta(controlRic);
 		finestraVisRicetta.open();

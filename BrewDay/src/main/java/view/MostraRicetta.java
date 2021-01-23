@@ -1,25 +1,36 @@
 package view;
 
+import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.layout.RowLayout;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
+import org.eclipse.swt.widgets.TableItem;
 
 import controller.ControllerRicetta;
 import model.Equipaggiamento;
 import model.Ingrediente;
+import model.Lotto;
+import model.NotaGusto;
 import model.Quantita;
 import model.Ricetta;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.CheckboxTableViewer;
 import org.eclipse.jface.viewers.ColumnLabelProvider;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.viewers.TableViewerColumn;
+import org.eclipse.jface.viewers.ViewerCell;
 
 public class MostraRicetta {
 
@@ -27,6 +38,8 @@ public class MostraRicetta {
 	private Table table;
 	private ControllerRicetta controller;
 	private Ricetta ricetta;
+	private Table table_1;
+	private TableViewer viewer;
 
 	/**
 	 * Launch the application.
@@ -49,6 +62,12 @@ public class MostraRicetta {
 	public MostraRicetta() {
 		controller = null;
 		ricetta = null;
+	}
+	
+	public void updateTableViewer()
+	{
+	    if(viewer != null)
+	        viewer.refresh();
 	}
 	
 	
@@ -74,14 +93,14 @@ public class MostraRicetta {
 	protected void createContents() {
 		
 		shell = new Shell();
-		shell.setSize(453, 551);
+		shell.setSize(1142, 551);
 		shell.setText("SWT Application");
 		
 		Label lblNome = new Label(shell, SWT.NONE);
 		lblNome.setBounds(10, 10, 48, 15);
 		lblNome.setText("Nome :");
 		
-		
+		ArrayList <Lotto> listaNote = controller.getControllerNota().getLotti(ricetta.getIdRicetta());
 		
 		Label lblTempoPreparazione = new Label(shell, SWT.NONE);
 		lblTempoPreparazione.setBounds(10, 42, 162, 25);
@@ -165,9 +184,167 @@ public class MostraRicetta {
         label_2.setBounds(10, 305, 414, 204);
         label_2.setText(ricetta.getDescrizione());
         
+        Label lblNewLabel = new Label(shell, SWT.NONE);
+        lblNewLabel.setBounds(496, 10, 55, 15);
+        lblNewLabel.setText("Note");
+        
+        TableViewer tableViewer_1 = new TableViewer(shell, SWT.BORDER | SWT.FULL_SELECTION);
+        table_1 = tableViewer_1.getTable();
+        table_1.setBounds(496, 42, 464, 225);
+        table_1.setLinesVisible(true);
+		table_1.setHeaderVisible(true);
+		
+		TableViewerColumn tableViewerColumn = new TableViewerColumn(tableViewer_1, SWT.NONE);
+		TableColumn tblclmnNomeNota = tableViewerColumn.getColumn();
+		tblclmnNomeNota.setWidth(100);
+		tblclmnNomeNota.setText("Data");
+		tableViewerColumn.setLabelProvider(new ColumnLabelProvider(){
+
+            @Override
+            public String getText(Object element) {
+               
+            	Lotto lo = (Lotto)element;
+            	return (""+lo.getData());
+            	
+            	
+            }
+
+        });
+		
+		TableViewerColumn tableViewerColumn_1 = new TableViewerColumn(tableViewer_1, SWT.NONE);
+		TableColumn tblclmnCommento = tableViewerColumn_1.getColumn();
+		tblclmnCommento.setWidth(100);
+		tblclmnCommento.setText("Commento");
+		tableViewerColumn_1.setLabelProvider(new ColumnLabelProvider(){
+
+            @Override
+            public String getText(Object element) {
+               
+            	Lotto lo = (Lotto)element;
+            	String ret = (""+lo.getCommento());
+            	String fin = "";
+            	if(ret.length() < 10)
+            		fin = ret;
+            	else
+            		fin = ret.substring(0, 11);
+            	
+            	return fin;	
+            	
+            	
+            }
+
+        });
+		
+		
+		
+		TableViewerColumn tableViewerColumn_2 = new TableViewerColumn(tableViewer_1, SWT.NONE);
+		TableColumn tableColumn = tableViewerColumn_2.getColumn();
+		tableColumn.setWidth(100);
+		
+		tableViewerColumn_2.setLabelProvider(new ColumnLabelProvider(){
+
+			Map<Object, Composite> compositesAction = new HashMap<Object, Composite>();
+
+
+			public void update(ViewerCell cell) {
+	
+	       	 TableItem item = (TableItem) cell.getItem();
+		        Composite composite;
+		        if(compositesAction.containsKey(cell.getElement()))
+		        {
+		            composite = compositesAction.get(cell.getElement());
+		        }
+		        else
+		        {
+		        	composite = new Composite((Composite) cell.getViewerRow().getControl(),SWT.NONE);
+		        	composite.setLayout(new RowLayout());
+		        	
+		            Button buttonRemove = new Button(composite,SWT.NONE);
+		            buttonRemove.setText("Remove");
+		            Lotto p = (Lotto)cell.getElement();
+		            buttonRemove.addSelectionListener(new SelectionAdapter() {
+		    		    @Override
+		    		    public void widgetSelected(SelectionEvent e) {
+		    		    	
+		    		    	controller.getControllerNota().rimuoviNota(p.getIdLotto());
+		    		    	listaNote.remove(p);
+		    		    	
+		    		    	
+		    		    	tableViewer_1.setInput(listaNote);
+		    		    	composite.dispose();
+		    		    	Display.getDefault().asyncExec(new Runnable() {
+		
+		                        @Override
+		                        public void run() {
+		                        	updateTableViewer();
+		                        	
+		                        }
+		                    });
+		    		    }
+		    		});
+		        }
+			
+		
+        
         tableViewer.setInput(ricetta.getIngredienti());
 		
+        Button buttonVisualize = new Button(composite,SWT.NONE);
+        buttonVisualize.setText("Visualizza");
+        buttonVisualize.addSelectionListener(new SelectionAdapter() {
+		    @Override
+		    public void widgetSelected(SelectionEvent e) {
+		    	/*MostraNota FinestraNota = new MostraNota(controller, p);
+		    	FinestraNota.open();*/
+		    }
+		});
 		
 
-	}
+			}
+	});
+		
+		
+		
+		TableViewerColumn tableViewerColumn_3 = new TableViewerColumn(tableViewer_1, SWT.NONE);
+		TableColumn tableColumn_1 = tableViewerColumn_3.getColumn();
+		tableColumn_1.setWidth(100);
+		tableColumn_1.setText("Valutazione");
+		tableViewerColumn_3.setLabelProvider(new ColumnLabelProvider(){
+
+            @Override
+            public String getText(Object element) {
+               
+            	String valutazione = "-";
+            	if(element instanceof NotaGusto)
+            		valutazione = (""+((NotaGusto)element).getValutazione());
+            	return valutazione;
+            	
+            	
+            }
+
+        });
+		
+		Button btnAggiungiNota = new Button(shell, SWT.NONE);
+		btnAggiungiNota.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				AggiuntaNota finestraAggiungi = new AggiuntaNota(ricetta.getIdRicetta(), controller.getControllerNota(), controller.getControllerEquipaggiamento().getEquipaggiamento());
+				finestraAggiungi.open();
+				
+			}
+		});
+		btnAggiungiNota.setBounds(496, 310, 117, 25);
+		btnAggiungiNota.setText("Aggiungi nota");
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+}
 }
