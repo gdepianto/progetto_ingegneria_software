@@ -121,6 +121,44 @@ public class BrewDayApplication {
 				        System.err.println( e.getClass().getName() + ": " + e.getMessage() );
 				        System.exit(0);
 				     }
+			     
+			     
+			     try {
+				        Class.forName("org.sqlite.JDBC");
+				        c = DriverManager.getConnection("jdbc:sqlite:"+dbName,"",
+				                 BrewDayApplication.password);
+				
+				        stmt = c.createStatement();
+				        String sql = "CREATE TABLE IF NOT EXISTS lotto ("+
+				        		  "id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "+
+				        		  "commento TEXT(2000) NOT NULL, " +
+				        		  "data DATE NOT NULL, "+
+				        		  "valutazione INT NULL, "+
+				        		  "ricetta_id INT NOT NULL, "+ 
+				        		  "quantitaProdotta FLOAT NOT NULL, "+
+				        		  "nomeEquipaggiamento VARCHAR NOT NULL, "+
+				        		  "capacitaEquipaggiamento FLOAT NOT NULL, "+
+				        		  "FOREIGN KEY (ricetta_id) "+
+				        		     "REFERENCES ricetta (id) "+
+				        		     "ON DELETE NO ACTION "+
+				        		     "ON UPDATE NO ACTION, "+
+				        		  "FOREIGN KEY (nomeEquipaggiamento) "+
+				        		     "REFERENCES equipaggiamento (nome) "+
+				        		     "ON DELETE NO ACTION "+
+				        		     "ON UPDATE NO ACTION, "+
+				        		  "FOREIGN KEY (capacitaEquipaggiamento) "+
+				        		     "REFERENCES equipaggiamento (capacita) "+
+				        		     "ON DELETE NO ACTION "+
+				        		     "ON UPDATE NO ACTION) ";
+				        stmt.executeUpdate(sql);
+				        stmt.close();
+				        c.close();
+				        System.out.println("Tabello lotto creata");
+				     } catch ( Exception e ) {
+				        System.err.println( e.getClass().getName() + ": " + e.getMessage() );
+				        System.exit(0);
+				     }
+			     
 				     
 
 	}
