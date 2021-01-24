@@ -37,7 +37,7 @@ public class MapperLotto {
                           "VALUES (?,?,?,?,?,?,?)";
 	         PreparedStatement pstmt = c.prepareStatement( sql );
 	         pstmt.setString(1, lotto.getCommento());
-	         pstmt.setDate(2, (Date) lotto.getData());
+	         pstmt.setDate(2, new Date( lotto.getData().getTime()));
 	         if (lotto instanceof NotaGusto) {
 	 			NotaGusto lotto2 = (NotaGusto) lotto;
 	 			pstmt.setInt(3, lotto2.getValutazione());
@@ -47,9 +47,11 @@ public class MapperLotto {
 	         pstmt.setFloat(5, lotto.getQuantitaProdotta());
 	         pstmt.setString(6, lotto.getEquipaggiamento().getNome());
 	         pstmt.setFloat(7, lotto.getEquipaggiamento().getCapacita());
-	         
-	         
-	         
+		     pstmt.executeUpdate();	         
+		     pstmt.close();
+		       
+		     c.commit();
+		     c.close();	         
 	      } catch ( Exception e ) {
 	    	  System.err.println( e.getClass().getName() + ": " + e.getMessage() );
 	    	  System.exit(0);
@@ -89,11 +91,11 @@ public class MapperLotto {
 	        	 float capacitaEquip = rs2.getFloat("capacitaEquipaggiamento");
 	        	 int valutazione = rs2.getInt("valutazione");
 	        	 if(rs2.wasNull()) {
-	        		 l = new Lotto(idRicetta,commento,data,quantitaProdotta,new Equipaggiamento(nomeEquip,capacitaEquip));
+	        		 l = new Lotto(idRicetta,commento,new java.util.Date(data.getTime()),quantitaProdotta,new Equipaggiamento(nomeEquip,capacitaEquip));
 	        		 l.setIdLotto(idNota);
 	        	 }
 	        	 else {
-	        		 l = new NotaGusto(idRicetta,commento,data,quantitaProdotta,new Equipaggiamento(nomeEquip,capacitaEquip),valutazione);
+	        		 l = new NotaGusto(idRicetta,commento,new java.util.Date(data.getTime()),quantitaProdotta,new Equipaggiamento(nomeEquip,capacitaEquip),valutazione);
 	        		 l.setIdLotto(idNota);
 	        	 }
 	        	 

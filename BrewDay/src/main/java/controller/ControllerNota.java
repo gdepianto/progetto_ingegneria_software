@@ -27,6 +27,7 @@ public class ControllerNota {
 			lotto = new Lotto(idRicetta,commento,data,quantita,equip);
 		}
 		
+		mapperLotto.insert(lotto);
 	}
 	
 	public ArrayList<Lotto> getLotti(int idRicetta) {

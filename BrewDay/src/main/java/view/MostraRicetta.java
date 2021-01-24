@@ -2,10 +2,14 @@ package view;
 
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.TableEditor;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.RowLayout;
@@ -32,7 +36,7 @@ import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.viewers.TableViewerColumn;
 import org.eclipse.jface.viewers.ViewerCell;
 
-public class MostraRicetta {
+public class MostraRicetta implements GenericObserver{
 
 	protected Shell shell;
 	private Table table;
@@ -40,6 +44,7 @@ public class MostraRicetta {
 	private Ricetta ricetta;
 	private Table table_1;
 	private TableViewer viewer;
+	private MostraRicetta instance;
 
 	/**
 	 * Launch the application.
@@ -57,11 +62,13 @@ public class MostraRicetta {
 	public MostraRicetta(ControllerRicetta c, Ricetta r) {
 		controller = c;
 		ricetta=r;
+		instance = this;
 	}
 	
 	public MostraRicetta() {
 		controller = null;
 		ricetta = null;
+		instance = this;
 	}
 	
 	public void updateTableViewer()
@@ -77,7 +84,7 @@ public class MostraRicetta {
 	 */
 	public void open() {
 		Display display = Display.getDefault();
-		createContents();
+		createContents(new Shell());
 		shell.open();
 		shell.layout();
 		while (!shell.isDisposed()) {
@@ -90,9 +97,9 @@ public class MostraRicetta {
 	/**
 	 * Create contents of the window.
 	 */
-	protected void createContents() {
+	protected void createContents(Shell s) {
 		
-		shell = new Shell();
+		shell = s;
 		shell.setSize(1142, 551);
 		shell.setText("SWT Application");
 		
@@ -101,6 +108,8 @@ public class MostraRicetta {
 		lblNome.setText("Nome :");
 		
 		ArrayList <Lotto> listaNote = controller.getControllerNota().getLotti(ricetta.getIdRicetta());
+
+		
 		
 		Label lblTempoPreparazione = new Label(shell, SWT.NONE);
 		lblTempoPreparazione.setBounds(10, 42, 162, 25);
@@ -189,8 +198,15 @@ public class MostraRicetta {
         lblNewLabel.setText("Note");
         
         TableViewer tableViewer_1 = new TableViewer(shell, SWT.BORDER | SWT.FULL_SELECTION);
+        tableViewer_1.setContentProvider(new ArrayContentProvider());
         table_1 = tableViewer_1.getTable();
-        table_1.setBounds(496, 42, 464, 225);
+        table_1.addListener(SWT.MeasureItem, new Listener() {
+            public void handleEvent(Event event) {
+                 
+                event.height = 50;
+            }
+        });
+        table_1.setBounds(496, 42, 623, 225);
         table_1.setLinesVisible(true);
 		table_1.setHeaderVisible(true);
 		
@@ -223,12 +239,12 @@ public class MostraRicetta {
             	Lotto lo = (Lotto)element;
             	String ret = (""+lo.getCommento());
             	String fin = "";
-            	if(ret.length() < 10)
+            	if(ret.length() < 12)
             		fin = ret;
             	else
             		fin = ret.substring(0, 11);
             	
-            	return fin;	
+            	return fin+"...";	
             	
             	
             }
@@ -239,7 +255,7 @@ public class MostraRicetta {
 		
 		TableViewerColumn tableViewerColumn_2 = new TableViewerColumn(tableViewer_1, SWT.NONE);
 		TableColumn tableColumn = tableViewerColumn_2.getColumn();
-		tableColumn.setWidth(100);
+		tableColumn.setWidth(200);
 		
 		tableViewerColumn_2.setLabelProvider(new ColumnLabelProvider(){
 
@@ -248,56 +264,58 @@ public class MostraRicetta {
 
 			public void update(ViewerCell cell) {
 	
-	       	 TableItem item = (TableItem) cell.getItem();
-		        Composite composite;
-		        if(compositesAction.containsKey(cell.getElement()))
-		        {
-		            composite = compositesAction.get(cell.getElement());
-		        }
-		        else
-		        {
-		        	composite = new Composite((Composite) cell.getViewerRow().getControl(),SWT.NONE);
-		        	composite.setLayout(new RowLayout());
-		        	
-		            Button buttonRemove = new Button(composite,SWT.NONE);
-		            buttonRemove.setText("Remove");
-		            Lotto p = (Lotto)cell.getElement();
-		            buttonRemove.addSelectionListener(new SelectionAdapter() {
-		    		    @Override
-		    		    public void widgetSelected(SelectionEvent e) {
-		    		    	
-		    		    	controller.getControllerNota().rimuoviNota(p.getIdLotto());
-		    		    	listaNote.remove(p);
-		    		    	
-		    		    	
-		    		    	tableViewer_1.setInput(listaNote);
-		    		    	composite.dispose();
-		    		    	Display.getDefault().asyncExec(new Runnable() {
-		
-		                        @Override
-		                        public void run() {
-		                        	updateTableViewer();
-		                        	
-		                        }
-		                    });
-		    		    }
-		    		});
-		        }
+					TableItem item = (TableItem) cell.getItem();
+			        Composite composite;
+			        if(compositesAction.containsKey(cell.getElement()))
+			        {
+			            composite = compositesAction.get(cell.getElement());
+			        }
+			        else
+			        {
+			        	composite = new Composite((Composite) cell.getViewerRow().getControl(),SWT.NONE);
+			        	composite.setLayout(new RowLayout());
+			        	
+			            Button buttonRemove = new Button(composite,SWT.NONE);
+			            buttonRemove.setText("Remove");
+			            Lotto p = (Lotto)cell.getElement();
+			            buttonRemove.addSelectionListener(new SelectionAdapter() {
+			    		    @Override
+			    		    public void widgetSelected(SelectionEvent e) {
+			    		    	
+			    		    	controller.getControllerNota().rimuoviNota(p.getIdLotto());
+			    		    	listaNote.remove(p);
+			    		    	
+			    		    	
+			    		    	tableViewer_1.setInput(listaNote);
+			    		    	composite.dispose();
+			    		    	Display.getDefault().asyncExec(new Runnable() {
 			
-		
-        
-        tableViewer.setInput(ricetta.getIngredienti());
-		
-        Button buttonVisualize = new Button(composite,SWT.NONE);
-        buttonVisualize.setText("Visualizza");
-        buttonVisualize.addSelectionListener(new SelectionAdapter() {
-		    @Override
-		    public void widgetSelected(SelectionEvent e) {
-		    	/*MostraNota FinestraNota = new MostraNota(controller, p);
-		    	FinestraNota.open();*/
-		    }
-		});
-		
+			                        @Override
+			                        public void run() {
+			                        	updateTableViewer();
+			                        	
+			                        }
+			                    });
+			    		    }
+			    		});
+			            Button buttonVisualize = new Button(composite,SWT.NONE);
+				        buttonVisualize.setText("Visualizza");
+				        buttonVisualize.addSelectionListener(new SelectionAdapter() {
+						    @Override
+						    public void widgetSelected(SelectionEvent e) {
+						    	/*MostraNota FinestraNota = new MostraNota(controller, p);
+						    	FinestraNota.open();*/
+						    }
+						});
+				        compositesAction.put(cell.getElement(), composite);
+			        }
+				
+			        TableEditor editor = new TableEditor(item.getParent());
+			        editor.grabHorizontal  = true;
+			        editor.grabVertical = true;
+			        editor.setEditor(composite , item, cell.getColumnIndex());
+			        editor.layout();
+	        
 
 			}
 	});
@@ -328,6 +346,7 @@ public class MostraRicetta {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				AggiuntaNota finestraAggiungi = new AggiuntaNota(ricetta.getIdRicetta(), controller.getControllerNota(), controller.getControllerEquipaggiamento().getEquipaggiamento());
+				finestraAggiungi.setObserver(instance);
 				finestraAggiungi.open();
 				
 			}
@@ -336,6 +355,9 @@ public class MostraRicetta {
 		btnAggiungiNota.setText("Aggiungi nota");
 		
 		
+		tableViewer.setInput(ricetta.getIngredienti());
+		
+		tableViewer_1.setInput(listaNote);
 		
 		
 		
@@ -343,8 +365,18 @@ public class MostraRicetta {
 		
 		
 		
+	}
+
+	@Override
+	public void update() {
+		for(Control c : shell.getChildren())
+			c.dispose();
+		createContents(shell);
+		shell.redraw(0, 0, shell.getBounds().width,
+				shell.getBounds().height, true);
 		
+		shell.update();
+		shell.layout();
 		
-		
-}
+	}
 }

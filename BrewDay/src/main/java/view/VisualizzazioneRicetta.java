@@ -76,12 +76,6 @@ public class VisualizzazioneRicetta implements GenericObserver {
 		Display display = Display.getDefault();
 		createContents(new Shell());
 		
-		
-		
-		
-		
-		
-		
 		shell.open();
 		shell.layout();
 		while (!shell.isDisposed()) {
@@ -316,7 +310,7 @@ public class VisualizzazioneRicetta implements GenericObserver {
 
 	@Override
 	public void update() {
-		// TODO Auto-generated method stub
+		
 		for(Control c : shell.getChildren())
 			c.dispose();
 		createContents(shell);

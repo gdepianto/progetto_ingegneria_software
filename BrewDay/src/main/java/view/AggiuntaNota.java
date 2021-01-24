@@ -31,7 +31,10 @@ public class AggiuntaNota {
 	private ControllerNota controller;
 	private Equipaggiamento equip;
 	private int idRicetta;
+	private GenericObserver observer;
 	
+	
+
 	public AggiuntaNota(int idRicetta,ControllerNota controller, Equipaggiamento equip) {
 		this.idRicetta = idRicetta;
 		this.controller = controller;
@@ -42,6 +45,10 @@ public class AggiuntaNota {
 		this.idRicetta = -1;
 		this.controller = null;
 		this.equip = null;
+	}
+	
+	public void setObserver(GenericObserver observer) {
+		this.observer = observer;
 	}
 	
 	/**
@@ -161,16 +168,19 @@ public class AggiuntaNota {
 				else if(text_1.getText().isEmpty()) {
 					MessageDialog.openWarning(Display.getDefault().getActiveShell(), "Errore", "Non puoi lasciare la quantita prodotta vuota");
 				}
-				int val;
-				if(spinner.isEnabled())
-					val = Integer.parseInt(spinner.getText());
-				else
-					val = -1;
-				Calendar cal = Calendar.getInstance();
-				cal.set(Calendar.YEAR, dateTime.getYear());
-				cal.set(Calendar.MONTH, dateTime.getMonth());
-				cal.set(Calendar.DAY_OF_MONTH, dateTime.getDay());
-				controller.inserisciNota(idRicetta,text.getText(),cal.getTime() ,Float.parseFloat( text_1.getText()), equip, val);
+				else {
+					int val;
+					if(spinner.isEnabled())
+						val = Integer.parseInt(spinner.getText());
+					else
+						val = -1;
+					Calendar cal = Calendar.getInstance();
+					cal.set(Calendar.YEAR, dateTime.getYear());
+					cal.set(Calendar.MONTH, dateTime.getMonth());
+					cal.set(Calendar.DAY_OF_MONTH, dateTime.getDay());
+					controller.inserisciNota(idRicetta,text.getText(),cal.getTime() ,Float.parseFloat( text_1.getText()), equip, val);
+					observer.update();
+				}
 			}
 		});
 		btnNewButton.setBounds(515, 262, 118, 28);
