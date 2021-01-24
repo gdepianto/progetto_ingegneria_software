@@ -11,10 +11,10 @@ public class ControllerRicetta {
 	private MapperRicetta mapperRicetta;
 	private ControllerIngredienti controllerIngredienti;
 	private ControllerEquipaggiamento controllerEquipaggiamento;
-	private ControllerNota controllerNota;
+	private ControllerLotto controllerNota;
 	
 	
-	public ControllerRicetta (ControllerIngredienti contring,ControllerEquipaggiamento contrEq,ControllerNota contrNota,String pass,String dbName) {
+	public ControllerRicetta (ControllerIngredienti contring,ControllerEquipaggiamento contrEq,ControllerLotto contrNota,String pass,String dbName) {
 		this.mapperRicetta = new MapperRicetta(pass,dbName);
 		controllerIngredienti = contring;
 		controllerEquipaggiamento = contrEq;
@@ -76,24 +76,6 @@ public class ControllerRicetta {
 		}
 		return ric;
 		
-		/*ArrayList<Ricetta> listaRicette = getRicette();
-		float max = 0;
-		Ricetta ric = null;
-		for(Ricetta r : listaRicette) {
-			float tmp = 0;
-			boolean contr = true;
-			for(Quantita q : r.getIngredienti()) {
-				if(q.getQuantitaNecessaria() > q.getIngrediente().getDisponibilita()) {
-					contr = false;
-				}
-				tmp+=q.getQuantitaNecessaria();
-			}
-			if(contr && tmp >= max) {
-				ric = r;
-				max = tmp;
-			}
-		}
-		return ric;*/
 	}
 
 	public ArrayList<Ricetta> getRicetteScarsaDisponibilita() {
@@ -120,7 +102,7 @@ public class ControllerRicetta {
 		return controllerEquipaggiamento;
 	}
 	
-	public ControllerNota getControllerNota() {
+	public ControllerLotto getControllerNota() {
 		return controllerNota;
 	}
 }

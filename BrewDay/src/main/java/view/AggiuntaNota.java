@@ -12,7 +12,7 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.DateTime;
 import org.eclipse.swt.widgets.Text;
 
-import controller.ControllerNota;
+import controller.ControllerLotto;
 import model.Equipaggiamento;
 
 import org.eclipse.swt.widgets.Button;
@@ -28,14 +28,14 @@ public class AggiuntaNota {
 	protected Shell shell;
 	private Text text;
 	private Text text_1;
-	private ControllerNota controller;
+	private ControllerLotto controller;
 	private Equipaggiamento equip;
 	private int idRicetta;
 	private GenericObserver observer;
 	
 	
 
-	public AggiuntaNota(int idRicetta,ControllerNota controller, Equipaggiamento equip) {
+	public AggiuntaNota(int idRicetta,ControllerLotto controller, Equipaggiamento equip) {
 		this.idRicetta = idRicetta;
 		this.controller = controller;
 		this.equip = equip;
@@ -178,7 +178,7 @@ public class AggiuntaNota {
 					cal.set(Calendar.YEAR, dateTime.getYear());
 					cal.set(Calendar.MONTH, dateTime.getMonth());
 					cal.set(Calendar.DAY_OF_MONTH, dateTime.getDay());
-					controller.inserisciNota(idRicetta,text.getText(),cal.getTime() ,Float.parseFloat( text_1.getText()), equip, val);
+					controller.inserisciLotto(idRicetta,text.getText(),cal.getTime() ,Float.parseFloat( text_1.getText()), equip, val);
 					observer.update();
 					shell.close();
 				}

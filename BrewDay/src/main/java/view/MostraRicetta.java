@@ -283,7 +283,7 @@ public class MostraRicetta implements GenericObserver{
 			    		    @Override
 			    		    public void widgetSelected(SelectionEvent e) {
 			    		    	
-			    		    	controller.getControllerNota().rimuoviNota(p.getIdLotto());
+			    		    	controller.getControllerNota().rimuoviLotto(p.getIdLotto());
 			    		    	listaNote.remove(p);
 			    		    	
 			    		    	
@@ -304,7 +304,7 @@ public class MostraRicetta implements GenericObserver{
 				        buttonVisualize.addSelectionListener(new SelectionAdapter() {
 						    @Override
 						    public void widgetSelected(SelectionEvent e) {
-						    	MostraNota FinestraNota = new MostraNota(p);
+						    	MostraLotto FinestraNota = new MostraLotto(p);
 						    	FinestraNota.open();
 						    }
 						});

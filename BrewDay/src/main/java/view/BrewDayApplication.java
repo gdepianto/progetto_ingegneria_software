@@ -6,7 +6,7 @@ import java.sql.Statement;
 
 import controller.ControllerEquipaggiamento;
 import controller.ControllerIngredienti;
-import controller.ControllerNota;
+import controller.ControllerLotto;
 import controller.ControllerRicetta;
 import controller.SecurityController;
 
@@ -167,7 +167,7 @@ public class BrewDayApplication {
 	public static void startApplication(String pass) {
 		password = pass;
 		
-		ControllerNota controllNota = new ControllerNota(password,dbName);     
+		ControllerLotto controllNota = new ControllerLotto(password,dbName);     
 		
 		ControllerEquipaggiamento controllerEq = new ControllerEquipaggiamento(password,dbName);
 		

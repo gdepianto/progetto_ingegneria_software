@@ -12,16 +12,16 @@ import java.text.SimpleDateFormat;
 
 import org.eclipse.swt.SWT;
 
-public class MostraNota {
+public class MostraLotto {
 
 	protected Shell shell;
 	private Lotto lotto;
 	
-	public MostraNota(Lotto lotto) {
+	public MostraLotto(Lotto lotto) {
 		this.lotto = lotto;
 	}
 	
-	public MostraNota() {
+	public MostraLotto() {
 		this.lotto = null;
 	}
 
@@ -31,7 +31,7 @@ public class MostraNota {
 	 */
 	public static void main(String[] args) {
 		try {
-			MostraNota window = new MostraNota();
+			MostraLotto window = new MostraLotto();
 			window.open();
 		} catch (Exception e) {
 			e.printStackTrace();

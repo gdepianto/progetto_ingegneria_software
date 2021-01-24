@@ -36,7 +36,7 @@ public class ControllerRicettaTest {
 
 	@Test
 	public void AggiuntaRicettaTest() {
-		ControllerNota contrNota = new ControllerNota("password","test.db");
+		ControllerLotto contrNota = new ControllerLotto("password","test.db");
 		ControllerIngredienti contrIng = new ControllerIngredienti("password","test.db");
 		contrIng.aggiungiIngrediente("Malto",15.6f,"Grammi");
 		contrIng.aggiungiIngrediente("Luppolo",13,"Grammi");
@@ -76,7 +76,7 @@ public class ControllerRicettaTest {
 	
 	@Test
 	public void AggiuntaRicettaNomeEsistenteTest() {
-		ControllerNota contrNota = new ControllerNota("password","test.db");
+		ControllerLotto contrNota = new ControllerLotto("password","test.db");
 		ControllerEquipaggiamento contrEquip = new ControllerEquipaggiamento("password","test.db");
 		ControllerIngredienti contrIng = new ControllerIngredienti("password","test.db");
 		contrIng.aggiungiIngrediente("Malto",15.6f,"Grammi");
@@ -133,7 +133,7 @@ public class ControllerRicettaTest {
 	
 	@Test
 	public void birraDelGiornoTest() {
-		ControllerNota contrNota = new ControllerNota("password","test.db");
+		ControllerLotto contrNota = new ControllerLotto("password","test.db");
 		ControllerEquipaggiamento contrEquip = new ControllerEquipaggiamento("password","test.db");
 		ControllerIngredienti contrIng = new ControllerIngredienti("password","test.db");
 		contrIng.aggiungiIngrediente("Malto",15.6f,"Grammi");
@@ -176,7 +176,7 @@ public class ControllerRicettaTest {
 	
 	@Test
 	public void quantitaCambioEquipaggiamentoTest() {
-		ControllerNota contrNota = new ControllerNota("password","test.db");
+		ControllerLotto contrNota = new ControllerLotto("password","test.db");
 		ControllerIngredienti contrIng = new ControllerIngredienti("password","test.db");
 		contrIng.aggiungiIngrediente("Malto",15.6f,"Grammi");
 		contrIng.aggiungiIngrediente("Luppolo",13,"Grammi");
@@ -213,7 +213,7 @@ public class ControllerRicettaTest {
 	
 	@Test
 	public void updateRicettaTest() {
-		ControllerNota contrNota = new ControllerNota("password","test.db");
+		ControllerLotto contrNota = new ControllerLotto("password","test.db");
 		ControllerIngredienti contrIng = new ControllerIngredienti("password","test.db");
 		contrIng.aggiungiIngrediente("Malto",15.6f,"Grammi");
 		contrIng.aggiungiIngrediente("Luppolo",13,"Grammi");
@@ -268,7 +268,7 @@ public class ControllerRicettaTest {
 	
 	@Test
 	public void deleteRicetta() {
-		ControllerNota contrNota = new ControllerNota("password","test.db");
+		ControllerLotto contrNota = new ControllerLotto("password","test.db");
 		ControllerIngredienti contrIng = new ControllerIngredienti("password","test.db");
 		contrIng.aggiungiIngrediente("Malto",15.6f,"Grammi");
 		contrIng.aggiungiIngrediente("Luppolo",13,"Grammi");

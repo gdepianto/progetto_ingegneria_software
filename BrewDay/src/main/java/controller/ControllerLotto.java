@@ -8,17 +8,17 @@ import model.Equipaggiamento;
 import model.Lotto;
 import model.NotaGusto;
 
-public class ControllerNota {
+public class ControllerLotto {
 	private MapperLotto mapperLotto;
 	
 	
-	public ControllerNota(String pass,String dbName) {
+	public ControllerLotto(String pass,String dbName) {
 		mapperLotto = new MapperLotto(pass,dbName);
 		
 	}
 	
 	
-	public void inserisciNota(int idRicetta,String commento,Date data,float quantita,Equipaggiamento equip,int valutazione) {
+	public void inserisciLotto(int idRicetta,String commento,Date data,float quantita,Equipaggiamento equip,int valutazione) {
 		Lotto lotto;
 		if ( valutazione != -1) {
 			lotto = new NotaGusto(idRicetta,commento,data,quantita,equip,valutazione);
@@ -35,7 +35,7 @@ public class ControllerNota {
 	}
 	
 	
-	public void rimuoviNota(int idNota) {
+	public void rimuoviLotto(int idNota) {
 		mapperLotto.delete(idNota);
 	}
 }
