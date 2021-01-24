@@ -25,6 +25,7 @@ import model.NotaGusto;
 import model.Quantita;
 import model.Ricetta;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -209,7 +210,7 @@ public class MostraRicetta implements GenericObserver{
         table_1.setBounds(496, 42, 623, 225);
         table_1.setLinesVisible(true);
 		table_1.setHeaderVisible(true);
-		
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 		TableViewerColumn tableViewerColumn = new TableViewerColumn(tableViewer_1, SWT.NONE);
 		TableColumn tblclmnNomeNota = tableViewerColumn.getColumn();
 		tblclmnNomeNota.setWidth(100);
@@ -220,7 +221,7 @@ public class MostraRicetta implements GenericObserver{
             public String getText(Object element) {
                
             	Lotto lo = (Lotto)element;
-            	return (""+lo.getData());
+            	return (sdf.format(lo.getData()));
             	
             	
             }
@@ -303,8 +304,8 @@ public class MostraRicetta implements GenericObserver{
 				        buttonVisualize.addSelectionListener(new SelectionAdapter() {
 						    @Override
 						    public void widgetSelected(SelectionEvent e) {
-						    	/*MostraNota FinestraNota = new MostraNota(controller, p);
-						    	FinestraNota.open();*/
+						    	MostraNota FinestraNota = new MostraNota(p);
+						    	FinestraNota.open();
 						    }
 						});
 				        compositesAction.put(cell.getElement(), composite);
