@@ -180,6 +180,7 @@ public class AggiuntaNota {
 					cal.set(Calendar.DAY_OF_MONTH, dateTime.getDay());
 					controller.inserisciNota(idRicetta,text.getText(),cal.getTime() ,Float.parseFloat( text_1.getText()), equip, val);
 					observer.update();
+					shell.close();
 				}
 			}
 		});
