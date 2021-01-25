@@ -210,7 +210,7 @@ public class MapperRicetta {
 		         int tempo_preparazione  = rs.getInt("tempo_preparazione");
 		         
 		         String sql = "SELECT nome, disponibilita,"+
-		        		 	  "unitaMisura, quantita_necessaria "+
+		        		 	  "unitaMisura, quantita_necessaria,id_ingrediente "+
 		        		 	  "FROM quantita,ingrediente "+
 		        		 	  "WHERE id_ingrediente = ingrediente.id "+
 		        		 	  "AND id_ricetta = ?";
@@ -223,8 +223,10 @@ public class MapperRicetta {
 		        	 String nomeIng = rs2.getString("nome");
 		        	 float disponibilitaIng = rs2.getFloat("disponibilita");
 		        	 String unitaMisuraIng = rs2.getString("unitaMisura");
+		        	 int idIngrediente = rs2.getInt("id_ingrediente");
 		        	 float quantitaNecessaria = rs2.getFloat("quantita_necessaria");
 			         Ingrediente ing = new Ingrediente (nomeIng, disponibilitaIng, unitaMisuraIng);
+			         ing.setIdIngrediente(idIngrediente);
 			         Quantita quantita = new Quantita();
 			         quantita.setIngrediente(ing);
 			         quantita.setQuantitaNecessaria(quantitaNecessaria);

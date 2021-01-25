@@ -4,6 +4,15 @@ public class Quantita {
 	private Ingrediente ingrediente;
 	private float quantitaNecessaria;	
 	
+	public Quantita() {
+		
+	}
+	
+	public Quantita(Quantita q) {
+		ingrediente = new Ingrediente(q.getIngrediente());
+		quantitaNecessaria = q.getQuantitaNecessaria();
+	}
+	
 	public Ingrediente getIngrediente() {
 		return ingrediente;
 	}

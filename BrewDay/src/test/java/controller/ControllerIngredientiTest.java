@@ -10,6 +10,7 @@ import org.junit.Test;
 
 import database_layer.MapperEquipaggiamento;
 import database_layer.MapperIngrediente;
+import database_layer.MapperLotto;
 import database_layer.MapperRicetta;
 import model.Ingrediente;
 import view.BrewDayApplication;
@@ -26,9 +27,11 @@ public class ControllerIngredientiTest {
 		MapperRicetta mapRicetta = new MapperRicetta("password","test.db");
 		MapperIngrediente mapIngrediente = new MapperIngrediente("password","test.db");
 		MapperEquipaggiamento mapEquipaggiamento = new MapperEquipaggiamento("password","test.db");
+		MapperLotto mapLotto = new MapperLotto("password","test.db");
 		mapRicetta.deleteAll();
 		mapIngrediente.deleteAll();
 		mapEquipaggiamento.delete();
+		mapLotto.deleteAll();
 		
 	}
 
