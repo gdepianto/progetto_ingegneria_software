@@ -1,12 +1,13 @@
 package model;
 
+
 import java.util.Date;
 
 public class Lotto {
 	private int idRicetta;
 	private int idLotto;
 	private String commento;
-	private Date data;
+	private  Date data;
 	private float quantitaProdotta;
 	private Equipaggiamento equipaggiamento;
 	
