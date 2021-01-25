@@ -16,6 +16,13 @@ public class Ingrediente {
 		this.unitaMisura  = unitaMisura;
 	}
 	
+	public Ingrediente(Ingrediente i) {
+		this.idIngrediente = i.getIdIngrediente();
+		this.nome = i.getNome();
+		this.disponibilita = i.getDisponibilita();
+		this.unitaMisura  = i.getUnitaMisura();
+	}
+	
 	public int getIdIngrediente() {	
 		return idIngrediente;
 	}

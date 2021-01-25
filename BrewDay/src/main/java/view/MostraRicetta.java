@@ -108,7 +108,7 @@ public class MostraRicetta implements GenericObserver{
 		lblNome.setBounds(10, 10, 48, 15);
 		lblNome.setText("Nome :");
 		
-		ArrayList <Lotto> listaNote = controller.getControllerNota().getLotti(ricetta.getIdRicetta());
+		ArrayList <Lotto> listaNote = controller.getControllerLotto().getLotti(ricetta.getIdRicetta());
 
 		
 		
@@ -283,7 +283,7 @@ public class MostraRicetta implements GenericObserver{
 			    		    @Override
 			    		    public void widgetSelected(SelectionEvent e) {
 			    		    	
-			    		    	controller.getControllerNota().rimuoviLotto(p.getIdLotto());
+			    		    	controller.getControllerLotto().rimuoviLotto(p.getIdLotto());
 			    		    	listaNote.remove(p);
 			    		    	
 			    		    	
@@ -346,7 +346,7 @@ public class MostraRicetta implements GenericObserver{
 		btnAggiungiNota.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				AggiuntaNota finestraAggiungi = new AggiuntaNota(ricetta.getIdRicetta(), controller.getControllerNota(), controller.getControllerEquipaggiamento().getEquipaggiamento());
+				AggiuntaNota finestraAggiungi = new AggiuntaNota(ricetta, controller, controller.getControllerEquipaggiamento().getEquipaggiamento());
 				finestraAggiungi.setObserver(instance);
 				finestraAggiungi.open();
 				

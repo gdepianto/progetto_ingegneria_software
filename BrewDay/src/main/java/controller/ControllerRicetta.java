@@ -1,6 +1,7 @@
 package controller;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import database_layer.MapperRicetta;
 import model.Equipaggiamento;
@@ -81,28 +82,55 @@ public class ControllerRicetta {
 	public ArrayList<Ricetta> getRicetteScarsaDisponibilita() {
 		ArrayList<Ricetta> listaRicetta = getRicette();
 		boolean contr = false;
-		for(Ricetta r : listaRicetta) {
+		for(Iterator<Ricetta> iterator = listaRicetta.iterator();iterator.hasNext();) {
 			contr = false;
-			for(Quantita q : r.getIngredienti()) {
+			Ricetta r = iterator.next();
+			for(Iterator<Quantita> iterator1 = r.getIngredienti().iterator();iterator1.hasNext();) {
+				Quantita q = iterator1.next();
 				if(q.getQuantitaNecessaria() > q.getIngrediente().getDisponibilita()) {
 					contr = true;
 				}
 				else {
-					r.getIngredienti().remove(q);
+					//r.getIngredienti().remove(q);
+					iterator1.remove();
 				}
 			}
 			if(!contr) {
-				listaRicetta.remove(r);
+				//listaRicetta.remove(r);
+				iterator.remove();
 			}
 		}
 		return listaRicetta;
 	}
 
+	public boolean aggiornaDisponibilità(Ricetta r,float molt) {
+		boolean contr = true;
+		ArrayList<Quantita> newListaQuantita = new ArrayList<Quantita>();
+		for(Quantita q : r.getIngredienti()) {
+			if(q.getIngrediente().getDisponibilita() < (q.getQuantitaNecessaria()*molt)) {
+				contr = false;
+			}
+			else {
+				Quantita tmpq = new Quantita(q);
+				tmpq.getIngrediente().setDisponibilita(q.getIngrediente().getDisponibilita()-(q.getQuantitaNecessaria()*molt));
+				newListaQuantita.add(tmpq);
+			}
+		}
+		if(contr) {
+			r.setIngredienti(newListaQuantita);
+			for(Quantita q : r.getIngredienti()) {
+				controllerIngredienti.aggiornaIngrediente(q.getIngrediente().getIdIngrediente(), q.getIngrediente().getNome(), q.getIngrediente().getDisponibilita(), q.getIngrediente().getUnitaMisura());
+			}
+		}
+		return contr;
+	}
+	
+	
 	public ControllerEquipaggiamento getControllerEquipaggiamento() {
 		return controllerEquipaggiamento;
 	}
 	
-	public ControllerLotto getControllerNota() {
+	public ControllerLotto getControllerLotto() {
 		return controllerNota;
 	}
 }

@@ -39,7 +39,7 @@
 	        <configuration>
                  
                <excludes>
-               		<exclude>src/main/java/view/*.java</exclude>
+               		<exclude>view/*.class</exclude>
                </excludes>
             </configuration>
 	    </plugin>
@@ -146,7 +146,9 @@
 	    </dependencies>
 	  </profile>
 	</profiles>
+	
+	
   <properties>
-  	<sonar.coverage.jacoco.xmlReportPaths>target/site/jacoco-aggregate/jacoco.xml</sonar.coverage.jacoco.xmlReportPaths>
+  	 <sonar.coverage.exclusions>src/main/java/view/*</sonar.coverage.exclusions>
   </properties>
 </project>

@@ -3,6 +3,7 @@ package view;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.MessageBox;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -13,7 +14,9 @@ import org.eclipse.swt.widgets.DateTime;
 import org.eclipse.swt.widgets.Text;
 
 import controller.ControllerLotto;
+import controller.ControllerRicetta;
 import model.Equipaggiamento;
+import model.Ricetta;
 
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Spinner;
@@ -28,21 +31,21 @@ public class AggiuntaNota {
 	protected Shell shell;
 	private Text text;
 	private Text text_1;
-	private ControllerLotto controller;
+	private ControllerRicetta controller;
 	private Equipaggiamento equip;
-	private int idRicetta;
+	private Ricetta ricetta;
 	private GenericObserver observer;
 	
 	
 
-	public AggiuntaNota(int idRicetta,ControllerLotto controller, Equipaggiamento equip) {
-		this.idRicetta = idRicetta;
+	public AggiuntaNota(Ricetta r,ControllerRicetta controller, Equipaggiamento equip) {
+		this.ricetta = r;
 		this.controller = controller;
 		this.equip = equip;
 	}
 
 	public AggiuntaNota() {
-		this.idRicetta = -1;
+		this.ricetta = null;
 		this.controller = null;
 		this.equip = null;
 	}
@@ -104,6 +107,7 @@ public class AggiuntaNota {
 		text.setBounds(318, 53, 326, 159);
 		
 		text_1 = new Text(shell, SWT.BORDER);
+		text_1.setText(""+equip.getCapacita());
 		text_1.setBounds(43, 265, 73, 25);
 		text_1.addVerifyListener(new VerifyListener() {
 
@@ -168,8 +172,19 @@ public class AggiuntaNota {
 				else if(text_1.getText().isEmpty()) {
 					MessageDialog.openWarning(Display.getDefault().getActiveShell(), "Errore", "Non puoi lasciare la quantita prodotta vuota");
 				}
+				else if(Float.parseFloat(text_1.getText()) > equip.getCapacita()) {
+					MessageDialog.openWarning(Display.getDefault().getActiveShell(), "Errore", "Non puoi produrre piu birra di quella che permette il tuo equipaggiamento!");
+				}
 				else {
 					int val;
+					boolean scalaIngredienti = false;
+					MessageBox messageBox = new MessageBox(shell, SWT.ICON_QUESTION
+					            | SWT.YES | SWT.NO);
+					messageBox.setMessage("Vuoi aggiornare le disponibilita degli ingredienti?");
+					messageBox.setText("Aggiornamento ingredienti");
+					int response = messageBox.open();
+					if (response == SWT.YES)
+						scalaIngredienti = true;
 					if(spinner.isEnabled())
 						val = Integer.parseInt(spinner.getText());
 					else
@@ -178,7 +193,17 @@ public class AggiuntaNota {
 					cal.set(Calendar.YEAR, dateTime.getYear());
 					cal.set(Calendar.MONTH, dateTime.getMonth());
 					cal.set(Calendar.DAY_OF_MONTH, dateTime.getDay());
-					controller.inserisciLotto(idRicetta,text.getText(),cal.getTime() ,Float.parseFloat( text_1.getText()), equip, val);
+					controller.getControllerLotto().inserisciLotto(ricetta.getIdRicetta(),text.getText(),cal.getTime() ,Float.parseFloat( text_1.getText()), equip, val);
+					if(scalaIngredienti) {
+						if(controller.aggiornaDisponibilità(ricetta, Float.parseFloat( text_1.getText())/equip.getCapacita())) {
+							MessageDialog.openWarning(Display.getDefault().getActiveShell(), "Disponibilita aggiornate!", "Le disponibilita degli ingredienti sono state aggiornate!");
+						}
+						else {
+							MessageDialog.openWarning(Display.getDefault().getActiveShell(), "Disponibilita non aggiornate.", "Le disponibilita degli ingredienti non sono state aggiornate perchè non erano sufficienti.");
+							
+						}
+					}
+					
 					observer.update();
 					shell.close();
 				}
