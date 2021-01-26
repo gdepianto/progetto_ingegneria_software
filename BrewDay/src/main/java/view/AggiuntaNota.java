@@ -195,7 +195,7 @@ public class AggiuntaNota {
 					cal.set(Calendar.DAY_OF_MONTH, dateTime.getDay());
 					controller.getControllerLotto().inserisciLotto(ricetta.getIdRicetta(),text.getText(),cal.getTime() ,Float.parseFloat( text_1.getText()), equip, val);
 					if(scalaIngredienti) {
-						if(controller.aggiornaDisponibilità(ricetta, Float.parseFloat( text_1.getText())/equip.getCapacita())) {
+						if(controller.aggiornaDisponibilita(ricetta, Float.parseFloat( text_1.getText())/equip.getCapacita())) {
 							MessageDialog.openWarning(Display.getDefault().getActiveShell(), "Disponibilita aggiornate!", "Le disponibilita degli ingredienti sono state aggiornate!");
 						}
 						else {
