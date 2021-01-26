@@ -300,7 +300,7 @@ public class ControllerRicettaTest {
 		ControllerRicetta contrRic = new ControllerRicetta(contrIng,contrEquip,contrNota,"password","test.db");
 		contrRic.aggiungiRicetta("Ricetta1", "Preparare e poi assaggiare", 23, listaQuantita);
 		Ricetta ric = contrRic.getRicette().get(0);
-		boolean contr1 = contrRic.aggiornaDisponibilità(ric, 1);
+		boolean contr1 = contrRic.aggiornaDisponibilita(ric, 1);
 		ArrayList<Ingrediente> listaIngredienti = contrIng.getIngredienti();
 		Ingrediente ing1 = listaIngredienti.get(2);
 		Ingrediente ing2 = listaIngredienti.get(1);

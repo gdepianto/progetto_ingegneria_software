@@ -103,7 +103,7 @@ public class ControllerRicetta {
 		return listaRicetta;
 	}
 
-	public boolean aggiornaDisponibilità(Ricetta r,float molt) {
+	public boolean aggiornaDisponibilita(Ricetta r,float molt) {
 		boolean contr = true;
 		ArrayList<Quantita> newListaQuantita = new ArrayList<Quantita>();
 		for(Quantita q : r.getIngredienti()) {
