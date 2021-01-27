@@ -30,35 +30,22 @@ import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.viewers.TableViewerColumn;
 import org.eclipse.jface.viewers.ViewerCell;
 
-public class Visualizzazione_Ingrediente implements GenericObserver {
+public class VisualizzazioneIngrediente extends Window implements GenericObserver {
 
-	protected Shell shell;
 	private ControllerIngredienti controller;
 	private TableViewer viewer;
-	private Visualizzazione_Ingrediente instance;
+	private VisualizzazioneIngrediente instance;
 	
-	public Visualizzazione_Ingrediente(ControllerIngredienti c) {
+	
+	//private Shell shell;
+	public VisualizzazioneIngrediente(ControllerIngredienti c) {
+		super();
 		controller = c;
 		instance = this;
+		//shell = new Shell();
+		//createContents(shell);
 	}
 	
-	public Visualizzazione_Ingrediente() {
-		controller = null;
-		instance = this;
-	}
-	
-	/**
-	 * Launch the application.
-	 * @param args
-	 */
-	public static void main(String[] args) {
-		try {
-			Visualizzazione_Ingrediente window = new Visualizzazione_Ingrediente();
-			window.open();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
 	
 	
 	
@@ -68,29 +55,16 @@ public class Visualizzazione_Ingrediente implements GenericObserver {
 	        viewer.refresh();
 	}
 
-	/**
-	 * Open the window.
-	 */
-	public void open() {
-		Display display = Display.getDefault();
-		createContents(new Shell());
-		shell.open();
-		shell.layout();
-		while (!shell.isDisposed()) {
-			if (!display.readAndDispatch()) {
-				display.sleep();
-			}
-		}
-	}
 
 	/**
 	 * Create contents of the window.
 	 */
+	@Override
 	protected void createContents(Shell s) {
-		shell = s;
+		super.createContents(s);
 	
 		shell.setSize(721, 293);
-		shell.setText("SWT Application");
+		shell.setText("Visualizza ingredienti");
 		ArrayList<Ingrediente> listaIngredienti = controller.getIngredienti();
 		
 		
@@ -99,7 +73,7 @@ public class Visualizzazione_Ingrediente implements GenericObserver {
         viewer = new TableViewer(shell);
         Table table_1 = viewer.getTable();
       
-        table_1.setBounds(0, 0, 503, 261);
+        table_1.setBounds(0, 0, 538, 261);
         // resize the row height using a MeasureItem listener
         table_1.addListener(SWT.MeasureItem, new Listener() {
             public void handleEvent(Event event) {
@@ -113,7 +87,7 @@ public class Visualizzazione_Ingrediente implements GenericObserver {
 
         TableColumn column = new TableColumn(viewer.getTable(), SWT.NONE);
         column.setText("Ingrediente");
-        column.setWidth(100);
+        column.setWidth(110);
        
         TableViewerColumn firstNameCol = new TableViewerColumn(viewer, column);
         
@@ -129,8 +103,8 @@ public class Visualizzazione_Ingrediente implements GenericObserver {
         });
 
         column = new TableColumn(viewer.getTable(), SWT.NONE);
-        column.setText("Disponibilit�");
-        column.setWidth(100);
+        column.setText("Disponibilit\u00E0");
+        column.setWidth(110);
         TableViewerColumn lastNameCol = new TableViewerColumn(viewer, column);
         lastNameCol.setLabelProvider(new ColumnLabelProvider(){
 
@@ -144,8 +118,8 @@ public class Visualizzazione_Ingrediente implements GenericObserver {
         });
 
         column = new TableColumn(viewer.getTable(), SWT.NONE);
-        column.setText("Unita Misura");
-        column.setWidth(100);
+        column.setText("Unit\u00E0 Misura");
+        column.setWidth(110);
         TableViewerColumn unitNameCol = new TableViewerColumn(viewer, column);
         unitNameCol.setLabelProvider(new ColumnLabelProvider(){
 
@@ -181,12 +155,13 @@ public class Visualizzazione_Ingrediente implements GenericObserver {
      	        }
      	        else
      	        {
+     	           Ingrediente p = (Ingrediente)cell.getElement();
      	        	composite = new Composite((Composite) cell.getViewerRow().getControl(),SWT.NONE);
      	        	composite.setLayout(new RowLayout());
      	        	
      	            Button buttonRemove = new Button(composite,SWT.NONE);
-     	            buttonRemove.setText("Remove");
-     	            Ingrediente p = (Ingrediente)cell.getElement();
+     	            
+     	        
      	            buttonRemove.addSelectionListener(new SelectionAdapter() {
      	    		    @Override
      	    		    public void widgetSelected(SelectionEvent e) {
@@ -198,7 +173,6 @@ public class Visualizzazione_Ingrediente implements GenericObserver {
      	    		    	controller.rimuoviIngrediente(p.getIdIngrediente() );
      	    		    	listaIngredienti.remove(p);
      	    		    	
-     	    		    	//buttons.remove(p);
      	    		    	viewer.setInput(listaIngredienti);
      	    		    	composite.dispose();
      	    		    	Display.getDefault().asyncExec(new Runnable() {
@@ -215,6 +189,7 @@ public class Visualizzazione_Ingrediente implements GenericObserver {
      	                    });
      	    		    }
      	    		});
+     	            buttonRemove.setText("Rimuovi");
      	            Button buttonUpdate = new Button(composite,SWT.NONE);
      	            buttonUpdate.setText("Aggiorna");
      	            buttonUpdate.addSelectionListener(new SelectionAdapter() {
@@ -222,7 +197,7 @@ public class Visualizzazione_Ingrediente implements GenericObserver {
              		    public void widgetSelected(SelectionEvent e) {
 
              		    	
-             		    	Modifica_Ingrediente FinestraModifica = new Modifica_Ingrediente(controller, p);
+             		    	ModificaIngrediente FinestraModifica = new ModificaIngrediente(controller, p);
              		    	FinestraModifica.addObserver(instance);
              		    	FinestraModifica.open();
 
@@ -244,11 +219,11 @@ public class Visualizzazione_Ingrediente implements GenericObserver {
         btnNewButton.addSelectionListener(new SelectionAdapter() {
         	@Override
         	public void widgetSelected(SelectionEvent e) {
-        		Aggiunta_Ingrediente finestraAggiungiIngrediente = new Aggiunta_Ingrediente(controller,instance,shell);
+        		AggiuntaIngrediente finestraAggiungiIngrediente = new AggiuntaIngrediente(controller,instance);
         		finestraAggiungiIngrediente.open();
         	}
         });
-        btnNewButton.setBounds(520, 34, 153, 28);
+        btnNewButton.setBounds(558, 34, 153, 28);
         btnNewButton.setText("Aggiungi Ingrediente");
 
         

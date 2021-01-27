@@ -21,16 +21,12 @@ public class SecurityController {
 				myWriter.write(saveString);
 				
 			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
 			}
 		    finally {
 		    	try {
 		    		if(myWriter != null)
 		    			myWriter.close();
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
 				}
 		    }
 		    
@@ -49,7 +45,6 @@ public class SecurityController {
 		      }
 		      myReader.close();
 		    } catch (FileNotFoundException e) {
-		      e.printStackTrace();
 		    }
 			
 			String storedPassword = storedHash.substring(0,2)+storedHash.substring(32);

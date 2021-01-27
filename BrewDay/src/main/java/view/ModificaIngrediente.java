@@ -14,27 +14,28 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.widgets.Text;
-import org.eclipse.swt.widgets.Spinner;
 import org.eclipse.swt.widgets.Button;
 
 
 
-public class Modifica_Ingrediente {
+public class ModificaIngrediente extends Window{
 
-	protected Shell shell;
 	private ControllerIngredienti controller;
 	private Text text;
 	private Ingrediente i;
 	private GenericObserver observer;
 	
-	public Modifica_Ingrediente(ControllerIngredienti c, Ingrediente ing) {
+	
+	//private Shell shell;
+	public ModificaIngrediente(ControllerIngredienti c, Ingrediente ing) {
+		super();
 		controller = c;
 		i = ing;
+		//shell = new Shell();
+		//createContents(shell);
 	}
 	
-	public Modifica_Ingrediente() {
-		controller = null;
-	}
+	
 
 	/**
 	 * Launch the application.
@@ -45,46 +46,22 @@ public class Modifica_Ingrediente {
 		observer = obs;
 	}
 	
-	public static void main(String[] args) {
-		try {
-			Modifica_Ingrediente window = new Modifica_Ingrediente();
-			window.open();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-
-	/**
-	 * Open the window.
-	 */
-	public void open() {
-		Display display = Display.getDefault();
-		createContents();
-		shell.open();
-		shell.layout();
-		while (!shell.isDisposed()) {
-			if (!display.readAndDispatch()) {
-				display.sleep();
-			}
-		}
-	}
 	
-	
-
 	/**
 	 * Create contents of the window.
 	 */
-	protected void createContents() {
-		shell = new Shell();
+	@Override
+	protected void createContents(Shell s) {
+		super.createContents(s);
 		shell.setSize(450, 300);
-		shell.setText("SWT Application");
+		shell.setText("Modifica ingrediente");
 		
 		Label lblModificaIngrediente = new Label(shell, SWT.NONE);
-		lblModificaIngrediente.setBounds(158, 10, 115, 15);
+		lblModificaIngrediente.setBounds(158, 10, 168, 20);
 		lblModificaIngrediente.setText("Modifica Ingrediente");
 		
 		Label lblModificaNome = new Label(shell, SWT.NONE);
-		lblModificaNome.setBounds(10, 44, 152, 15);
+		lblModificaNome.setBounds(10, 39, 197, 20);
 		lblModificaNome.setText("Modifica nome ingrediente");
 		
 		text = new Text(shell, SWT.BORDER);
@@ -92,7 +69,7 @@ public class Modifica_Ingrediente {
 		text.setText(i.getNome());
 		
 		Label lblModificaUnitDi = new Label(shell, SWT.NONE);
-		lblModificaUnitDi.setBounds(10, 111, 197, 15);
+		lblModificaUnitDi.setBounds(10, 100, 241, 20);
 		lblModificaUnitDi.setText("Modifica unit\u00E0 di misura ingrediente");
 		
 		String [] items = {"litri", "grammi"};
@@ -102,29 +79,33 @@ public class Modifica_Ingrediente {
 		combo.setText(i.getUnitaMisura());
 		
 		Label lblModificaQuantit = new Label(shell, SWT.NONE);
-		lblModificaQuantit.setBounds(10, 180, 99, 15);
+		lblModificaQuantit.setBounds(10, 170, 175, 20);
 		lblModificaQuantit.setText("Modifica quantit\u00E0");
 		
-		Spinner spinner = new Spinner(shell, SWT.BORDER);
-		spinner.setBounds(10, 201, 91, 22);
-		spinner.setMaximum(1000000000);
-		spinner.setSelection((int)i.getDisponibilita());
+		Text disponibilitaText = new Text(shell, SWT.BORDER);
+		disponibilitaText.setBounds(10, 201, 91, 22);
+		disponibilitaText.setText(""+i.getDisponibilita());
+		disponibilitaText.addVerifyListener(floatVerifyListener);
 		
 		Button btnModifica = new Button(shell, SWT.NONE);
 		btnModifica.addSelectionListener(new SelectionAdapter() {
 		    @Override
 		    public void widgetSelected(SelectionEvent e) {
-		    	
-		    	if(combo.getText().equals(""))
-						MessageDialog.openWarning(Display.getDefault().getActiveShell(), "Errore", "Selezionare obbligatoriamente un'unità di misura");
-		    	else if (spinner.getText().equals(""))
-						MessageDialog.openWarning(Display.getDefault().getActiveShell(), "Errore", "Selezionare obbligatoriamente una qantita");
-		    	else if (text.getText().equals(""))
-		    			MessageDialog.openWarning(Display.getDefault().getActiveShell(), "Errore", "Selezionare obbligatoriamente un nome");
-		    	else {
-		    	controller.aggiornaIngrediente(i.getIdIngrediente(), text.getText(), Integer.parseInt(spinner.getText()),combo.getText());
-				observer.update();
-				shell.close();
+		    	try {
+			    	if(combo.getText().equals(""))
+							MessageDialog.openWarning(Display.getDefault().getActiveShell(), "Errore", "Selezionare obbligatoriamente un'unit\u00E0 di misura");
+			    	else if (disponibilitaText.getText().equals(""))
+							MessageDialog.openWarning(Display.getDefault().getActiveShell(), "Errore", "Selezionare obbligatoriamente una qantit\u00E0");
+			    	else if (text.getText().equals(""))
+			    			MessageDialog.openWarning(Display.getDefault().getActiveShell(), "Errore", "Selezionare obbligatoriamente un nome");
+			    	else {
+				    	controller.aggiornaIngrediente(i.getIdIngrediente(), text.getText(), Float.parseFloat(disponibilitaText.getText()),combo.getText());
+						observer.update();
+						shell.close();
+			    	}
+		    	}catch(NumberFormatException ex) {
+		    		MessageDialog.openWarning(Display.getDefault().getActiveShell(), "Errore", "La qantit\u00E0 deve essere un numero valido");
+				    
 		    	}
 		    }
 		});

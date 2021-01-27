@@ -122,8 +122,9 @@ public class MapperLotto {
 	       Class.forName("org.sqlite.JDBC");
 	       c = DriverManager.getConnection("jdbc:sqlite:"+dbName,"",
 	    		   pass);
-	       c.setAutoCommit(false);
 	       String sql = "DELETE FROM lotto WHERE ID=?";
+	       c.setAutoCommit(false);
+	      
 	       PreparedStatement pstmt = c.prepareStatement( sql );
 	       pstmt.setInt(1, id);      
 
@@ -138,27 +139,5 @@ public class MapperLotto {
 	    }
 	 }
 	
-	public void deleteAll() {
-		Connection c = null;
-	    
-	    try {
-	       Class.forName("org.sqlite.JDBC");
-	       c = DriverManager.getConnection("jdbc:sqlite:"+dbName,"",
-	    		   pass);
-	       c.setAutoCommit(false);
-	       String sql = "DELETE FROM lotto";
-	       PreparedStatement pstmt = c.prepareStatement( sql );
-	     
-
-	       pstmt.executeUpdate();	         
-	       pstmt.close();
-	       
-	       c.commit();
-	       c.close();
-	    } catch ( Exception e ) {
-	       System.err.println( e.getClass().getName() + ": " + e.getMessage() );
-	       System.exit(0);
-	    }
-	}
 
 }

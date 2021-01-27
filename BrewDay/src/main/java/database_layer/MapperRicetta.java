@@ -88,10 +88,10 @@ public class MapperRicetta {
 	         System.err.println( e.getClass().getName() + ": " + e.getMessage() );
 	         System.exit(0);
 	      }
-	      if(count == 0)
-	    	  return "Ok";
-	      else if(count == -1)
+	      if(count == -1)
 	    	  return "Errore: problemi al database";
+	      else if(count == 0)
+	    	  return "Ok";
 	      else
 	    	  return "Errore: ricetta con questo nome gia esistente";
 	   
@@ -250,36 +250,7 @@ public class MapperRicetta {
 		return listaRicette;
 	}
 	
-	public void deleteAll() {
-		Connection c = null;
-	    
-	    try {
-	       Class.forName("org.sqlite.JDBC");
-	       c = DriverManager.getConnection("jdbc:sqlite:"+dbName,"",
-	    		   pass);
-	       c.setAutoCommit(false);
-	       String sql = "DELETE FROM ricetta";
-	       
-	       PreparedStatement pstmt = c.prepareStatement( sql );
 
-		   pstmt.executeUpdate();
-		   
-		   String sql2 = "DELETE FROM quantita";
-		   PreparedStatement pstmt2 = c.prepareStatement(sql2);
-		
-		   pstmt2.executeUpdate();		         
-		     
-		   pstmt2.close();
-		   pstmt.close();
-	      
-	       c.commit();
-	
-	    c.close();
-	    } catch ( Exception e ) {
-	       System.err.println( e.getClass().getName() + ": " + e.getMessage() );
-	       System.exit(0);
-	    }
-	}
 
 	public Ricetta selectBirraDelGiorno(float capacitaEquipaggiamento) {
 		System.out.println(""+capacitaEquipaggiamento);

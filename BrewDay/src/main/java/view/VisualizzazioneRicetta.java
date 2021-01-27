@@ -21,24 +21,21 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.TableEditor;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.RowLayout;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.TableItem;
 
-import controller.ControllerEquipaggiamento;
-import controller.ControllerIngredienti;
 import controller.ControllerRicetta;
 import model.Equipaggiamento;
-import model.Ingrediente;
 import model.Ricetta;
 
 import org.eclipse.jface.viewers.TableViewerColumn;
 import org.eclipse.jface.viewers.ViewerCell;
 import org.eclipse.swt.widgets.Label;
 
-public class VisualizzazioneRicetta implements GenericObserver {
+public class VisualizzazioneRicetta extends Window implements GenericObserver {
 
-	protected Shell shell;
 	private Table table;
 	private ControllerRicetta controller;
 	private TableViewer viewer;
@@ -46,16 +43,17 @@ public class VisualizzazioneRicetta implements GenericObserver {
 	private Equipaggiamento equip;
 	
 	
-
+	//private Shell shell;
 	public VisualizzazioneRicetta(ControllerRicetta c) {
+		super();
 		controller = c;
 		instance = this;
+		//shell = new Shell();
+		//createContents(shell);
+		
+		
 	}
 	
-	public VisualizzazioneRicetta() {
-		controller = null;
-		instance = this;
-	}
 	
 	public void updateTableViewer()
 	{
@@ -63,27 +61,6 @@ public class VisualizzazioneRicetta implements GenericObserver {
 	        viewer.refresh();
 	}
 
-	public static void main(String[] args) {
-		try {
-			VisualizzazioneRicetta window = new VisualizzazioneRicetta();
-			window.open();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-	
-	public void open() {
-		Display display = Display.getDefault();
-		createContents(new Shell());
-		
-		shell.open();
-		shell.layout();
-		while (!shell.isDisposed()) {
-			if (!display.readAndDispatch()) {
-				display.sleep();
-			}
-		}
-	}
 	
 	
 	
@@ -91,15 +68,17 @@ public class VisualizzazioneRicetta implements GenericObserver {
 	 * Launch the application.
 	 * @param args
 	 */
+	@Override
 	protected void createContents(Shell s) {
-		
+		super.createContents(s);
 		equip=controller.getControllerEquipaggiamento().getEquipaggiamento();
-		
-		shell = s;
+
 		
 		shell.setSize(855, 532);
-		shell.setText("SWT Application");
-		
+		shell.setText("Visualizza ricette");
+		Label lblNewLabel_1 = new Label(shell, SWT.NONE);
+		lblNewLabel_1.setBounds(583, 23, 236, 88);
+		lblNewLabel_1.setImage(new Image(display,"resources/icona.png"));
 		ArrayList <Ricetta> listaRicette = controller.getRicette();
 		
 		TableViewer tableViewer = new TableViewer(shell);
@@ -116,15 +95,15 @@ public class VisualizzazioneRicetta implements GenericObserver {
 		table.setBounds(0, 0, 537, 490);
 		
 		Label lblNomeEquipaggiamento = new Label(shell, SWT.NONE);
-		lblNomeEquipaggiamento.setBounds(583, 335, 193, 15);
+		lblNomeEquipaggiamento.setBounds(583, 330, 193, 25);
 		lblNomeEquipaggiamento.setText("Nome equipaggiamento:");
 		
 		Label lblCapacit = new Label(shell, SWT.NONE);
-		lblCapacit.setBounds(583, 411, 101, 15);
+		lblCapacit.setBounds(583, 411, 101, 20);
 		lblCapacit.setText("Capacit\u00E0:");
 		
 		Label lblNewLabel = new Label(shell, SWT.NONE);
-		lblNewLabel.setBounds(583, 369, 136, 15);
+		lblNewLabel.setBounds(583, 369, 136, 20);
 		lblNewLabel.setText(equip.getNome());
 		
 		
@@ -173,7 +152,7 @@ public class VisualizzazioneRicetta implements GenericObserver {
 		        	composite.setLayout(new RowLayout());
 		        	
 		            Button buttonRemove = new Button(composite,SWT.NONE);
-		            buttonRemove.setText("Remove");
+		            buttonRemove.setText("Rimuovi");
 		            Ricetta p = (Ricetta)cell.getElement();
 		            buttonRemove.addSelectionListener(new SelectionAdapter() {
 		    		    @Override
@@ -249,7 +228,7 @@ public class VisualizzazioneRicetta implements GenericObserver {
 				finestraAggiunta.open();
 			}
 		});
-		btnAggiungiRicetta.setBounds(583, 11, 193, 25);
+		btnAggiungiRicetta.setBounds(583, 117, 193, 30);
 		btnAggiungiRicetta.setText("Aggiungi Ricetta");
 		
 		
@@ -257,11 +236,11 @@ public class VisualizzazioneRicetta implements GenericObserver {
 		btnVisualizzaIngrediente.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				Visualizzazione_Ingrediente finestraIngredienti = new Visualizzazione_Ingrediente(controller.getControllerIngredienti());
+				VisualizzazioneIngrediente finestraIngredienti = new VisualizzazioneIngrediente(controller.getControllerIngredienti());
 				finestraIngredienti.open();
 			}
 		});
-		btnVisualizzaIngrediente.setBounds(583, 42, 193, 25);
+		btnVisualizzaIngrediente.setBounds(583, 153, 193, 30);
 		btnVisualizzaIngrediente.setText("Visualizza ingrediente");
 		Button btnModificaEquip = new Button(shell, SWT.NONE);
 		btnModificaEquip.addSelectionListener(new SelectionAdapter() {
@@ -273,7 +252,7 @@ public class VisualizzazioneRicetta implements GenericObserver {
 						
 			}
 		});
-		btnModificaEquip.setBounds(583, 73, 193, 25);
+		btnModificaEquip.setBounds(583, 189, 193, 30);
 		btnModificaEquip.setText("Modifica equipaggiamento");
 		Button btnBirraGiorno = new Button(shell, SWT.NONE);
 		btnBirraGiorno.addSelectionListener(new SelectionAdapter() {
@@ -285,12 +264,12 @@ public class VisualizzazioneRicetta implements GenericObserver {
 			    	FinestraRicetta.open();	
 				}
 				else{
-					 MessageDialog.openWarning(Display.getDefault().getActiveShell(), "Errore", "Non hai disponibilita di ingredienti per fare nessuna ricetta!");
+					 MessageDialog.openWarning(Display.getDefault().getActiveShell(), "Errore", "Non hai disponibilit\u00E0 di ingredienti per fare nessuna ricetta!");
 	        	    	
 				}
 			}
 		});
-		btnBirraGiorno.setBounds(583, 135, 193, 25);
+		btnBirraGiorno.setBounds(583, 261, 193, 30);
 		btnBirraGiorno.setText("Birra del Giorno");
 		
 		Button btnListaSpesa = new Button(shell, SWT.NONE);
@@ -301,7 +280,7 @@ public class VisualizzazioneRicetta implements GenericObserver {
 				finestraListaSpesa.open();
 			}
 		});
-		btnListaSpesa.setBounds(583, 104, 193, 25);
+		btnListaSpesa.setBounds(583, 225, 193, 30);
 		btnListaSpesa.setText("Lista della spesa");
 		
 		

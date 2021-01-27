@@ -2,6 +2,7 @@ package view;
 import java.io.File;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.Statement;
 
 import controller.ControllerEquipaggiamento;
@@ -36,18 +37,58 @@ public class BrewDayApplication {
 	public static void initializeDB(String pass,String dbName) {
 		Connection c = null;
 	     Statement stmt = null;
+	     String sqlIng = "CREATE TABLE IF NOT EXISTS ingrediente " + 
+       		  "(id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,"+
+       		  "nome VARCHAR(45) UNIQUE NOT NULL, " +
+       		  "unitaMisura VARCHAR(45) NOT NULL, " +
+       		  "disponibilita FLOAT NOT NULL)";
+	     String sqlRic = "CREATE TABLE IF NOT EXISTS ricetta " + 
+	        	  "(id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL," +
+	       		  "nome VARCHAR(45) NOT NULL, " +
+	       		  "descrizione TEXT(1000) NOT NULL, " +
+	       		  "tempo_preparazione INT NOT NULL)";
+	     String sqlEquip = "CREATE TABLE IF NOT EXISTS equipaggiamento " + 
+	        	  "(id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL," +
+	       		  "nome VARCHAR(45) NOT NULL, " +
+	       		  "capacita FLOAT NOT NULL)";
+	     String sqlQuant = "CREATE TABLE IF NOT EXISTS quantita " + 
+	        	  "(id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL," +
+	       		  "id_ricetta INTEGER NOT NULL, " +
+	       		  "id_ingrediente INTEGER NOT NULL," +
+	       		  "quantita_necessaria REAL NOT NULL," +
+	       	      "FOREIGN KEY (id_ingrediente) "+
+	       	      "REFERENCES ingrediente(id) "+
+	       	      "ON DELETE NO ACTION "+
+	       	      "ON UPDATE NO ACTION,"+
+	              "FOREIGN KEY (id_ricetta) "+
+	              "REFERENCES ricetta(id) "+
+	              "ON DELETE NO ACTION "+
+	              "ON UPDATE NO ACTION)";
+	     String sqlLot = "CREATE TABLE IF NOT EXISTS lotto ("+
+       		  "id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "+
+       		  "commento TEXT(2000) NOT NULL, " +
+       		  "data DATE NOT NULL, "+
+       		  "valutazione INT NULL, "+
+       		  "ricetta_id INT NOT NULL, "+ 
+       		  "quantitaProdotta FLOAT NOT NULL, "+
+       		  "nomeEquipaggiamento VARCHAR NOT NULL, "+
+       		  "capacitaEquipaggiamento FLOAT NOT NULL, "+
+       		  "FOREIGN KEY (ricetta_id) "+
+       		     "REFERENCES ricetta (id) "+
+       		     "ON DELETE NO ACTION "+
+       		     "ON UPDATE NO ACTION )";
+	     
 		 try {
 	         Class.forName("org.sqlite.JDBC");
 	         c = DriverManager.getConnection("jdbc:sqlite:"+dbName,"",
 	                 pass);
 	         
 	         stmt = c.createStatement();
-	         String sql = "CREATE TABLE IF NOT EXISTS ingrediente " + 
-	        		  "(id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,"+
-	        		  "nome VARCHAR(45) UNIQUE NOT NULL, " +
-	        		  "unitaMisura VARCHAR(45) NOT NULL, " +
-	        		  "disponibilita FLOAT NOT NULL)";
-	         stmt.executeUpdate(sql);
+	         stmt.executeUpdate(sqlIng);
+	         stmt.executeUpdate(sqlRic);
+	         stmt.executeUpdate(sqlEquip);
+	         stmt.executeUpdate(sqlQuant);
+	         stmt.executeUpdate(sqlLot);
 	         stmt.close();
 	         c.close();
 	      } catch ( Exception e ) {
@@ -55,103 +96,65 @@ public class BrewDayApplication {
 	         System.exit(0);
 	      }
 	      
-	      try {
-		        Class.forName("org.sqlite.JDBC");
-		        c = DriverManager.getConnection("jdbc:sqlite:"+dbName,"",
-		                 BrewDayApplication.password);
+	     
+
+	}
+	
+	public static void resetDB(String pass, String dbName) {
+		Connection c = null;
+	    
+	    try {
+	       Class.forName("org.sqlite.JDBC");
+	       c = DriverManager.getConnection("jdbc:sqlite:"+dbName,"",
+	    		   pass);
+	       c.setAutoCommit(false);
+	       String sql = "DELETE FROM ingrediente";
+	       PreparedStatement pstmt = c.prepareStatement( sql );
+	         
+	         
+	       pstmt.executeUpdate();
+	         
+	     
+	       pstmt.close();
+	       c.commit();
+	       sql = "DELETE FROM lotto";
+	       pstmt = c.prepareStatement( sql );
+	     
+
+	       pstmt.executeUpdate();	         
+	       pstmt.close();
+	       
+	       c.commit();
+	       
+	       sql = "DELETE FROM ricetta";
+	       pstmt = c.prepareStatement( sql );
+
+		   pstmt.executeUpdate();
+		   
+		   String sql2 = "DELETE FROM quantita";
+		   PreparedStatement pstmt2 = c.prepareStatement(sql2);
 		
-		        stmt = c.createStatement();
-		        String sql = "CREATE TABLE IF NOT EXISTS ricetta " + 
-		        	  "(id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL," +
-		       		  "nome VARCHAR(45) NOT NULL, " +
-		       		  "descrizione TEXT(1000) NOT NULL, " +
-		       		  "tempo_preparazione INT NOT NULL)";
-		        stmt.executeUpdate(sql);
-		        stmt.close();
-		        c.close();
-		     } catch ( Exception e ) {
-		        System.err.println( e.getClass().getName() + ": " + e.getMessage() );
-		        System.exit(0);
-		     }
-
+		   pstmt2.executeUpdate();		         
 		     
-		     try {
+		   pstmt2.close();
+		   pstmt.close();
+	      
+	       c.commit();
+	       sql = "DELETE FROM equipaggiamento";
+	       pstmt = c.prepareStatement( sql );
+	         
+	         
+	       pstmt.executeUpdate();
+	         
 
-			        Class.forName("org.sqlite.JDBC");
-			        c = DriverManager.getConnection("jdbc:sqlite:"+dbName,"",
-			                 pass);
-			
-			        stmt = c.createStatement();
-			        String sql = "CREATE TABLE IF NOT EXISTS equipaggiamento " + 
-			        	  "(id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL," +
-			       		  "nome VARCHAR(45) NOT NULL, " +
-			       		  "capacita FLOAT NOT NULL)";
-			        stmt.executeUpdate(sql);
-			        stmt.close();
-			        c.close();
-			     } catch ( Exception e ) {
-			        System.err.println( e.getClass().getName() + ": " + e.getMessage() );
-			        System.exit(0);
-			     }
-			     
-			     
-			     try {
-				        Class.forName("org.sqlite.JDBC");
-				        c = DriverManager.getConnection("jdbc:sqlite:"+dbName,"",
-				                 pass);
-				
-				        stmt = c.createStatement();
-				        String sql = "CREATE TABLE IF NOT EXISTS quantita " + 
-				        	  "(id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL," +
-				       		  "id_ricetta INTEGER NOT NULL, " +
-				       		  "id_ingrediente INTEGER NOT NULL," +
-				       		  "quantita_necessaria REAL NOT NULL," +
-				       	      "FOREIGN KEY (id_ingrediente) "+
-				       	      "REFERENCES ingrediente(id) "+
-				       	      "ON DELETE NO ACTION "+
-				       	      "ON UPDATE NO ACTION,"+
-				              "FOREIGN KEY (id_ricetta) "+
-				              "REFERENCES ricetta(id) "+
-				              "ON DELETE NO ACTION "+
-				              "ON UPDATE NO ACTION)";
-				        stmt.executeUpdate(sql);
-				        stmt.close();
-				        c.close();
-				     } catch ( Exception e ) {
-				        System.err.println( e.getClass().getName() + ": " + e.getMessage() );
-				        System.exit(0);
-				     }
-			     
-			     
-			     try {
-				        Class.forName("org.sqlite.JDBC");
-				        c = DriverManager.getConnection("jdbc:sqlite:"+dbName,"",
-				                 BrewDayApplication.password);
-				
-				        stmt = c.createStatement();
-				        String sql = "CREATE TABLE IF NOT EXISTS lotto ("+
-				        		  "id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "+
-				        		  "commento TEXT(2000) NOT NULL, " +
-				        		  "data DATE NOT NULL, "+
-				        		  "valutazione INT NULL, "+
-				        		  "ricetta_id INT NOT NULL, "+ 
-				        		  "quantitaProdotta FLOAT NOT NULL, "+
-				        		  "nomeEquipaggiamento VARCHAR NOT NULL, "+
-				        		  "capacitaEquipaggiamento FLOAT NOT NULL, "+
-				        		  "FOREIGN KEY (ricetta_id) "+
-				        		     "REFERENCES ricetta (id) "+
-				        		     "ON DELETE NO ACTION "+
-				        		     "ON UPDATE NO ACTION )";
-				        stmt.executeUpdate(sql);
-				        stmt.close();
-				        c.close();
-				     } catch ( Exception e ) {
-				        System.err.println( e.getClass().getName() + ": " + e.getMessage() );
-				        System.exit(0);
-				     }
-			     
-				     
-
+	       pstmt.close();
+	       c.commit();
+	       
+	       c.close();
+	    } catch ( Exception e ) {
+	       System.err.println( e.getClass().getName() + ": " + e.getMessage() );
+	       System.exit(0);
+	    }
 	}
 	
 	public static void initialize(String pass) {

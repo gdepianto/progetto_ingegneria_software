@@ -24,15 +24,7 @@ public class ControllerIngredientiTest {
 	
 	@After
 	public void resetDB() {
-		MapperRicetta mapRicetta = new MapperRicetta("password","test.db");
-		MapperIngrediente mapIngrediente = new MapperIngrediente("password","test.db");
-		MapperEquipaggiamento mapEquipaggiamento = new MapperEquipaggiamento("password","test.db");
-		MapperLotto mapLotto = new MapperLotto("password","test.db");
-		mapRicetta.deleteAll();
-		mapIngrediente.deleteAll();
-		mapEquipaggiamento.delete();
-		mapLotto.deleteAll();
-		
+		BrewDayApplication.resetDB("password", "test.db");
 	}
 
 	@Test

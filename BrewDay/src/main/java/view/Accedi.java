@@ -13,75 +13,49 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 
-public class Accedi {
+public class Accedi extends Window{
 
-	protected Shell shell;
-	private Text text;
+	private Text passwordText;
 	private SecurityController controller;
 	
 	
-	
+	//le righe commentate servono per fare andare il WindowBuilder
+	//private Shell shell;
 	public Accedi(SecurityController controller) {
 		super();
 		this.controller = controller;
+		//shell = new Shell();
+		//this.createContents(new Shell());
 	}
 	
-	public Accedi() {
 	
-	}
-	/**
-	 * Launch the application.
-	 * @param args
-	 */
-	
-	
-	public static void main(String[] args) {
-		try {
-			Accedi window = new Accedi();
-			window.open();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-
-	/**
-	 * Open the window.
-	 */
-	public void open() {
-		Display display = Display.getDefault();
-		createContents();
-		shell.open();
-		shell.layout();
-		while (!shell.isDisposed()) {
-			if (!display.readAndDispatch()) {
-				display.sleep();
-			}
-		}
-	}
 
 	/**
 	 * Create contents of the window.
 	 */
-	protected void createContents() {
-		shell = new Shell();
+	@Override
+	protected void createContents(Shell s) {
+		super.createContents(s);
 		shell.setSize(450, 300);
-		shell.setText("SWT Application");
+		shell.setText("Accedi a BrewDay");
 		shell.setLayout(null);
 		
+		passwordText = new Text(shell, SWT.BORDER | SWT.PASSWORD);
+		passwordText.setToolTipText("Inserisci password");
+		passwordText.setBounds(176, 82, 73, 25);
+		
 		Label lblNewLabel = new Label(shell, SWT.NONE);
-		lblNewLabel.setBounds(176, 34, 70, 17);
+		lblNewLabel.setBounds(176, 34, 95, 17);
 		lblNewLabel.setText("Accedi");
 		
-		text = new Text(shell, SWT.BORDER | SWT.PASSWORD);
-		text.setToolTipText("Inserisci password");
-		text.setBounds(176, 82, 73, 25);
+	
 		
 		Button btnNewButton = new Button(shell, SWT.NONE);
 		btnNewButton.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				
-				if(controller.verifyPassword(text.getText())) {
+				if(controller.verifyPassword(passwordText.getText())) {
 					MessageDialog.openWarning(Display.getDefault().getActiveShell(), "Password Corretta", "Verrà avviata l'applicazione");
 					
 					Display.getDefault().asyncExec(new Runnable() {
@@ -94,12 +68,12 @@ public class Accedi {
 	                        	
 	                        }
 	                    });
-					BrewDayApplication.startApplication(text.getText());
+					BrewDayApplication.startApplication(passwordText.getText());
 					
 					
 				}
 				else {
-					MessageDialog.openWarning(Display.getDefault().getActiveShell(), "Errore", "NONONONONO");
+					MessageDialog.openWarning(Display.getDefault().getActiveShell(), "Errore", "Password errata");
 					
 				}
 				

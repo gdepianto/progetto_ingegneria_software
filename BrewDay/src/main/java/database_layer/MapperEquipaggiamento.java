@@ -48,6 +48,7 @@ public class MapperEquipaggiamento {
 	}
 
 	public void delete () {
+		String sql = "DELETE FROM equipaggiamento";
 		Connection c = null;
 	    
 	    try {
@@ -55,7 +56,7 @@ public class MapperEquipaggiamento {
 	       c = DriverManager.getConnection("jdbc:sqlite:"+dbName,"",
 	    		   pass);
 	       c.setAutoCommit(false);
-	       String sql = "DELETE FROM equipaggiamento";
+	      
 	       PreparedStatement pstmt = c.prepareStatement( sql );
 	         
 	         

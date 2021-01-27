@@ -18,7 +18,6 @@ import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.TableItem;
 
 import controller.ControllerRicetta;
-import model.Equipaggiamento;
 import model.Ingrediente;
 import model.Lotto;
 import model.NotaGusto;
@@ -31,15 +30,13 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.eclipse.jface.viewers.ArrayContentProvider;
-import org.eclipse.jface.viewers.CheckboxTableViewer;
 import org.eclipse.jface.viewers.ColumnLabelProvider;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.viewers.TableViewerColumn;
 import org.eclipse.jface.viewers.ViewerCell;
 
-public class MostraRicetta implements GenericObserver{
+public class MostraRicetta  extends Window implements GenericObserver{
 
-	protected Shell shell;
 	private Table table;
 	private ControllerRicetta controller;
 	private Ricetta ricetta;
@@ -47,30 +44,18 @@ public class MostraRicetta implements GenericObserver{
 	private TableViewer viewer;
 	private MostraRicetta instance;
 
-	/**
-	 * Launch the application.
-	 * @param args
-	 */
-	public static void main(String[] args) {
-		try {
-			MostraRicetta window = new MostraRicetta();
-			window.open();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
 	
+	//private Shell shell;
 	public MostraRicetta(ControllerRicetta c, Ricetta r) {
+		super();
 		controller = c;
 		ricetta=r;
 		instance = this;
+		//shell = new Shell();
+		//createContents(shell);
 	}
 	
-	public MostraRicetta() {
-		controller = null;
-		ricetta = null;
-		instance = this;
-	}
+	
 	
 	public void updateTableViewer()
 	{
@@ -81,28 +66,14 @@ public class MostraRicetta implements GenericObserver{
 	
 
 	/**
-	 * Open the window.
-	 */
-	public void open() {
-		Display display = Display.getDefault();
-		createContents(new Shell());
-		shell.open();
-		shell.layout();
-		while (!shell.isDisposed()) {
-			if (!display.readAndDispatch()) {
-				display.sleep();
-			}
-		}
-	}
-
-	/**
 	 * Create contents of the window.
 	 */
+	@Override
 	protected void createContents(Shell s) {
+		super.createContents(s);
 		
-		shell = s;
 		shell.setSize(1142, 551);
-		shell.setText("SWT Application");
+		shell.setText("Visualizza ricetta");
 		
 		Label lblNome = new Label(shell, SWT.NONE);
 		lblNome.setBounds(10, 10, 48, 15);
@@ -264,21 +235,22 @@ public class MostraRicetta implements GenericObserver{
 
 
 			public void update(ViewerCell cell) {
-	
+				Composite composite;
 					TableItem item = (TableItem) cell.getItem();
-			        Composite composite;
+			        
 			        if(compositesAction.containsKey(cell.getElement()))
 			        {
 			            composite = compositesAction.get(cell.getElement());
 			        }
 			        else
 			        {
+			        	Lotto p = (Lotto)cell.getElement();
 			        	composite = new Composite((Composite) cell.getViewerRow().getControl(),SWT.NONE);
 			        	composite.setLayout(new RowLayout());
 			        	
 			            Button buttonRemove = new Button(composite,SWT.NONE);
-			            buttonRemove.setText("Remove");
-			            Lotto p = (Lotto)cell.getElement();
+			            
+			            
 			            buttonRemove.addSelectionListener(new SelectionAdapter() {
 			    		    @Override
 			    		    public void widgetSelected(SelectionEvent e) {
@@ -299,6 +271,7 @@ public class MostraRicetta implements GenericObserver{
 			                    });
 			    		    }
 			    		});
+			            buttonRemove.setText("Rimuovi");
 			            Button buttonVisualize = new Button(composite,SWT.NONE);
 				        buttonVisualize.setText("Visualizza");
 				        buttonVisualize.addSelectionListener(new SelectionAdapter() {
@@ -352,7 +325,7 @@ public class MostraRicetta implements GenericObserver{
 				
 			}
 		});
-		btnAggiungiNota.setBounds(496, 310, 117, 25);
+		btnAggiungiNota.setBounds(496, 310, 132, 34);
 		btnAggiungiNota.setText("Aggiungi nota");
 		
 		

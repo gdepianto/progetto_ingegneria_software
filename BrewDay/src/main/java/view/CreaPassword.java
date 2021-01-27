@@ -13,90 +13,60 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 
-public class CreaPassword {
+public class CreaPassword extends Window{
 
-	protected Shell shell;
-	private Text text;
-	private Text text_1;
+	private Text password1Text;
+	private Text password2Text;
 	private SecurityController controller;
 	
 	
 	
 	public CreaPassword(SecurityController controller) {
-
+		super();
 		this.controller = controller;
 	}
 
-	/**
-	 * Launch the application.
-	 * @param args
-	 */
-	public static void main(String[] args) {
-		try {
-			CreaPassword window = new CreaPassword();
-			window.open();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
 
-	public CreaPassword() {
-		
-	}
-
-	/**
-	 * Open the window.
-	 */
-	public void open() {
-		Display display = Display.getDefault();
-		createContents();
-		shell.open();
-		shell.layout();
-		while (!shell.isDisposed()) {
-			if (!display.readAndDispatch()) {
-				display.sleep();
-			}
-		}
-	}
 
 	/**
 	 * Create contents of the window.
 	 */
-	protected void createContents() {
-		shell = new Shell();
+	@Override
+	protected void createContents(Shell s) {
+		super.createContents(s);
 		shell.setSize(450, 300);
-		shell.setText("SWT Application");
+		shell.setText("Creazione password");
 		shell.setLayout(null);
 		
 		Label lblNewLabel = new Label(shell, SWT.NONE);
 		lblNewLabel.setBounds(32, 29, 189, 30);
 		lblNewLabel.setText("Inserisci Password");
 		
-		text = new Text(shell, SWT.BORDER | SWT.PASSWORD);
-		text.setToolTipText("Inserisci password");
-		text.setBounds(32, 65, 73, 25);
+		password1Text = new Text(shell, SWT.BORDER | SWT.PASSWORD);
+		password1Text.setToolTipText("Inserisci password");
+		password1Text.setBounds(32, 65, 73, 25);
 		
 		Label lblNewLabel_1 = new Label(shell, SWT.NONE);
 		lblNewLabel_1.setBounds(32, 119, 212, 30);
 		lblNewLabel_1.setText("Conferma Password");
 		
-		text_1 = new Text(shell, SWT.BORDER | SWT.PASSWORD);
-		text_1.setToolTipText("Conferma password");
-		text_1.setBounds(32, 173, 73, 25);
+		password2Text = new Text(shell, SWT.BORDER | SWT.PASSWORD);
+		password2Text.setToolTipText("Conferma password");
+		password2Text.setBounds(32, 173, 73, 25);
 		
 		Button btnNewButton = new Button(shell, SWT.NONE);
 		btnNewButton.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				if(!text.getText().equals(text_1.getText())) {
+				if(!password1Text.getText().equals(password2Text.getText())) {
 					MessageDialog.openWarning(Display.getDefault().getActiveShell(), "Errore", "Password diverse!");
 				}
 				else {
-					if(text.getText().length() < 5){
+					if(password1Text.getText().length() < 5){
 						MessageDialog.openWarning(Display.getDefault().getActiveShell(), "Errore", "Password deve essere di almeno 5 caratteri!");
 					}
 					else {
-						controller.savePassword(text.getText());
+						controller.savePassword(password1Text.getText());
 						Display.getDefault().asyncExec(new Runnable() {
 					     	
 	                        @Override
@@ -107,7 +77,7 @@ public class CreaPassword {
 	                        	
 	                        }
 	                    });
-						BrewDayApplication.initialize(text.getText());
+						BrewDayApplication.initialize(password1Text.getText());
 						
 					}
 				}

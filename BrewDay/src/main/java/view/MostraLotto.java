@@ -1,6 +1,5 @@
 package view;
 
-import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 
 import model.Lotto;
@@ -12,56 +11,24 @@ import java.text.SimpleDateFormat;
 
 import org.eclipse.swt.SWT;
 
-public class MostraLotto {
+public class MostraLotto extends Window{
 
-	protected Shell shell;
 	private Lotto lotto;
 	
 	public MostraLotto(Lotto lotto) {
+		super();
 		this.lotto = lotto;
 	}
 	
-	public MostraLotto() {
-		this.lotto = null;
-	}
-
-	/**
-	 * Launch the application.
-	 * @param args
-	 */
-	public static void main(String[] args) {
-		try {
-			MostraLotto window = new MostraLotto();
-			window.open();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-
 	
-
-	/**
-	 * Open the window.
-	 */
-	public void open() {
-		Display display = Display.getDefault();
-		createContents();
-		shell.open();
-		shell.layout();
-		while (!shell.isDisposed()) {
-			if (!display.readAndDispatch()) {
-				display.sleep();
-			}
-		}
-	}
-
 	/**
 	 * Create contents of the window.
 	 */
-	protected void createContents() {
-		shell = new Shell();
+	@Override
+	protected void createContents(Shell s) {
+		super.createContents(s);
 		shell.setSize(592, 340);
-		shell.setText("SWT Application");
+		shell.setText("Visualizza lotto");
 		
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 		

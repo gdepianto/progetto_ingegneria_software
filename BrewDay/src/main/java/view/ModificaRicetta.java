@@ -1,34 +1,20 @@
 package view;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
 import org.eclipse.jface.dialogs.MessageDialog;
-import org.eclipse.jface.viewers.ArrayContentProvider;
-import org.eclipse.jface.viewers.ColumnLabelProvider;
-import org.eclipse.jface.viewers.TableViewer;
-import org.eclipse.jface.viewers.TableViewerColumn;
-import org.eclipse.jface.viewers.ViewerCell;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.custom.TableEditor;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.events.VerifyEvent;
-import org.eclipse.swt.events.VerifyListener;
 import org.eclipse.swt.widgets.Button;
-import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Spinner;
-import org.eclipse.swt.widgets.Table;
-import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.swt.widgets.Text;
 
 import controller.ControllerRicetta;
-import model.Equipaggiamento;
 import model.Ingrediente;
 import model.Quantita;
 import model.Ricetta;
@@ -36,69 +22,35 @@ import model.Ricetta;
 
 
 
-public class ModificaRicetta {
+public class ModificaRicetta extends ManipolaRicetta{
 
-	protected Shell shell;
-	private ControllerRicetta controller;
 	private Text text;
 	private Text text_1;
-	private Table table;
 	private GenericObserver observer;
 	private Ricetta ricetta;
 	
 	
 	
 	public ModificaRicetta(ControllerRicetta controller, Ricetta ricetta) {
-		this.controller = controller;
+		super(controller);
 		this.ricetta = ricetta;
 	}
-	public ModificaRicetta() {
-		this.controller = null;
-		this.ricetta = null;
-	}
+	
 
 	public void setObserver(GenericObserver observer) {
 		this.observer = observer;
 	}
-	/**
-	 * Launch the application.
-	 * @param args
-	 */
-	public static void main(String[] args) {
-		try {
-			ModificaRicetta window = new ModificaRicetta();
-			window.open();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
 
-	/**
-	 * Open the window.
-	 */
-	public void open() {
-		Display display = Display.getDefault();
-		createContents();
-		shell.open();
-		shell.layout();
-		while (!shell.isDisposed()) {
-			if (!display.readAndDispatch()) {
-				display.sleep();
-			}
-		}
-	}
 
 	/**
 	 * Create contents of the window.
 	 */
-	protected void createContents() {
-		shell = new Shell();
+	@Override
+	protected void createContents(Shell s) {
+		super.createContents(s);
 		shell.setSize(957, 357);
-		shell.setText("SWT Application");
+		shell.setText("Modifica ricetta");
 		
-		
-		ArrayList<Ingrediente> listaIngredienti = controller.getControllerIngredienti().getIngredienti();
-		ArrayList<Text> listaTextBox = new ArrayList<Text>();
 		
 		
 		
@@ -134,110 +86,6 @@ public class ModificaRicetta {
 		
 		
 		
-		TableViewer tableViewer = new TableViewer(shell,SWT.CHECK | SWT.BORDER | SWT.FULL_SELECTION | SWT.V_SCROLL | SWT.H_SCROLL);
-		tableViewer.getTable().setHeaderVisible(true);
-        tableViewer.getTable().setLinesVisible(true);
-		tableViewer.setContentProvider(new ArrayContentProvider());
-		table = tableViewer.getTable();
-		table.setBounds(512, 47, 399, 144);
-		
-		
-		TableColumn column = new TableColumn(tableViewer.getTable(), SWT.NONE);
-        column.setText("Ingrediente");
-        column.setWidth(100);
-       
-        TableViewerColumn nameCol = new TableViewerColumn(tableViewer, column);
-        
-        nameCol.setLabelProvider(new ColumnLabelProvider(){
-
-            @Override
-            public String getText(Object element) {
-                Ingrediente p = (Ingrediente)element;
-
-                return p.getNome();
-            }
-
-        });
-        
-        column = new TableColumn(tableViewer.getTable(), SWT.NONE);
-        column.setText("Quantità necessaria");
-        column.setWidth(100);
-       
-        TableViewerColumn quantitaCol = new TableViewerColumn(tableViewer, column);
-       
-        quantitaCol.setLabelProvider(new ColumnLabelProvider(){
-            //make sure you dispose these buttons when viewer input changes
-            Map<Object, Text> textBoxes = new HashMap<Object, Text>();
-
-
-            @Override
-            public void update(ViewerCell cell) {
-
-                TableItem item = (TableItem) cell.getItem();
-                Text textBox;
-                if(textBoxes.containsKey(cell.getElement()))
-                {
-                	textBox = textBoxes.get(cell.getElement());
-                }
-                else
-                {
-                	textBox = new Text((Composite) cell.getViewerRow().getControl(),SWT.BORDER);
-                	textBox.addVerifyListener(new VerifyListener() {
-
-                        @Override
-                        public void verifyText(VerifyEvent e) {
-                            // allows cut (CTRL + x)
-                            if (e.text.isEmpty()) {
-                                e.doit = true;
-                            } else if (e.keyCode == SWT.ARROW_LEFT ||
-                                        e.keyCode == SWT.ARROW_RIGHT ||
-                                        e.keyCode == SWT.BS ||
-                                        e.keyCode == SWT.DEL ||
-                                        e.keyCode == SWT.CTRL ||
-                                        e.keyCode == SWT.SHIFT) {
-                                e.doit = true;
-                            } else {
-                                boolean allow = false;
-                                for (int i = 0; i < e.text.length(); i++) {
-                                    char c = e.text.charAt(i);
-                                    allow = Character.isDigit(c) || c=='.';
-                                    if ( ! allow ) {
-                                        break;
-                                    }
-                                }
-                                e.doit = allow;
-                            }
-
-                        }
-                    });
-                	textBoxes.put(cell.getElement(), textBox);
-                	listaTextBox.add(textBox);
-                }
-                TableEditor editor = new TableEditor(item.getParent());
-                editor.grabHorizontal  = true;
-                editor.grabVertical = true;
-                editor.setEditor(textBox , item, cell.getColumnIndex());
-                editor.layout();
-            }
-
-        });
-        column = new TableColumn(tableViewer.getTable(), SWT.NONE);
-        column.setText("Unita di misura");
-        column.setWidth(300);
-       
-        TableViewerColumn unitaMisuraCol = new TableViewerColumn(tableViewer, column);
-        
-        unitaMisuraCol.setLabelProvider(new ColumnLabelProvider(){
-
-            @Override
-            public String getText(Object element) {
-                Ingrediente p = (Ingrediente)element;
-
-                return p.getUnitaMisura();
-            }
-
-        });
-		
 		
 		tableViewer.setInput(listaIngredienti);
 		for(Ingrediente ing : listaIngredienti) {
@@ -257,32 +105,47 @@ public class ModificaRicetta {
 		btnNewButton.addSelectionListener(new SelectionAdapter() {
         	@Override
         	public void widgetSelected(SelectionEvent e) {
-        		ArrayList<Quantita> listaQuantita = new ArrayList<Quantita>();
-        		boolean contr = true;
-        		TableItem [] items = tableViewer.getTable().getItems();
-        	    for (int i = 0; i < items.length; ++i) {
-        	      if (items[i].getChecked()) {
-        	    	  if(listaTextBox.get(i).getText().isEmpty() ) {
-        	    		  MessageDialog.openWarning(Display.getDefault().getActiveShell(), "Errore", "Non lasciare ingrediente selezionato con quantita vuota");
-        	    		  contr = false;
-        	    	  }
-        	    	  else {
-	        	    	  Quantita q = new Quantita();
-	        	    	  q.setIngrediente(listaIngredienti.get(i));
-	        	    	  q.setQuantitaNecessaria(Float.parseFloat(listaTextBox.get(i).getText()));
-	        	    	  listaQuantita.add(q);
-        	    	  }
-        	    	  
-        	      }
-        	    }
+        		try {
+        			boolean contr = true;
+	        		ArrayList<Quantita> listaQuantita = new ArrayList<Quantita>();
+	        		
+	        		TableItem [] items = tableViewer.getTable().getItems();
+	        	    for (int i = 0; i < items.length; ++i) {
+	        	      if (items[i].getChecked()) {
+	        	    	  if(listaTextBox.get(i).getText().isEmpty() ) {
+	        	    		  MessageDialog.openWarning(Display.getDefault().getActiveShell(), "Errore", "Non lasciare ingrediente selezionato con quantita vuota");
+	        	    		  contr = false;
+	        	    	  }
+	        	    	  else {
+		        	    	  Quantita q = new Quantita();
+		        	    	  q.setIngrediente(listaIngredienti.get(i));
+		        	    	  q.setQuantitaNecessaria(Float.parseFloat(listaTextBox.get(i).getText()));
+		        	    	  listaQuantita.add(q);
+	        	    	  }
+	        	    	  
+	        	      }
+	        	    }
+	        	    if(listaQuantita.size() == 0) {
+	        	    	contr = false;
+	        	    	MessageDialog.openWarning(Display.getDefault().getActiveShell(), "Errore", "Selezionare almeno un ingrediente");
+	        	    }
+	        	    if(text.getText().isEmpty() || text_1.getText().isEmpty()) {
+	        	    	contr = false;
+	        	    	MessageDialog.openWarning(Display.getDefault().getActiveShell(), "Errore", "Compilare tutti i campi");
+	        	    }
+	        	    if(contr) {
+	        	    	controller.aggiornaRicetta(ricetta.getIdRicetta(),text.getText(), text_1.getText(), Integer.parseInt(spinner.getText()), listaQuantita);
+	        	    	observer.update();
+	        	    	shell.close();
+	        	    }
+        		}catch(NumberFormatException ex) {
+        	 		MessageDialog.openWarning(Display.getDefault().getActiveShell(), "Errore", "La qantit\u00E0 deve essere un numero valido");
+	        	    
+        		}
         	    
-        	    if(contr) {
-        	    	controller.aggiornaRicetta(ricetta.getIdRicetta(),text.getText(), text_1.getText(), Integer.parseInt(spinner.getText()), listaQuantita);
-        	    	observer.update();
-        	    }
-        	    
-        	    shell.close();
+        	   
         	}
+        		
         });
 
 	}

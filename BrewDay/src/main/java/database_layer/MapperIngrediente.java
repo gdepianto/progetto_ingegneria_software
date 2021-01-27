@@ -105,13 +105,13 @@ public class MapperIngrediente {
 	
 	public void delete (int id) {
 		Connection c = null;
-	    
+
+	    String sql = "DELETE FROM ingrediente WHERE ID=?";
 	    try {
 	       Class.forName("org.sqlite.JDBC");
 	       c = DriverManager.getConnection("jdbc:sqlite:"+dbName,"",
 	    		   pass);
 	       c.setAutoCommit(false);
-	       String sql = "DELETE FROM ingrediente WHERE ID=?";
 	       PreparedStatement pstmt = c.prepareStatement( sql );
 	       pstmt.setInt(1, id);      
 	         
@@ -125,7 +125,6 @@ public class MapperIngrediente {
 	       
 	       c.close();
 	    } catch ( Exception e ) {
-	       System.err.println( e.getClass().getName() + ": " + e.getMessage() );
 	       System.exit(0);
 	    }
 	 }
@@ -157,35 +156,10 @@ public class MapperIngrediente {
 		   
 		      c.close();
 	   }  catch ( Exception e ) {
-		      System.err.println( e.getClass().getName() + ": " + e.getMessage() );
 		      System.exit(0);
 	   }	
 	}
 	
-	public void deleteAll() {
-		Connection c = null;
-	    
-	    try {
-	       Class.forName("org.sqlite.JDBC");
-	       c = DriverManager.getConnection("jdbc:sqlite:"+dbName,"",
-	    		   pass);
-	       c.setAutoCommit(false);
-	       String sql = "DELETE FROM ingrediente";
-	       PreparedStatement pstmt = c.prepareStatement( sql );
-	         
-	         
-	       pstmt.executeUpdate();
-	         
-	     
-	       pstmt.close();
-	       c.commit();
 	
-	       
-	       c.close();
-	    } catch ( Exception e ) {
-	       System.err.println( e.getClass().getName() + ": " + e.getMessage() );
-	       System.exit(0);
-	    }
-	}
 		
 }
