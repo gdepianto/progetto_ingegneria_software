@@ -39,7 +39,6 @@ public class ManipolaRicetta extends Window{
 		super.createContents(s);
 		listaIngredienti = controller.getControllerIngredienti().getIngredienti();
 		listaTextBox = new ArrayList<>();
-		
 		tableViewer = new TableViewer(shell,SWT.CHECK | SWT.BORDER | SWT.FULL_SELECTION | SWT.V_SCROLL | SWT.H_SCROLL);
 		tableViewer.getTable().setHeaderVisible(true);
         tableViewer.getTable().setLinesVisible(true);
