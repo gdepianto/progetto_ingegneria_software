@@ -12,6 +12,7 @@ import controller.SecurityController;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.graphics.Image;
 
 public class CreaPassword extends Window{
 
@@ -20,10 +21,14 @@ public class CreaPassword extends Window{
 	private SecurityController controller;
 	
 	
-	
+	//private Shell shell;
 	public CreaPassword(SecurityController controller) {
 		super();
 		this.controller = controller;
+		//shell = new Shell();
+		//createContents(shell);
+		
+		
 	}
 
 
@@ -87,6 +92,12 @@ public class CreaPassword extends Window{
 		});
 		btnNewButton.setBounds(247, 213, 147, 28);
 		btnNewButton.setText("Aggiungi password");
-
+		Image image = new Image(display,"resources/icona_rettangolo.png");
+		Image scaled = imageScale(image,190,72);
+		
+		Label lblNewLabel_2 = new Label(shell, SWT.NONE);
+		lblNewLabel_2.setBounds(250, 65, 190, 72);
+		lblNewLabel_2.setImage(scaled);
+		
 	}
 }

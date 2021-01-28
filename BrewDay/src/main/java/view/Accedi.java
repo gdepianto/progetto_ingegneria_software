@@ -57,7 +57,6 @@ public class Accedi extends Window{
 			public void widgetSelected(SelectionEvent e) {
 				
 				if(controller.verifyPassword(passwordText.getText())) {
-					MessageDialog.openWarning(Display.getDefault().getActiveShell(), "Password Corretta", "Verrà avviata l'applicazione");
 					
 					Display.getDefault().asyncExec(new Runnable() {
 				     	
@@ -83,9 +82,11 @@ public class Accedi extends Window{
 		btnNewButton.setBounds(176, 207, 95, 28);
 		btnNewButton.setText("Accedi");
 		
+		Image image = new Image(display,"resources/icona_rettangolo.png");
+		Image scaled = imageScale(image,284,92);
 		Label lblNewLabel_1 = new Label(shell, SWT.NONE);
-		lblNewLabel_1.setBounds(114, 0, 284, 92);
-		lblNewLabel_1.setImage(new Image(display,"resources/icona.png"));
+		lblNewLabel_1.setBounds(150, 0, 284, 92);
+		lblNewLabel_1.setImage(scaled);
 
 	}
 }
