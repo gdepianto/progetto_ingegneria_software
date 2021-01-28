@@ -12,6 +12,7 @@ import controller.SecurityController;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.graphics.Image;
 
 public class Accedi extends Window{
 
@@ -42,10 +43,10 @@ public class Accedi extends Window{
 		
 		passwordText = new Text(shell, SWT.BORDER | SWT.PASSWORD);
 		passwordText.setToolTipText("Inserisci password");
-		passwordText.setBounds(176, 82, 73, 25);
+		passwordText.setBounds(176, 155, 95, 25);
 		
 		Label lblNewLabel = new Label(shell, SWT.NONE);
-		lblNewLabel.setBounds(176, 34, 95, 17);
+		lblNewLabel.setBounds(176, 108, 95, 17);
 		lblNewLabel.setText("Accedi");
 		
 	
@@ -79,10 +80,12 @@ public class Accedi extends Window{
 				
 			}
 		});
-		btnNewButton.setBounds(176, 158, 95, 28);
+		btnNewButton.setBounds(176, 207, 95, 28);
 		btnNewButton.setText("Accedi");
+		
+		Label lblNewLabel_1 = new Label(shell, SWT.NONE);
+		lblNewLabel_1.setBounds(114, 0, 284, 92);
+		lblNewLabel_1.setImage(new Image(display,"resources/icona.png"));
 
 	}
-
-	
 }

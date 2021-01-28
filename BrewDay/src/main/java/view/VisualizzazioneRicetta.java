@@ -76,9 +76,12 @@ public class VisualizzazioneRicetta extends Window implements GenericObserver {
 		
 		shell.setSize(855, 532);
 		shell.setText("Visualizza ricette");
+		Image image = new Image(display,"resources/icona_rettangolo.png");
+		
 		Label lblNewLabel_1 = new Label(shell, SWT.NONE);
 		lblNewLabel_1.setBounds(583, 23, 236, 88);
-		lblNewLabel_1.setImage(new Image(display,"resources/icona.png"));
+		Image scaled = imageScale(image, 236, 88);
+		lblNewLabel_1.setImage(scaled);
 		ArrayList <Ricetta> listaRicette = controller.getRicette();
 		
 		TableViewer tableViewer = new TableViewer(shell);
@@ -299,5 +302,6 @@ public class VisualizzazioneRicetta extends Window implements GenericObserver {
 		shell.update();
 		shell.layout();
 	}
+	
 }
 
